@@ -1,5 +1,5 @@
 import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
-import { getSparkAiReply as getReply } from '../spark/index.js'
+import { getSparkAiReply as getReply } from '../spark/index'
 
 /**
  * 默认消息发送
