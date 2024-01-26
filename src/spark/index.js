@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import WebSocket from 'ws';
-import Spark from './model';
+import Spark from './model.js';
 
 const env = dotenv.config().parsed;
 
