@@ -1,6 +1,5 @@
-// import { getChatGPTReply as getReply } from '../chatgpt/index.js'
-// import { getOpenAiReply as getReply } from '../openai/index.js'
 import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
+import { getSparkAiReply as getReply } from '../spark/index.js'
 
 /**
  * 默认消息发送
@@ -9,41 +8,46 @@ import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
  * @returns {Promise<void>}
  */
 export async function defaultMessage(msg, bot) {
-  const contact = msg.talker() // 发消息人
-  const receiver = msg.to() // 消息接收人
-  const content = msg.text() // 消息内容
-  const room = msg.room() // 是否是群消息
-  const roomName = (await room?.topic()) || null // 群名称
-  const alias = (await contact.alias()) || (await contact.name()) // 发消息人昵称
-  const remarkName = await contact.alias() // 备注名称
-  const name = await contact.name() // 微信名称
-  const isText = msg.type() === bot.Message.Type.Text // 消息类型是否为文本
-  const isRoom = roomWhiteList.includes(roomName) && content.includes(`${botName}`) // 是否在群聊白名单内并且艾特了机器人
-  const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) // 发消息的人是否在联系人白名单内
-  const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
-  // TODO 你们可以根据自己的需求修改这里的逻辑
+  const contact = msg.talker(); // 发消息人
+  const receiver = msg.to(); // 消息接收人
+  const content = msg.text(); // 消息内容
+  const room = msg.room(); // 是否是群消息
+  const roomName = (await room?.topic()) || null; // 群名称
+  const alias = (await contact.alias()) || (await contact.name()); // 发消息人昵称
+  const remarkName = await contact.alias(); // 备注名称
+  const name = await contact.name(); // 微信名称
+  const isText = msg.type() === bot.Message.Type.Text; // 消息类型是否为文本
+  const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes()) && content.includes(`${botName}`); // 是否在群聊白名单内并且艾特了机器人
+  const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name); // 发消息的人是否在联系人白名单内
+  const isBotSelf = botName === remarkName || botName === name; // 是否是机器人自己
+
+  // TODO: 你们可以根据自己的需求修改这里的逻辑
+
+  // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
-    console.log(JSON.stringify(msg))
-    if ((Date.now() - 1e3 * msg.payload.timestamp) > 3000) return 
-    if (!content.startsWith('? ') && !content.startsWith('？ ') && !content.startsWith('> ')) return 
+    console.log(JSON.stringify(msg));
+
+    // 检查消息时间戳，如果距离现在超过3秒则不处理
+    if ((Date.now() - 1000 * msg.payload.timestamp) > 3000) return;
+
     try {
-      const trimed = content.substr(2)
-      if (trimed.length < 5) return 
-      
       // 区分群聊和私聊
       if (isRoom && room) {
-        await room.say("await getReply(trimed.replace(`${botName}`, ''))")
-        return
+        // 在群聊中回复消息
+        await room.say(await getReply(content.replace(`@${botName}`, '')));
+        return;
       }
-      // 私人聊天，白名单内的直接发送
+
+      // 私聊中，白名单内的直接发送回复消息
       if (isAlias && !room) {
-        await contact.say("await getReply(trimed)")
+        await contact.say(await getReply(content));
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 }
+
 
 /**
  * 分片消息发送

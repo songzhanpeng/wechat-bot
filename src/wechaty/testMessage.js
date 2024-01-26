@@ -1,5 +1,4 @@
-// import { getChatGPTReply as getReply } from '../chatgpt/index.js'
-import { getOpenAiReply as getReply } from '../openai/index.js'
+import { getSparkAiReply as getReply } from '../spark/index.js'
 
 // 测试 open ai api
 async function testMessage() {
