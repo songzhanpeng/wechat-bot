@@ -28,7 +28,14 @@ export async function defaultMessage(msg, bot) {
     console.log(JSON.stringify(msg));
 
     // 检查消息时间戳，如果距离现在超过10秒则不处理
-    if ((Date.now() - 1000 * msg.payload.timestamp) > 10 * 1000) return;
+    const messageTimestamp = 1000 * msg.payload.timestamp;
+    const currentTimestamp = Date.now();
+    const timeDifference = currentTimestamp - messageTimestamp;
+
+    if (timeDifference > 10 * 1000) {
+        console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`);
+        return;
+    }
 
     try {
       // 区分群聊和私聊
