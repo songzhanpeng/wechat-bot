@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { getSparkAiReply as getReply, getSparkAiReplyWithMemory as getReplyWithMemory } from './index';
+import { getSparkAiReply as getReply, getSparkAiReplyWithMemory as getReplyWithMemory } from './index.js';
 
 it('testMessage', async () => {
   try {
