@@ -27,8 +27,8 @@ export async function defaultMessage(msg, bot) {
   if (isText && !isBotSelf) {
     console.log(JSON.stringify(msg));
 
-    // 检查消息时间戳，如果距离现在超过3秒则不处理
-    if ((Date.now() - 1000 * msg.payload.timestamp) > 3000) return;
+    // 检查消息时间戳，如果距离现在超过10秒则不处理
+    if ((Date.now() - 1000 * msg.payload.timestamp) > 10 * 1000) return;
 
     try {
       // 区分群聊和私聊
