@@ -12,6 +12,7 @@ export async function defaultMessage(msg, bot) {
   const receiver = msg.to(); // 消息接收人
   const content = msg.text(); // 消息内容
   const room = msg.room(); // 是否是群消息
+  console.log("🚀 ~ defaultMessage ~ room:", room)
   const roomName = (await room?.topic()) || null; // 群名称
   const alias = (await contact.alias()) || (await contact.name()); // 发消息人昵称
   const remarkName = await contact.alias(); // 备注名称
@@ -19,6 +20,7 @@ export async function defaultMessage(msg, bot) {
   const isText = msg.type() === bot.Message.Type.Text; // 消息类型是否为文本
   const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes()) && content.includes(`${botName}`); // 是否在群聊白名单内并且艾特了机器人
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name); // 发消息的人是否在联系人白名单内
+  console.log("🚀 ~ defaultMessage ~ isRoom:", isRoom)
   const isBotSelf = botName === remarkName || botName === name; // 是否是机器人自己
 
   // TODO: 你们可以根据自己的需求修改这里的逻辑
