@@ -2,16 +2,19 @@ import crypto from 'crypto';
 import querystring from 'querystring';
 
 class Spark {
-  constructor(appId, apiKey, apiSecret, domain, version) {
-    this.appId = appId;
-    this.apiKey = apiKey;
-    this.apiSecret = apiSecret;
-    this.domain = domain;
-    this.version = version;
+  private readonly host: string;
+
+  constructor(
+    private readonly appId: string,
+    private readonly apiKey: string,
+    private readonly apiSecret: string,
+    private readonly domain: string,
+    private readonly version: string
+  ) {
     this.host = 'spark-api.xf-yun.com';
   }
 
-  async generateAuthorization(date, path) {
+  async generateAuthorization(date: string, path: string): Promise<string> {
     const requestLine = `GET ${path} HTTP/1.1`;
     const tmp = `host: ${this.host}\ndate: ${date}\n${requestLine}`;
 
@@ -24,7 +27,7 @@ class Spark {
     return Buffer.from(authorizationOrigin).toString('base64');
   }
 
-  async generateAuthParams(path) {
+  async generateAuthParams(path: string): Promise<{ authorization: string; date: string; host: string }> {
     const date = new Date().toUTCString();
     const authorization = await this.generateAuthorization(date, path);
 
@@ -35,7 +38,7 @@ class Spark {
     };
   }
 
-  async generateFinalUrl() {
+  async generateFinalUrl(): Promise<string> {
     const authParams = await this.generateAuthParams(`/v${this.version}.1/chat`);
     const queryString = querystring.stringify(authParams);
 

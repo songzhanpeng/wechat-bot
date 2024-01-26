@@ -1,10 +1,17 @@
-import dotenv from 'dotenv'
-import WebSocket from 'ws'
-import Spark from './model.js'
+import dotenv from 'dotenv';
+import WebSocket from 'ws';
+import Spark from './model';
 
-const env = dotenv.config().parsed // 环境参数
+interface Environment extends dotenv.DotenvParseOutput {
+  appId: string;
+  apiKey: string;
+  apiSecret: string;
+  domain: string;
+  version: string;
+}
+const env: Environment = dotenv.config().parsed as Environment; // 环境参数
 
-async function sendRequestToSpark(requestPayload) {
+async function sendRequestToSpark(requestPayload: any): Promise<string> {
     try {
         const spark = new Spark(env.appId, env.apiKey, env.apiSecret, env.domain, env.version);
         let finalUrl = await spark.generateFinalUrl();
@@ -15,9 +22,9 @@ async function sendRequestToSpark(requestPayload) {
         });
 
         let completeMessage = '';
-        let ai_msg;
+        let ai_msg: string;
 
-        return new Promise((resolve, reject) => {
+        return new Promise<string>((resolve, reject) => {
             sparkMsg.on('message', async (data) => {
                 const partialMessage = JSON.parse(data);
 
@@ -44,7 +51,7 @@ async function sendRequestToSpark(requestPayload) {
     }
 }
 
-export async function getSparkAiReply(prompt) {
+export async function getSparkAiReply(prompt: string): Promise<string> {
     console.log(`收到的消息: ${prompt}`);
 
     let requestPayload = {
@@ -69,7 +76,7 @@ export async function getSparkAiReply(prompt) {
     return sendRequestToSpark(requestPayload);
 }
 
-export async function getSparkAiReplyWithMemory(prompts) {
+export async function getSparkAiReplyWithMemory(prompts: any[]): Promise<string> {
     console.log(`收到的消息: ${JSON.stringify(prompts)}`);
 
     let requestPayload = {
@@ -93,4 +100,3 @@ export async function getSparkAiReplyWithMemory(prompts) {
 
     return sendRequestToSpark(requestPayload);
 }
-
