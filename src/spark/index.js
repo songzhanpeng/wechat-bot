@@ -21,16 +21,26 @@ async function sendRequestToSpark(requestPayload) {
             sparkMsg.on('message', async (data) => {
                 const partialMessage = JSON.parse(data);
 
-                if (partialMessage.payload.usage) {
-                    let myArray = partialMessage.payload.choices.text;
-                    completeMessage += myArray[0].content;
-                    console.log('AI的消息:', JSON.stringify(completeMessage));
-                    ai_msg = completeMessage;
-                    completeMessage = '';
-                    resolve(ai_msg);
-                } else {
-                    let myArray = partialMessage.payload.choices.text;
-                    completeMessage += myArray[0].content;
+                switch (partialMessage.header.code) {
+                    // 异常case
+                    case 10013: {
+                        resolve(partialMessage.header.message)
+                        break;
+                    }
+                    default: {
+                        if (partialMessage.payload.usage) {
+                            let myArray = partialMessage.payload.choices.text;
+                            completeMessage += myArray[0].content;
+                            console.log('AI的消息:', JSON.stringify(completeMessage));
+                            ai_msg = completeMessage;
+                            completeMessage = '';
+                            resolve(ai_msg);
+                        } else {
+                            let myArray = partialMessage.payload.choices.text;
+                            completeMessage += myArray[0].content;
+                        }
+                        break;
+                    }
                 }
             });
 
