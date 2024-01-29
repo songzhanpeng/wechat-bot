@@ -18,7 +18,7 @@ export async function defaultMessage(msg, bot) {
   const name = await contact.name(); // 微信名称
   const isText = msg.type() === bot.Message.Type.Text; // 消息类型是否为文本
   const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes('*')) && content.includes(`@${botName}`); // 是否在群聊白名单内并且艾特了机器人
-  const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name); // 发消息的人是否在联系人白名单内
+  const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*'); // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name; // 是否是机器人自己
 
   // TODO: 你们可以根据自己的需求修改这里的逻辑

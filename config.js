@@ -5,4 +5,4 @@ export const botName = '饮月君'
 export const roomWhiteList = ['*']
 
 // 联系人白名单，白名单内的联系人才会自动回复
-export const aliasWhiteList = ['备注名或微信名', '张三', '李四']
+export const aliasWhiteList = ['备注名或微信名', '*']
