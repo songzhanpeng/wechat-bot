@@ -21,7 +21,7 @@ export async function defaultMessage(msg, bot) {
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*'); // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name; // 是否是机器人自己
 
-   console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
+  //  console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
 
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
