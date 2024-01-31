@@ -1,7 +1,6 @@
 import { WechatyBuilder, ScanStatus, log } from 'wechaty'
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
-import { scheduleDailyMessage } from '../tasks/index.js'
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -20,10 +19,6 @@ function onLogin(user) {
   const date = new Date();
   console.log(`当前时间：${date}`);
   console.log(`自动聊天机器人模式已启动`);
-
-  // 设置定时任务，在每天的8点触发
-  // const roomIds = ['@@659e1ec63bba8f845011c616b62499ea7abb703297a0069047c3a685775bf92c']; // 群聊的 id 列表
-  // scheduleDailyMessage(bot, roomIds);
 }
 
 // 登出

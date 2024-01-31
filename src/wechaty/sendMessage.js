@@ -14,8 +14,11 @@ export async function defaultMessage(msg, bot) {
   const room = msg.room(); // 是否是群消息
   const roomName = (await room?.topic()) || null; // 群名称
   const alias = (await contact.alias()) || (await contact.name()); // 发消息人昵称
+  console.log("🚀 ~ defaultMessage ~ alias:", alias)
   const remarkName = await contact.alias(); // 备注名称
+  console.log("🚀 ~ defaultMessage ~ remarkName:", remarkName)
   const name = await contact.name(); // 微信名称
+  console.log("🚀 ~ defaultMessage ~ name:", name)
   const isText = msg.type() === bot.Message.Type.Text; // 消息类型是否为文本
   const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes('*')) && content.includes(`@${botName}`); // 是否在群聊白名单内并且艾特了机器人
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*'); // 发消息的人是否在联系人白名单内
