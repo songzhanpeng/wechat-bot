@@ -41,11 +41,9 @@ export async function defaultMessage(msg, bot) {
     try {
       // 区分群聊和私聊
       if (isRoom && room) {
-        console.log("🚀 ~ defaultMessage ~ remarkName:", name)
         const member = await room.member(name) // all members in this room
-        console.log("🚀 ~ defaultMessage ~ member:", member)
         // 在群聊中回复消息
-        await room.say(await getReply(content.replace(`@${botName}`, '')));
+        await room.say(await getReply(content.replace(`@${botName}`, '')), member);
         return;
       }
 
