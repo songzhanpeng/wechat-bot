@@ -41,7 +41,7 @@ export async function defaultMessage(msg, bot) {
     try {
       // 区分群聊和私聊
       if (isRoom && room) {
-       const mention = room.mention()
+       const mention = msg.mention()
         console.log("🚀 ~ defaultMessage ~ mention:", mention)
         const member = await room.member(name) // all members in this room
         console.log("🚀 ~ defaultMessage ~ member:", member)
