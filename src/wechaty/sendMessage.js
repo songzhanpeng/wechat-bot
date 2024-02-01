@@ -45,7 +45,7 @@ export async function defaultMessage(msg, bot) {
         const mentionList = mention.map(m => m.id);
         console.log("🚀 ~ defaultMessage ~ mentionList:", mentionList)
         // 在群聊中回复消息
-        await room.say(await getReply(content.replace(`@${botName}`, '')), { mentionList });
+        await room.say(await getReply(content.replace(`@${botName}`, '')));
         return;
       }
 
