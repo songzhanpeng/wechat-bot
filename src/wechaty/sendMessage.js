@@ -41,12 +41,11 @@ export async function defaultMessage(msg, bot) {
     try {
       // 区分群聊和私聊
       if (isRoom && room) {
-       const mention = await msg.mention()
-        console.log("🚀 ~ defaultMessage ~ mention:", mention)
-        const member = await room.member(name) // all members in this room
-        console.log("🚀 ~ defaultMessage ~ member:", member)
+       const mention = await msg.mention();
+       const mentionList = mention.map(m => m.id);
+        console.log("🚀 ~ defaultMessage ~ mentionList:", mentionList)
         // 在群聊中回复消息
-        await room.say(await getReply(content.replace(`@${botName}`, '')), member);
+        await room.say(await getReply(content.replace(`@${botName}`, '')), mentionList);
         return;
       }
 
