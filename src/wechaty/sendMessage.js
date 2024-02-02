@@ -44,18 +44,19 @@ export async function defaultMessage(msg, bot) {
       return;
     }
 
-    if (content.startsWith("/update")) {
-      try {
-        console.log("正在执行更新脚本...");
-        await msg.say(`正在执行更新脚本...`);
-        const { stdout, stderr } = await executeShellScript('npm run update');
-        await msg.say(`更新成功！输出：${stdout}`);
-      } catch (error) {
-        console.error(error);
-        await msg.say(`更新失败！错误：${error}`);
-      }
-      return;
-    }
+    // 会终止当前pm2进行导致机器人重启失败
+    // if (content.startsWith("/update")) {
+    //   try {
+    //     console.log("正在执行更新脚本...");
+    //     await msg.say(`正在执行更新脚本...`);
+    //     const { stdout, stderr } = await executeShellScript('npm run update');
+    //     await msg.say(`更新成功！输出：${stdout}`);
+    //   } catch (error) {
+    //     console.error(error);
+    //     await msg.say(`更新失败！错误：${error}`);
+    //   }
+    //   return;
+    // }
 
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
