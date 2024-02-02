@@ -1,5 +1,6 @@
 import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
 import { getSparkAiReply as getReply } from '../spark/index.js'
+import { executeShellScript } from '../utils/index.js'
 
 /**
  * 默认消息发送
@@ -41,6 +42,16 @@ export async function defaultMessage(msg, bot) {
     if (content.startsWith("/ping")) {
       await msg.say("pong");
       return;
+    }
+
+    if (content.startsWith("/update")) {
+      try {
+        const { stdout, stderr } = await executeShellScript('npm run update');
+        await msg.say(`更新成功！输出：${stdout}`);
+      } catch (error) {
+        console.error(error);
+        await msg.say(`更新失败！错误：${error}`);
+      }
     }
 
     if (privateChat) {

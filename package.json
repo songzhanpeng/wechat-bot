@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node ./index.js",
-    "test": "vitest"
+    "test": "vitest",
+    "update": "sh update.sh"
   },
   "author": "rongding",
   "license": "ISC",

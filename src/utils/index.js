@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { exec } from 'child_process';
 
 export async function getRedirectUrl(url, maxRedirects = 5) {
   try {
@@ -29,5 +30,25 @@ export async function getRedirectUrl(url, maxRedirects = 5) {
       // 如果不是 302 状态码，则抛出错误
       throw error;
     }
+  }
+}
+
+export async function executeShellScript(scriptPath) {
+  try {
+    // 执行终端脚本
+    const { stdout, stderr } = await new Promise((resolve, reject) => {
+      exec(scriptPath, (error, stdout, stderr) => {
+        if (error) {
+          reject(`执行脚本时发生错误： ${error}`);
+          return;
+        }
+        // 返回脚本的输出和错误信息
+        resolve({ stdout, stderr });
+      });
+    });
+    console.log(`脚本输出： ${stdout}`);
+    console.error(`脚本错误： ${stderr}`);
+  } catch (error) {
+    console.error(error);
   }
 }
