@@ -46,7 +46,7 @@ export async function defaultMessage(msg, bot) {
 
     if (content.startsWith("/update")) {
       try {
-        // const { stdout, stderr } = await executeShellScript('npm run update');
+        const { stdout, stderr } = await executeShellScript('npm run update');
         await msg.say(`更新成功！输出：${stdout}`);
       } catch (error) {
         console.error(error);
