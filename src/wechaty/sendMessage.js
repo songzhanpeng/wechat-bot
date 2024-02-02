@@ -38,8 +38,8 @@ export async function defaultMessage(msg, bot) {
       return;
     }
 
-    if (message.text().startsWith("/ping")) {
-      await message.say("pong");
+    if (content.startsWith("/ping")) {
+      await msg.say("pong");
       return;
     }
 
