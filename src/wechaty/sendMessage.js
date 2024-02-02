@@ -46,12 +46,31 @@ export async function defaultMessage(msg, bot) {
 
     if (content.startsWith("/snapshot")) {
       const memberList = await room.memberAll();
-      console.log("🚀 ~ defaultMessage ~ memberList:", memberList)
-      const memberNames = memberList.map(member => member.name()).join(', ');
-      const memberCount = memberList.length;
-      
-      console.log(`Room members: ${memberNames}`);
-      console.log(`Total members: ${memberCount}`);
+      const snapshot = memberList.map(member => ({
+        id: member.id,
+        name: member.name(),
+        avatar: member.avatar(),
+        gender: member.gender(),
+        province: member.province(),
+        city: member.city(),
+        signature: member.signature(),
+        alias: member.alias(),
+        isFriend: member.friend(),
+        contactType: member.contactType(),
+        tags: member.tags(),
+        isStar: member.star(),
+        isBlocked: member.blocked(),
+        type: member.type(),
+        weixin: member.weixin(),
+        isOfficial: member.official(),
+        aliasPinyin: member.aliasPinyin(),
+        aliasPinyinInitial: member.aliasPinyinInitial(),
+        isDeleted: member.deleted(),
+        isSelf: member.self(),
+      }));
+    
+      const snapshotJson = JSON.stringify(snapshot, null, 2);
+      console.log("🚀 ~ defaultMessage ~ snapshotJson:", snapshotJson)
       
       // await msg.say(`快照成功，群里有 ${memberCount} 位成员：${memberNames}`);
       await msg.say(`snapshot`);
