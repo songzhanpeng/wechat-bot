@@ -20,7 +20,7 @@ export async function defaultMessage(msg, bot) {
   const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes('*')) && content.includes(`@${botName}`); // 是否在群聊白名单内并且艾特了机器人
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*'); // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name; // 是否是机器人自己
-
+  const privateChat = !room;
 
   //  console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
 
@@ -38,12 +38,21 @@ export async function defaultMessage(msg, bot) {
       return;
     }
 
+    if (message.text().startsWith("/ping")) {
+      await message.say("pong");
+      return;
+    }
+
+    if (privateChat) {
+      console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
+    } else {
+      const topic = await room.topic()
+      console.log(`🚪 Room: ${topic} 🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
+    }
+
     try {
       // 区分群聊和私聊
       if (isRoom && room) {
-        const mention = await msg.mention();
-        const mentionList = mention.map(m => m.id);
-        console.log("🚀 ~ defaultMessage ~ mentionList:", mentionList)
         // 在群聊中回复消息
         await room.say(await getReply(content.replace(`@${botName}`, '')));
         return;
