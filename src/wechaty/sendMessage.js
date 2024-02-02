@@ -46,13 +46,15 @@ export async function defaultMessage(msg, bot) {
 
     if (content.startsWith("/snapshot")) {
       const memberList = await room.memberAll();
+      console.log("🚀 ~ defaultMessage ~ memberList:", memberList)
       const memberNames = memberList.map(member => member.name()).join(', ');
       const memberCount = memberList.length;
       
       console.log(`Room members: ${memberNames}`);
       console.log(`Total members: ${memberCount}`);
       
-      await msg.say(`快照成功，群里有 ${memberCount} 位成员：${memberNames}`);
+      // await msg.say(`快照成功，群里有 ${memberCount} 位成员：${memberNames}`);
+      await msg.say(`snapshot`);
       return;
     }
     
