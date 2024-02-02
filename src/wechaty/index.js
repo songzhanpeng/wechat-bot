@@ -7,23 +7,24 @@ function onScan(qrcode, status) {
     // 在控制台显示二维码
     qrTerminal.generate(qrcode, { small: true })
     const qrcodeImageUrl = ['https://api.qrserver.com/v1/create-qr-code/?data=', encodeURIComponent(qrcode)].join('')
-    console.log('扫描状态:', qrcodeImageUrl, ScanStatus[status], status)
+    console.log('Scan:', qrcodeImageUrl, ScanStatus[status], status)
+
   } else {
-    log.info('扫描状态: %s(%s)', ScanStatus[status], status)
+    log.info('Scan: %s(%s)', ScanStatus[status], status)
   }
 }
 
 // 登录
 function onLogin(user) {
-  console.log(`${user} 已登录`);
+  console.log(`User ${user} logged in`);
   const date = new Date();
-  console.log(`当前时间：${date}`);
-  console.log(`自动聊天机器人模式已启动`);
+  console.log(`Current time: ${date}`);
+  console.log(`Auto chatbot mode activated`);
 }
 
 // 登出
 function onLogout(user) {
-  console.log(`${user} 已退出登录`);
+  console.log(`${user} has logged out`);
 }
 
 // 收到好友请求
@@ -50,15 +51,12 @@ async function onMessage(msg) {
 }
 
 // 初始化机器人
-const CHROME_BIN = process.env.CHROME_BIN ? { endpoint: process.env.CHROME_BIN } : {}
 export const bot = WechatyBuilder.build({
   name: 'WechatEveryDay',
-  // puppet: 'wechaty-puppet-wechat4u', // 如果有token，记得更换对应的puppet
-  // puppet: 'wechaty-puppet-wechat', // 如果 wechaty-puppet-wechat 存在问题，也可以尝试使用上面的 wechaty-puppet-wechat4u ，记得安装 wechaty-puppet-wechat4u
-  // puppetOptions: {
-  //   uos: true,
-  //   ...CHROME_BIN
-  // },
+  puppet: "wechaty-puppet-wechat",
+  puppetOptions: {
+    uos: true
+  }
 })
 
 // 扫码
