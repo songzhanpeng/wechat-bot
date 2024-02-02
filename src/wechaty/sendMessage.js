@@ -43,34 +43,7 @@ export async function defaultMessage(msg, bot) {
       await msg.say("pong");
       return;
     }
-
-    if (content.startsWith("/snapshot")) {
-      const memberList = await room.memberAll();
-      const snapshot = memberList.map(member => ({
-        id: member.id,
-        name: member.name(),
-        avatar: member.avatar(),
-        gender: member.gender(),
-        province: member.province(),
-        city: member.city(),
-        alias: member.alias(),
-        isFriend: member.friend(),
-        tags: member.tags(),
-        isStar: member.star(),
-        type: member.type(),
-        weixin: member.weixin(),
-        isSelf: member.self(),
-      }));
     
-      const snapshotJson = JSON.stringify(snapshot, null, 2);
-      console.log("🚀 ~ defaultMessage ~ snapshotJson:", snapshotJson)
-      
-      // await msg.say(`快照成功，群里有 ${memberCount} 位成员：${memberNames}`);
-      await msg.say(`snapshot`);
-      return;
-    }
-    
-
     // 会终止当前pm2进行导致机器人重启失败
     // if (content.startsWith("/update")) {
     //   try {
