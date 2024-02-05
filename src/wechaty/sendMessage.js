@@ -2,7 +2,7 @@ import { FileBox } from 'file-box'
 
 import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
 import { getSparkAiReply as getReply } from '../spark/index.js'
-import { fetchMoyuData } from '../services/index.js'
+import { fetchMoyuData, fetchSixsData } from '../services/index.js'
 
 /**
  * 默认消息发送
@@ -49,6 +49,13 @@ export async function defaultMessage(msg, bot) {
     // 摸鱼人
     if (content.startsWith("/moyu")) {
       const url = await fetchMoyuData();
+      await msg.say(FileBox.fromUrl(url))
+      return;
+    }
+
+    // 60s新闻
+    if (content.startsWith("/sixs")) {
+      const url = await fetchSixsData();
       await msg.say(FileBox.fromUrl(url))
       return;
     }
