@@ -6,7 +6,7 @@ const env = dotenv.config().parsed;
 
 async function sendRequestToSpark(requestPayload) {
     try {
-        const spark = new Spark(env.appId, env.apiKey, env.apiSecret, env.domain, env.version);
+        const spark = new Spark(env.APP_ID, env.API_KEY, env.API_SECRET, env.DOMAIN, env.VERSION);
         let finalUrl = await spark.generateFinalUrl();
         const sparkMsg = new WebSocket(finalUrl);
 
@@ -59,12 +59,12 @@ export async function getSparkAiReply(prompt) {
 
     let requestPayload = {
         header: {
-            app_id: env.appId,
+            app_id: env.APP_ID,
             uid: '123'
         },
         parameter: {
             chat: {
-                domain: env.domain,
+                domain: env.DOMAIN,
                 temperature: 0.5,
                 max_tokens: 1024
             }
@@ -84,12 +84,12 @@ export async function getSparkAiReplyWithMemory(prompts) {
 
     let requestPayload = {
         header: {
-            app_id: env.appId,
+            app_id: env.APP_ID,
             uid: '123'
         },
         parameter: {
             chat: {
-                domain: env.domain,
+                domain: env.DOMAIN,
                 temperature: 0.5,
                 max_tokens: 1024
             }

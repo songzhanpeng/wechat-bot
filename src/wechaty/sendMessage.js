@@ -1,8 +1,13 @@
 import { FileBox } from 'file-box'
+import dotenv from 'dotenv';
 
-import { botName, roomWhiteList, aliasWhiteList } from '../../config.js'
 import { getSparkAiReply as getReply } from '../spark/index.js'
 import { fetchMoyuData, fetchSixsData } from '../services/index.js'
+
+const env = dotenv.config().parsed;
+const botName = env.BOT_NAME;
+const roomWhiteList = env.ROOM_WHITE_LIST.split(',');
+const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',');
 
 /**
  * 默认消息发送
