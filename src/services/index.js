@@ -45,3 +45,17 @@ export async function fetchSixsData() {
         return '接口异常，请稍后';
     }
 }
+
+export async function fetchDataFromXialiu() {
+    const url = 'https://xialiu.cn/api/dan/';
+
+    try {
+        const response = await axios.get(url);
+        console.log("🚀 ~ fetchDataFromXialiu ~ response:", response)
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data from Xialiu API:', error);
+        throw new Error('Failed to fetch data from Xialiu API');
+    }
+}
+// fetchDataFromXialiu()
