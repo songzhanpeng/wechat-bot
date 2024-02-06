@@ -68,7 +68,8 @@ export async function defaultMessage(msg, bot) {
     // 60s新闻
     if (content.startsWith('/dog')) {
       const data = await fetchTianGouData()
-      await msg.say(data)
+      const result = data.replace(/<[^>]*>/g, '');
+      await msg.say(result)
       return
     }
 
