@@ -58,4 +58,17 @@ export async function fetchDataFromXialiu() {
         throw new Error('Failed to fetch data from Xialiu API');
     }
 }
-// fetchDataFromXialiu()
+
+export async function fetchTianGouData() {
+    const url = 'https://v.api.aa1.cn/api/tiangou/index.php';
+
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching data from tiangou API:', error);
+        throw new Error('Failed to fetch data from tiangou API');
+    }
+}
+
+// fetchTianGouData()

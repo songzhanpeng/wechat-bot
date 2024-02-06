@@ -2,7 +2,7 @@ import { FileBox } from 'file-box'
 import dotenv from 'dotenv';
 
 import { getSparkAiReply as getReply } from '../spark/index.js'
-import { fetchMoyuData, fetchSixsData } from '../services/index.js'
+import { fetchMoyuData, fetchSixsData, fetchTianGouData } from '../services/index.js'
 
 const env = dotenv.config().parsed;
 const botName = env.BOT_NAME;
@@ -65,12 +65,20 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
+    // 60s新闻
+    if (content.startsWith('/dog')) {
+      const data = await fetchTianGouData()
+      await msg.say(data)
+      return
+    }
+
     // 帮助命令
     if (content.startsWith('/help')) {
       const helpMessage = `可用命令：
     /ping - 发送 "pong" 以测试是否在线
     /moyu - 获取摸鱼人数据
-    /sixs - 获取60秒新闻数据`
+    /sixs - 获取60秒新闻数据
+    /dog  - 获取舔狗日记`
       await msg.say(helpMessage)
       return
     }
