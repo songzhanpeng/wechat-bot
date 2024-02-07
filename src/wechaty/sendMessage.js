@@ -99,7 +99,7 @@ export async function defaultMessage(msg, bot) {
         const data = await fetchOneDayEnglishData()
         if (data.code === 200) {
           await msg.say(FileBox.fromUrl(data.result.img))
-          await msg.say(FileBox.fromFile(data.result.tts))
+          await msg.say(FileBox.fromUrl(data.result.tts))
           console.log('Daily English data message sent successfully')
         } else {
           await msg.say('服务失去高光')
