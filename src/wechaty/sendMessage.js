@@ -1,8 +1,7 @@
-import { FileBox } from 'file-box'
 import dotenv from 'dotenv'
 
 import { getSparkAiReply as getReply } from '../spark/index.js'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
+import { MessageHandler } from './messageHandler.js'
 
 const env = dotenv.config().parsed
 const botName = env.BOT_NAME
@@ -29,7 +28,7 @@ export async function defaultMessage(msg, bot) {
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*') // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   const privateChat = !room
-
+  const handler = new MessageHandler(bot)
   //  console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
 
   // 如果消息类型为文本且不是机器人自己发送的消息
@@ -46,96 +45,11 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
-    if (content.startsWith('/ping')) {
-      try {
-        await msg.say('pong')
-        console.log('Pong message sent successfully')
-      } catch (error) {
-        console.error('Error sending pong message:', error)
-      }
+    // 检测到 / 拦截一下
+    if (content.startsWith('/')) {
+      handler.handleMessage(msg)
       return
     }
-
-    // 摸鱼人
-    if (content.startsWith('/moyu')) {
-      try {
-        const url = await fetchMoyuData()
-        await msg.say(FileBox.fromUrl(url))
-        console.log('MoYu data message sent successfully')
-      } catch (error) {
-        console.error('Error sending MoYu data message:', error)
-      }
-      return
-    }
-
-    // 60s新闻
-    if (content.startsWith('/sixs')) {
-      try {
-        const url = await fetchSixsData()
-        await msg.say(FileBox.fromUrl(url))
-        console.log('Sixs data message sent successfully')
-      } catch (error) {
-        console.error('Error sending Sixs data message:', error)
-      }
-      return
-    }
-
-    // 狗图
-    if (content.startsWith('/dog')) {
-      try {
-        const data = await fetchTianGouData()
-        const result = data.replace(/<[^>]*>/g, '')
-        await msg.say(result)
-        console.log('Dog data message sent successfully')
-      } catch (error) {
-        console.error('Error sending Dog data message:', error)
-      }
-      return
-    }
-
-    // 每日英语
-    if (content.startsWith('/daily-english')) {
-      try {
-        const data = await fetchOneDayEnglishData()
-        if (data.code === 200) {
-          await msg.say(FileBox.fromUrl(data.result.img))
-          await msg.say(FileBox.fromUrl(data.result.tts))
-          console.log('Daily English data message sent successfully')
-        } else {
-          await msg.say('服务失去高光')
-          console.error('Failed to get Daily English data:', data)
-        }
-      } catch (error) {
-        console.error('Error sending Daily English data message:', error)
-      }
-      return
-    }
-
-    // 帮助命令
-    if (content.startsWith('/help')) {
-      const helpMessage = `可用命令：
-    /ping - 发送 "pong" 以测试是否在线
-    /moyu - 获取摸鱼人数据
-    /sixs - 获取60秒新闻数据
-    /daily-english - 获取每日英语
-    /dog  - 获取舔狗日记`
-      await msg.say(helpMessage)
-      return
-    }
-
-    // 会终止当前pm2进行导致机器人重启失败
-    // if (content.startsWith("/update")) {
-    //   try {
-    //     console.log("正在执行更新脚本...");
-    //     await msg.say(`正在执行更新脚本...`);
-    //     const { stdout, stderr } = await executeShellScript('npm run update');
-    //     await msg.say(`更新成功！输出：${stdout}`);
-    //   } catch (error) {
-    //     console.error(error);
-    //     await msg.say(`更新失败！错误：${error}`);
-    //   }
-    //   return;
-    // }
 
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
