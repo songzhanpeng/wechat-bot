@@ -1,13 +1,13 @@
 import { FileBox } from 'file-box'
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
 import { getSparkAiReply as getReply } from '../spark/index.js'
 import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
 
-const env = dotenv.config().parsed;
-const botName = env.BOT_NAME;
-const roomWhiteList = env.ROOM_WHITE_LIST.split(',');
-const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',');
+const env = dotenv.config().parsed
+const botName = env.BOT_NAME
+const roomWhiteList = env.ROOM_WHITE_LIST.split(',')
+const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',')
 
 /**
  * 默认消息发送
@@ -47,40 +47,67 @@ export async function defaultMessage(msg, bot) {
     }
 
     if (content.startsWith('/ping')) {
-      await msg.say('pong')
+      try {
+        await msg.say('pong')
+        console.log('Pong message sent successfully')
+      } catch (error) {
+        console.error('Error sending pong message:', error)
+      }
       return
     }
 
     // 摸鱼人
     if (content.startsWith('/moyu')) {
-      const url = await fetchMoyuData()
-      await msg.say(FileBox.fromUrl(url))
+      try {
+        const url = await fetchMoyuData()
+        await msg.say(FileBox.fromUrl(url))
+        console.log('MoYu data message sent successfully')
+      } catch (error) {
+        console.error('Error sending MoYu data message:', error)
+      }
       return
     }
 
     // 60s新闻
     if (content.startsWith('/sixs')) {
-      const url = await fetchSixsData()
-      await msg.say(FileBox.fromUrl(url))
+      try {
+        const url = await fetchSixsData()
+        await msg.say(FileBox.fromUrl(url))
+        console.log('Sixs data message sent successfully')
+      } catch (error) {
+        console.error('Error sending Sixs data message:', error)
+      }
       return
     }
 
-    // 60s新闻
+    // 狗图
     if (content.startsWith('/dog')) {
-      const data = await fetchTianGouData()
-      const result = data.replace(/<[^>]*>/g, '');
-      await msg.say(result)
+      try {
+        const data = await fetchTianGouData()
+        const result = data.replace(/<[^>]*>/g, '')
+        await msg.say(result)
+        console.log('Dog data message sent successfully')
+      } catch (error) {
+        console.error('Error sending Dog data message:', error)
+      }
       return
     }
 
     // 每日英语
     if (content.startsWith('/daily-english')) {
-      const data = await fetchOneDayEnglishData()
-      if (data.code === 200) {
-        await msg.say(FileBox.fromUrl(data.result.img))
-        return
+      try {
+        const data = await fetchOneDayEnglishData()
+        if (data.code === 200) {
+          await msg.say(FileBox.fromUrl(data.result.img))
+          await msg.say(FileBox.fromFile(data.result.tts))
+          console.log('Daily English data message sent successfully')
+        } else {
+          await msg.say('服务失去高光')
+          console.error('Failed to get Daily English data:', data)
+        }
+      } catch (error) {
+        console.error('Error sending Daily English data message:', error)
       }
-      await msg.say('服务失去高光')
       return
     }
 
