@@ -46,19 +46,6 @@ export async function fetchSixsData() {
     }
 }
 
-export async function fetchDataFromXialiu() {
-    const url = 'https://xialiu.cn/api/dan/';
-
-    try {
-        const response = await axios.get(url);
-        console.log("🚀 ~ fetchDataFromXialiu ~ response:", response)
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching data from Xialiu API:', error);
-        throw new Error('Failed to fetch data from Xialiu API');
-    }
-}
-
 export async function fetchTianGouData() {
     const url = 'https://v.api.aa1.cn/api/tiangou/index.php';
 
@@ -71,4 +58,16 @@ export async function fetchTianGouData() {
     }
 }
 
-// fetchTianGouData()
+export async function fetchOneDayEnglishData() {
+    const url = 'https://api.oioweb.cn/api/common/OneDayEnglish';
+
+    try {
+        const data = await fetchData(url);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data from OneDayEnglish API:', error);
+        throw new Error('Failed to fetch data from OneDayEnglish API');
+    }
+}
+
+// fetchOneDayEnglishData()
