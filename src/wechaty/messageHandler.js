@@ -96,3 +96,53 @@ export class MessageHandler {
     }
   }
 }
+
+export class MessageSender {
+  constructor(wechaty) {
+      this.wechaty = wechaty;
+  }
+
+  async sendMessage(data) {
+      if (!this.wechaty) {
+          console.log('Wechaty instance is not provided.');
+          return;
+      }
+
+      await this.wechaty.start();
+      this.wechaty.on('ready', async () => {
+          if (data.type === 'room') {
+              await this.sendToRoom(data);
+          } else {
+              console.log('Invalid message type in JSON.');
+          }
+          await this.wechaty.stop();
+      });
+  }
+
+  async sendToRoom(data) {
+      const room = await this.wechaty.Room.load(data.roomId);
+      if (room) {
+          const talker = await this.wechaty.Contact.load(data.talkerId);
+          if (talker) {
+              await room.say(data.message, talker);
+          } else {
+              console.log(`Talker ${data.talkerId} not found.`);
+          }
+      } else {
+          console.log(`Room ${data.roomId} not found.`);
+      }
+  }
+
+  async loadTasksFromJSON(jsonFilePath) {
+      try {
+          const jsonData = fs.readFileSync(jsonFilePath, 'utf8');
+          const tasks = JSON.parse(jsonData);
+          console.log("🚀 ~ MessageSender ~ loadTasksFromJSON ~ tasks:", tasks)
+          for (const task of tasks) {
+              await this.sendMessage(task);
+          }
+      } catch (error) {
+          console.error('Error loading tasks from JSON:', error);
+      }
+  }
+}

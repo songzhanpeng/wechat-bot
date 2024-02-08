@@ -1,6 +1,7 @@
 import { WechatyBuilder, ScanStatus, log } from 'wechaty'
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
+import { MessageSender } from './messageHandler.js'
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -20,6 +21,9 @@ function onLogin(user) {
   const date = new Date();
   console.log(`Current time: ${date}`);
   console.log(`Auto chatbot mode activated`);
+
+  const messageSender = new MessageSender(bot);
+  messageSender.loadTasksFromJSON('../tasks/tasks.json');
 }
 
 // 登出
