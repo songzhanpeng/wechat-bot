@@ -22,8 +22,11 @@ function onLogin(user) {
   console.log(`Current time: ${date}`);
   console.log(`Auto chatbot mode activated`);
 
-  // const messageSender = new MessageSender(bot);
-  // messageSender.loadTasksFromJSON('../tasks/tasks.json');
+  // 加载任务
+  const currentFilePath = fileURLToPath(import.meta.url);
+  const currentDirPath = dirname(currentFilePath);
+  const messageSender = new MessageSender(bot)
+  messageSender.loadTasksFromJSON(join(currentDirPath, '..', 'tasks', 'tasks.json'))
 }
 
 // 登出

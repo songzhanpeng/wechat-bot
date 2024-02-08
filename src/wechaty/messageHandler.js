@@ -1,5 +1,7 @@
 import { FileBox } from 'file-box'
 import fs from 'fs'
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
 
 export class MessageHandler {
@@ -116,7 +118,8 @@ export class MessageSender {
   }
 
   async sendToRoom(data) {
-    const room = await this.wechaty.Room.load(data.roomId)
+    const room = await this.wechaty.Room.find({ id: data.roomId })
+    console.log("🚀 ~ MessageSender ~ sendToRoom ~ room:", room)
     if (room) {
       const talker = await this.wechaty.Contact.load(data.talkerId)
       if (talker) {
@@ -142,5 +145,7 @@ export class MessageSender {
   }
 }
 
-const messageSender = new MessageSender(null)
-messageSender.loadTasksFromJSON('../tasks/tasks.json')
+// const currentFilePath = fileURLToPath(import.meta.url);
+// const currentDirPath = dirname(currentFilePath);
+// const messageSender = new MessageSender(null)
+// messageSender.loadTasksFromJSON(join(currentDirPath, '..', 'tasks', 'tasks.json'))
