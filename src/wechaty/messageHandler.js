@@ -1,7 +1,7 @@
 import { FileBox } from 'file-box'
 import fs from 'fs'
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
 
 export class MessageHandler {
@@ -119,14 +119,8 @@ export class MessageSender {
 
   async sendToRoom(data) {
     const room = await this.wechaty.Room.find({ id: data.roomId })
-    console.log("🚀 ~ MessageSender ~ sendToRoom ~ room:", room)
     if (room) {
-      const talker = await this.wechaty.Contact.load(data.talkerId)
-      if (talker) {
-        await room.say(data.message, talker)
-      } else {
-        console.log(`Talker ${data.talkerId} not found.`)
-      }
+      await room.say(data.message)
     } else {
       console.log(`Room ${data.roomId} not found.`)
     }
@@ -136,7 +130,7 @@ export class MessageSender {
     try {
       const jsonData = fs.readFileSync(jsonFilePath, 'utf8')
       const tasks = JSON.parse(jsonData)
-      console.log("🚀 ~ MessageSender ~ loadTasksFromJSON ~ tasks:", tasks)
+      console.log('🚀 ~ MessageSender ~ loadTasksFromJSON ~ tasks:', tasks)
       for (const task of tasks) {
         await this.sendMessage(task)
       }
