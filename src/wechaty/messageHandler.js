@@ -136,6 +136,7 @@ export class MessageSender {
     try {
       const jsonData = fs.readFileSync(jsonFilePath, 'utf8')
       const tasks = JSON.parse(jsonData)
+      console.log("🚀 ~ MessageSender ~ loadTasksFromJSON ~ tasks:", tasks)
       for (const task of tasks) {
         await this.sendMessage(task)
       }
