@@ -1,4 +1,6 @@
 import { WechatyBuilder, ScanStatus, log } from 'wechaty'
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
 import { MessageSender } from './messageHandler.js'
