@@ -1,4 +1,5 @@
 import { FileBox } from 'file-box'
+import fs from 'fs'
 import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
 
 export class MessageHandler {
@@ -137,7 +138,6 @@ export class MessageSender {
       try {
           const jsonData = fs.readFileSync(jsonFilePath, 'utf8');
           const tasks = JSON.parse(jsonData);
-          console.log("🚀 ~ MessageSender ~ loadTasksFromJSON ~ tasks:", tasks)
           for (const task of tasks) {
               await this.sendMessage(task);
           }
@@ -146,3 +146,6 @@ export class MessageSender {
       }
   }
 }
+
+// const messageSender = new MessageSender(null);
+// messageSender.loadTasksFromJSON('../tasks/tasks.json');
