@@ -1,8 +1,8 @@
 import { FileBox } from 'file-box'
 import fs from 'fs'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData } from '../services/index.js'
+// import { fileURLToPath } from 'url'
+// import { dirname, join } from 'path'
+import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData } from '../services/index.js'
 
 export class MessageHandler {
   constructor(bot) {
@@ -20,9 +20,15 @@ export class MessageHandler {
 
   async handleMoYu(msg) {
     try {
-      const url = await fetchMoyuData()
-      await msg.say(FileBox.fromUrl(url))
-      console.log('MoYu data message sent successfully')
+      const { data } = await fetchMoyuData()
+      if (data.code === 200) {
+        const res = await getRedirectUrl(data.data.moyu_url)
+        await msg.say(FileBox.fromUrl(res))
+        console.log('MoYu data message sent successfully')
+      } else {
+        await msg.say('获取摸鱼数据失败')
+        console.error('Error: 摸鱼数据请求失败，状态码:', data.code)
+      }
     } catch (error) {
       console.error('Error sending MoYu data message:', error)
     }
@@ -30,9 +36,14 @@ export class MessageHandler {
 
   async handleSixs(msg) {
     try {
-      const url = await fetchSixsData()
-      await msg.say(FileBox.fromUrl(url))
-      console.log('Sixs data message sent successfully')
+      const { data } = await fetchSixsData()
+      if (data.code === '200') {
+        await msg.say(FileBox.fromUrl(data.image))
+        console.log('Sixs data message sent successfully')
+      } else {
+        await msg.say('获取新闻60s数据失败')
+        console.error('Error: 新闻60s数据请求失败，状态码:', data.code)
+      }
     } catch (error) {
       console.error('Error sending Sixs data message:', error)
     }
@@ -40,10 +51,16 @@ export class MessageHandler {
 
   async handleDog(msg) {
     try {
-      const data = await fetchTianGouData()
-      const result = data.replace(/<[^>]*>/g, '')
-      await msg.say(result)
-      console.log('Dog data message sent successfully')
+      const { data = '' } = await fetchTianGouData()
+      if (containsHtmlTags(data)) {
+        const result = data.replace(/<[^>]*>/g, '')
+        await msg.say(result)
+        console.log('Dog data message sent successfully')
+      } else {
+        // 如果数据不包含 HTML 标签，发送一条提示消息
+        await msg.say('舔狗日记数据为空或无效')
+        console.log('Dog data is empty or invalid')
+      }
     } catch (error) {
       console.error('Error sending Dog data message:', error)
     }
@@ -51,17 +68,32 @@ export class MessageHandler {
 
   async handleDailyEnglish(msg) {
     try {
-      const data = await fetchOneDayEnglishData()
+      const { data } = await fetchOneDayEnglishData()
       if (data.code === 200) {
         await msg.say(FileBox.fromUrl(data.result.img))
         await msg.say(FileBox.fromUrl(data.result.tts))
         console.log('Daily English data message sent successfully')
       } else {
-        await msg.say('服务失去高光')
+        await msg.say('获取每日英语一句数据失败')
         console.error('Failed to get Daily English data:', data)
       }
     } catch (error) {
       console.error('Error sending Daily English data message:', error)
+    }
+  }
+
+  async handleConstellations(msg) {
+    try {
+      const { data } = await fetchConstellationsData()
+      if (data.code === 200) {
+        await msg.say(FileBox.fromUrl(data.data))
+        console.log('Constellations data message sent successfully')
+      } else {
+        await msg.say('获取星座运势数据失败')
+        console.error('Failed to get Constellations data:', data)
+      }
+    } catch (error) {
+      console.error('Error sending Constellations data message:', error)
     }
   }
 
@@ -70,7 +102,8 @@ export class MessageHandler {
       /ping - 发送 "pong" 以测试是否在线
       /moyu - 获取摸鱼人数据
       /sixs - 获取60秒新闻数据
-      /daily-english - 获取每日英语
+      /de   - 获取每日英语
+      /cs   - 获取今日星座运势
       /dog  - 获取舔狗日记`
     await msg.say(helpMessage)
   }
@@ -90,8 +123,10 @@ export class MessageHandler {
       await this.handleSixs(msg)
     } else if (content.startsWith('/dog')) {
       await this.handleDog(msg)
-    } else if (content.startsWith('/daily-english')) {
+    } else if (content.startsWith('/de')) {
       await this.handleDailyEnglish(msg)
+    } else if (content.startsWith('/cs')) {
+      await this.handleConstellations(msg)
     } else if (content.startsWith('/help')) {
       await this.handleHelp(msg)
     } else {

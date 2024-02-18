@@ -52,3 +52,8 @@ export async function executeShellScript(scriptPath) {
     console.error(error);
   }
 }
+
+export function containsHtmlTags(str) {
+  const regex = /<[^>]*>/;
+  return regex.test(str);
+}
