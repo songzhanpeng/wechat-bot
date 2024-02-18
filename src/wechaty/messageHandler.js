@@ -3,6 +3,7 @@ import fs from 'fs'
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
 import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData } from '../services/index.js'
+import { containsHtmlTags, getRedirectUrl } from '../utils/index.js'
 
 export class MessageHandler {
   constructor(bot) {
