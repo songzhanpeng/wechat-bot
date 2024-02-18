@@ -113,8 +113,49 @@ export class MessageHandler {
     await msg.say('未知命令，请使用 /help 查看可用命令')
   }
 
+  async handleCDK(msg) {
+    await msg.say(`
+      VIP666
+      VIP888
+      VIP2023
+      xddq666
+      xddq2023
+      xddq2309
+      xddqqq
+      xddqzhw
+      xddqgzh
+      xddqfl
+      XD123NBH6
+      wgyx666
+      cyg666
+      cyg888
+      zhendan666
+      zz666
+      zz888
+      XD12YLH6
+      DQ34QLH88
+      QT666
+      xdcjxqy
+      xddqydkl
+      fkxqyxd66
+      cjxqyxd6
+      dqdxyq8
+      hylddqsj6
+      xdhhgdn
+      xdxxscl66
+      xdhjak666
+      xdwsry888
+      xdlnkgdj66
+    `)
+  }
+
   async handleMessage(msg) {
     const content = msg.text()
+
+    if (content.startsWith('#CDK') || content.startsWith('#兑换码')) {
+      await this.handleCDK(msg)
+      return
+    }
 
     if (content.startsWith('/ping')) {
       await this.handlePing(msg)

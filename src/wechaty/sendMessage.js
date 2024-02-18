@@ -45,12 +45,12 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
-    // 检测到 / 拦截一下
-    if (content.startsWith('/')) {
+    // 检测到 / | # 拦截一下
+    if (content.startsWith('/') || content.startsWith('#')) {
       handler.handleMessage(msg)
       return
     }
-
+    
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
     } else {
