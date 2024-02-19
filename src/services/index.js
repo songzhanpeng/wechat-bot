@@ -36,3 +36,8 @@ export async function fetchBoyImage() {
   const url = 'https://api.52vmy.cn/api/img/tu/boy'
   return await request.get(url)
 }
+
+export async function fetchGirlImage() {
+  const url = 'https://api.52vmy.cn/api/img/tu/girl'
+  return await request.get(url)
+}

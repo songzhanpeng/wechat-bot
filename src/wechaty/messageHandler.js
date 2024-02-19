@@ -2,7 +2,7 @@ import { FileBox } from 'file-box'
 import fs from 'fs'
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchBoyImage } from '../services/index.js'
+import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchBoyImage, fetchGirlImage } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl } from '../utils/index.js'
 import axios from 'axios'
 
@@ -122,6 +122,29 @@ export class MessageHandler {
     }
   }
 
+  async handleMM(msg) {
+    try {
+      const { data } = await fetchGirlImage()
+
+      if (data.code === 200) {
+        const response = await axios({
+          method: 'GET',
+          url: data.url,
+          responseType: 'arraybuffer', // Important: specify responseType as arraybuffer
+        })
+
+        await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+        console.log('Image sent successfully')
+      } else {
+        await msg.say('获取图片数据失败')
+        console.error('Failed to get image data:', data)
+      }
+    } catch (error) {
+      console.error('Error handling image:', error)
+      await msg.say('处理图片时发生错误')
+    }
+  }
+
   async handleHelp(msg) {
     const helpMessage = `可用命令：
       /ping - 发送 "pong" 以测试是否在线
@@ -130,6 +153,7 @@ export class MessageHandler {
       /de   - 获取每日英语
       /cs   - 获取今日星座运势
       /gg   - 获取随机帅哥
+      /mm   - 获取随机妹妹
       /dog  - 获取舔狗日记`
     await msg.say(helpMessage)
   }
@@ -183,6 +207,7 @@ xdlnkgdj66`)
       '/cs': this.handleConstellations,
       '/help': this.handleHelp,
       '/gg': this.handleGG,
+      '/mm': this.handleMM,
       '#CDK': this.handleCDK,
       '#兑换码': this.handleCDK,
     }
