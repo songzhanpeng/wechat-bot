@@ -174,31 +174,27 @@ xdlnkgdj66`)
 
   async handleMessage(msg) {
     const content = msg.text()
-
-    if (content.startsWith('#CDK') || content.startsWith('#兑换码')) {
-      await this.handleCDK(msg)
-      return
+    const commands = {
+      '/ping': this.handlePing,
+      '/moyu': this.handleMoYu,
+      '/sixs': this.handleSixs,
+      '/dog': this.handleDog,
+      '/de': this.handleDailyEnglish,
+      '/cs': this.handleConstellations,
+      '/help': this.handleHelp,
+      '/gg': this.handleGG,
+      '#CDK': this.handleCDK,
+      '#兑换码': this.handleCDK,
     }
 
-    if (content.startsWith('/ping')) {
-      await this.handlePing(msg)
-    } else if (content.startsWith('/moyu')) {
-      await this.handleMoYu(msg)
-    } else if (content.startsWith('/sixs')) {
-      await this.handleSixs(msg)
-    } else if (content.startsWith('/dog')) {
-      await this.handleDog(msg)
-    } else if (content.startsWith('/de')) {
-      await this.handleDailyEnglish(msg)
-    } else if (content.startsWith('/cs')) {
-      await this.handleConstellations(msg)
-    } else if (content.startsWith('/help')) {
-      await this.handleHelp(msg)
-    } else if (content.startsWith('/gg')) {
-      await this.handleGG(msg)
-    } else {
-      await this.handleUnknown(msg)
+    for (const [command, handler] of Object.entries(commands)) {
+      if (content.startsWith(command)) {
+        await handler.call(this, msg)
+        return
+      }
     }
+
+    await this.handleUnknown(msg)
   }
 }
 
