@@ -110,7 +110,7 @@ export class MessageHandler {
           responseType: 'arraybuffer', // Important: specify responseType as arraybuffer
         })
 
-        await msg.say(FileBox.fromBuffer(response.data))
+        await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
         console.log('Image sent successfully')
       } else {
         await msg.say('获取图片数据失败')
