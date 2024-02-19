@@ -36,10 +36,10 @@ class Spark {
   }
 
   async generateFinalUrl() {
-    const authParams = await this.generateAuthParams(`/v${this.version}.1/chat`);
+    const authParams = await this.generateAuthParams(`/${this.version}/chat`);
     const queryString = querystring.stringify(authParams);
 
-    return `wss://${this.host}/v${this.version}.1/chat?${queryString}`;
+    return `wss://${this.host}/${this.version}/chat?${queryString}`;
   }
 }
 
