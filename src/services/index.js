@@ -24,6 +24,11 @@ export async function fetchOneDayEnglishData() {
 }
 
 export async function fetchConstellationsData() {
-    const url = `https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json`;
-    return await axios.get(url);
+  const url = `https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json`
+  return await axios.get(url)
+}
+
+export async function fetchBoyImage() {
+  const url = 'https://api.52vmy.cn/api/img/tu/boy'
+  return await axios.get(url)
 }
