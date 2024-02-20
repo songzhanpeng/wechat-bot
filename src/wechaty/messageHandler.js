@@ -201,7 +201,7 @@ xdlnkgdj66`)
     try {
       const { data } = await fetchGirlVideo()
       if (data.result === 200) {
-        await msg.say(FileBox.fromUrl(data.mp4));
+        await msg.say(FileBox.fromUrl('https:' + data.mp4));
         console.log('Random girl video message sent successfully');
       }else {
         await msg.say('获取随机小姐姐视频失败');
