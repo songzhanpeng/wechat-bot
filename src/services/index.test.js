@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchGirlVideo } from './index.js'
+import {
+  fetchMoyuData,
+  fetchSixsData,
+  fetchTianGouData,
+  fetchOneDayEnglishData,
+  fetchConstellationsData,
+  fetchGirlVideo,
+  fetchRandomBeautyGirlVideo,
+} from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
 
@@ -30,7 +38,7 @@ describe('测试 夏柔api 接口', () => {
 
   it('每日英语', async () => {
     const { data } = await fetchOneDayEnglishData()
-    console.log("🚀 ~ it ~ data:", data)
+    console.log('🚀 ~ it ~ data:', data)
     if (data.code === 200) {
       // 匹配 PNG 图片的 URL 格式
       const pngUrlRegex = /\.png$/i
@@ -69,15 +77,24 @@ describe('测试 夏柔api 接口', () => {
   //   // }
   // })
 
-  it.only('随机小姐姐视频', async () => {
+  it('随机小姐姐视频', async () => {
     const { data } = await fetchGirlVideo()
-    console.log("🚀 ~ it.only ~ data:", data)
+    console.log('🚀 ~ it.only ~ data:', data)
     if (data.result === 200) {
       // 匹配 PNG 图片的 URL 格式
       const pngUrlRegex = /\.mp4$/i
       // const res = await FileBox.fromUrl('https:' + data.mp4)
       // console.log("🚀 ~ it.only ~ res:", res)
       expect(pngUrlRegex.test(data.mp4)).toBe(true)
+    }
+  })
+
+
+  it.only('fetchRandomBeautyGirlVideo', async () => {
+    const { data } = await fetchRandomBeautyGirlVideo()
+    if (data.code === '200') {
+      const pngUrlRegex = /\.mp4$/i
+      expect(pngUrlRegex.test(data.data)).toBe(true)
     }
   })
 })

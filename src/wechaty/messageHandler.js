@@ -2,7 +2,17 @@ import { FileBox } from 'file-box'
 import fs from 'fs'
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchBoyImage, fetchGirlImage, fetchGirlVideo } from '../services/index.js'
+import {
+  fetchMoyuData,
+  fetchSixsData,
+  fetchTianGouData,
+  fetchOneDayEnglishData,
+  fetchConstellationsData,
+  fetchBoyImage,
+  fetchGirlImage,
+  fetchGirlVideo,
+  fetchRandomBeautyGirlVideo,
+} from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl } from '../utils/index.js'
 import axios from 'axios'
 
@@ -155,6 +165,7 @@ export class MessageHandler {
       /gg   - 获取随机帅哥
       /mm   - 获取随机妹妹
       /rgv  - 获取随机小姐姐视频
+      /rgbv  - 获取随机美少女视频
       /dog  - 获取舔狗日记`
     await msg.say(helpMessage)
   }
@@ -201,17 +212,31 @@ xdlnkgdj66`)
     try {
       const { data } = await fetchGirlVideo()
       if (data.result === 200) {
-        await msg.say(FileBox.fromUrl('https:' + data.mp4));
-        console.log('Random girl video message sent successfully');
-      }else {
-        await msg.say('获取随机小姐姐视频失败');
-        console.error('Failed to get random girl video: Video URL not found');
+        await msg.say(FileBox.fromUrl('https:' + data.mp4))
+        console.log('Random girl video message sent successfully')
+      } else {
+        await msg.say('获取随机小姐姐视频失败')
+        console.error('Failed to get random girl video: Video URL not found')
       }
     } catch (error) {
-      console.error('Error sending random girl video message:', error);
+      console.error('Error sending random girl video message:', error)
     }
   }
-  
+
+  async handleRandomBeautyGirlVideo(msg) {
+    try {
+      const { data } = await fetchRandomBeautyGirlVideo();
+      if (data.code === "200") {
+        await msg.say(FileBox.fromUrl(data.data));
+        console.log('Random beauty girl video message sent successfully');
+      } else {
+        await msg.say('获取随机美少女视频失败');
+        console.error('Failed to get random beauty girl video: Video URL not found');
+      }
+    } catch (error) {
+      console.error('Error sending random beauty girl video message:', error);
+    }
+  }
 
   async handleMessage(msg) {
     const content = msg.text()
@@ -227,7 +252,8 @@ xdlnkgdj66`)
       '/mm': this.handleMM,
       '#CDK': this.handleCDK,
       '#兑换码': this.handleCDK,
-      '/rgv': this.handleRGV
+      '/rgv': this.handleRGV,
+      '/rgbv': this.handleRandomBeautyGirlVideo,
     }
 
     for (const [command, handler] of Object.entries(commands)) {

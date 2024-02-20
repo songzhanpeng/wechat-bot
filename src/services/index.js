@@ -46,3 +46,8 @@ export async function fetchGirlVideo() {
   const url = 'https://tucdn.wpon.cn/api-girl/index.php?wpon=json'
   return await request.get(url)
 }
+
+export async function fetchRandomBeautyGirlVideo() {
+  const url = 'http://www.wudada.online/Api/ScSp';
+  return await request.get(url);
+}
