@@ -2,7 +2,7 @@ import { FileBox } from 'file-box'
 import fs from 'fs'
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
-import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchBoyImage, fetchGirlImage } from '../services/index.js'
+import { fetchMoyuData, fetchSixsData, fetchTianGouData, fetchOneDayEnglishData, fetchConstellationsData, fetchBoyImage, fetchGirlImage, fetchGirlVideo } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl } from '../utils/index.js'
 import axios from 'axios'
 
@@ -154,6 +154,7 @@ export class MessageHandler {
       /cs   - 获取今日星座运势
       /gg   - 获取随机帅哥
       /mm   - 获取随机妹妹
+      /rgv  - 获取随机小姐姐视频
       /dog  - 获取舔狗日记`
     await msg.say(helpMessage)
   }
@@ -196,6 +197,22 @@ xdwsry888
 xdlnkgdj66`)
   }
 
+  async handleRGV(msg) {
+    try {
+      const { data } = await fetchGirlVideo()
+      if (data.result === 200) {
+        await msg.say(FileBox.fromUrl(data.mp4));
+        console.log('Random girl video message sent successfully');
+      }else {
+        await msg.say('获取随机小姐姐视频失败');
+        console.error('Failed to get random girl video: Video URL not found');
+      }
+    } catch (error) {
+      console.error('Error sending random girl video message:', error);
+    }
+  }
+  
+
   async handleMessage(msg) {
     const content = msg.text()
     const commands = {
@@ -210,6 +227,7 @@ xdlnkgdj66`)
       '/mm': this.handleMM,
       '#CDK': this.handleCDK,
       '#兑换码': this.handleCDK,
+      '/rgv': this.handleRGV
     }
 
     for (const [command, handler] of Object.entries(commands)) {

@@ -41,3 +41,8 @@ export async function fetchGirlImage() {
   const url = 'https://api.52vmy.cn/api/img/tu/girl'
   return await request.get(url)
 }
+
+export async function fetchGirlVideo() {
+  const url = 'https://tucdn.wpon.cn/api-girl/index.php?wpon=json'
+  return await request.get(url)
+}
