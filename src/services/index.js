@@ -51,3 +51,8 @@ export async function fetchRandomBeautyGirlVideo() {
   const url = 'http://www.wudada.online/Api/ScSp';
   return await request.get(url);
 }
+
+export async function fetchShaoLuoRandomBeautyGirlVideo() {
+  const url = 'https://api.8uid.cn/sl.php';
+  return await request.get(url);
+}

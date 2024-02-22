@@ -156,17 +156,25 @@ export class MessageHandler {
   }
 
   async handleHelp(msg) {
-    const helpMessage = `可用命令：
-      /ping - 发送 "pong" 以测试是否在线
-      /moyu - 获取摸鱼人数据
-      /sixs - 获取60秒新闻数据
-      /de   - 获取每日英语
-      /cs   - 获取今日星座运势
-      /gg   - 获取随机帅哥
-      /mm   - 获取随机妹妹
-      /rgv  - 获取随机小姐姐视频
-      /rgbv  - 获取随机美少女视频
-      /dog  - 获取舔狗日记`
+    const commands = {
+      '/ping': '发送 "pong" 以测试是否在线',
+      '/moyu': '获取摸鱼人数据',
+      '/sixs': '获取60秒新闻数据',
+      '/de': '获取每日英语',
+      '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
+      '/cs': '获取今日星座运势',
+      '/gg': '获取随机帅哥',
+      '/mm': '获取随机妹妹',
+      '/rgv': '获取随机小姐姐视频',
+      '/rgbv': '获取随机美少女视频',
+      '/dog': '获取舔狗日记',
+    }
+
+    let helpMessage = '可用命令：\n'
+    for (const [command, description] of Object.entries(commands)) {
+      helpMessage += `${command} - ${description}\n`
+    }
+
     await msg.say(helpMessage)
   }
 
@@ -225,44 +233,82 @@ xdlnkgdj66`)
 
   async handleRandomBeautyGirlVideo(msg) {
     try {
-      const { data } = await fetchRandomBeautyGirlVideo();
-      if (data.code === "200") {
-        await msg.say(FileBox.fromUrl(data.data));
-        console.log('Random beauty girl video message sent successfully');
+      const { data } = await fetchRandomBeautyGirlVideo()
+      if (data.code === '200') {
+        await msg.say(FileBox.fromUrl(data.data))
+        console.log('Random beauty girl video message sent successfully')
       } else {
-        await msg.say('获取随机美少女视频失败');
-        console.error('Failed to get random beauty girl video: Video URL not found');
+        await msg.say('获取随机美少女视频失败')
+        console.error('Failed to get random beauty girl video: Video URL not found')
       }
     } catch (error) {
-      console.error('Error sending random beauty girl video message:', error);
+      console.error('Error sending random beauty girl video message:', error)
     }
   }
 
+  TASKS = [
+    {
+      keyword: ['/ping'],
+      description: '发送 "pong" 以测试是否在线',
+      func: this.handlePing,
+    },
+    {
+      keyword: ['/moyu'],
+      description: '获取摸鱼人数据',
+      func: this.handleMoYu,
+    },
+    {
+      keyword: ['/sixs'],
+      description: '获取60秒新闻数据',
+      func: this.handleSixs,
+    },
+    {
+      keyword: ['/dog'],
+      description: '获取舔狗日记',
+      func: this.handleDog,
+    },
+    {
+      keyword: ['/de'],
+      description: '获取每日英语',
+      func: this.handleDailyEnglish,
+    },
+    {
+      keyword: ['/cs'],
+      description: '获取今日星座运势',
+      func: this.handleConstellations,
+    },
+    {
+      keyword: ['/help'],
+      description: '获取帮助信息',
+      func: this.handleHelp,
+    },
+    {
+      keyword: ['#CDK', '#兑换码', '兑换码'],
+      description: '输出兑换码',
+      func: this.handleCDK,
+    },
+    {
+      keyword: ['/rgv'],
+      description: '获取随机小姐姐视频',
+      func: this.handleRGV,
+    },
+    {
+      keyword: ['/rgbv'],
+      description: '获取随机美少女视频',
+      func: this.handleRandomBeautyGirlVideo,
+    },
+  ]
+
   async handleMessage(msg) {
     const content = msg.text()
-    const commands = {
-      '/ping': this.handlePing,
-      '/moyu': this.handleMoYu,
-      '/sixs': this.handleSixs,
-      '/dog': this.handleDog,
-      '/de': this.handleDailyEnglish,
-      '/cs': this.handleConstellations,
-      '/help': this.handleHelp,
-      '/gg': this.handleGG,
-      '/mm': this.handleMM,
-      '#CDK': this.handleCDK,
-      '#兑换码': this.handleCDK,
-      '/rgv': this.handleRGV,
-      '/rgbv': this.handleRandomBeautyGirlVideo,
-    }
-
-    for (const [command, handler] of Object.entries(commands)) {
-      if (content.startsWith(command)) {
-        await handler.call(this, msg)
-        return
+    for (const task of TASKS) {
+      for (const keyword of task.keyword) {
+        if (content.startsWith(keyword)) {
+          await task.func.call(this, msg)
+          return
+        }
       }
     }
-
     await this.handleUnknown(msg)
   }
 }

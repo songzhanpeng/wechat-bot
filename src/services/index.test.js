@@ -7,6 +7,7 @@ import {
   fetchConstellationsData,
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
+  fetchShaoLuoRandomBeautyGirlVideo,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -89,12 +90,23 @@ describe('测试 夏柔api 接口', () => {
     }
   })
 
-
-  it.only('fetchRandomBeautyGirlVideo', async () => {
+  it('fetchRandomBeautyGirlVideo', async () => {
     const { data } = await fetchRandomBeautyGirlVideo()
     if (data.code === '200') {
       const pngUrlRegex = /\.mp4$/i
       expect(pngUrlRegex.test(data.data)).toBe(true)
     }
+  })
+
+  it.only('fetchShaoLuoRandomBeautyGirlVideo', async () => {
+    const { data } = await fetchShaoLuoRandomBeautyGirlVideo()
+    // console.log("🚀 ~ it.only ~ data:", data)
+    // if (data.code === '200') {
+    //   const pngUrlRegex = /\.mp4$/i
+    //   expect(pngUrlRegex.test(data.data)).toBe(true)
+    // }
+    const res = await FileBox.fromUrl('https://www.mnapi.cn/sl.php?type=video')
+      console.log("🚀 ~ it.only ~ res:", res)
+    
   })
 })
