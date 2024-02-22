@@ -302,14 +302,20 @@ xdlnkgdj66`)
   async handleMessage(msg) {
     const content = msg.text()
     for (const task of this.TASKS) {
-      for (const keyword of task.keyword) {
-        if (content.startsWith(keyword)) {
-          await task.func.call(this, msg)
-          return
-        }
+      if (task.keyword.includes(content)) {
+        await task.func.call(this, msg)
+        return
       }
     }
     await this.handleUnknown(msg)
+  }
+
+  isIncludesKeyword (content) {
+    return this.TASKS.some(task => {
+      return task.keyword.some(keyword => {
+          return keyword === content;
+      });
+  });
   }
 }
 

@@ -46,7 +46,7 @@ export async function defaultMessage(msg, bot) {
     }
 
     // 检测到 / | # 拦截一下
-    if (content.startsWith('/') || content.startsWith('#')) {
+    if (handler.isIncludesKeyword(content)) {
       handler.handleMessage(msg)
       return
     }
