@@ -301,7 +301,7 @@ xdlnkgdj66`)
 
   async handleMessage(msg) {
     const content = msg.text()
-    for (const task of TASKS) {
+    for (const task of this.TASKS) {
       for (const keyword of task.keyword) {
         if (content.startsWith(keyword)) {
           await task.func.call(this, msg)
