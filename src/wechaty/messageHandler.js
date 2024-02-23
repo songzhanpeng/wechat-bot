@@ -12,6 +12,7 @@ import {
   fetchGirlImage,
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
+  fetchFabingData
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
