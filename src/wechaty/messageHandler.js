@@ -274,7 +274,7 @@ xdlnkgdj66`)
         name = (await contact.alias()) || (await contact.name()) // 发消息人昵称
       }
       const { data } = await fetchFabingData(name)
-      if (data.code === 200) {
+      if (data.code === 1) {
         await msg.say(data.data)
       } else {
         console.error('Failed to get random girl video: Video URL not found')
