@@ -287,8 +287,9 @@ xdlnkgdj66`)
 
   async handleMessage(msg) {
     const content = msg.text()
+    const { instruction } = parseCommand(content)
     for (const task of this.TASKS) {
-      if (task.keyword.includes(content)) {
+      if (task.keyword.includes(instruction)) {
         await task.func.call(this, msg)
         return
       }
