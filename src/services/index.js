@@ -56,3 +56,39 @@ export async function fetchShaoLuoRandomBeautyGirlVideo() {
   const url = 'https://api.8uid.cn/sl.php';
   return await request.get(url);
 }
+
+export async function fetchFabingData(name) {
+  const url = `https://api.lolimi.cn/API/fabing/fb.php?name=${name}`;
+  return await request.get(url);
+}
+
+// // 定义接口列表
+// const endpoints = [
+//   'https://example.com/api/endpoint1',
+//   'https://example.com/api/endpoint2',
+//   // 添加更多的接口URL
+// ];
+
+// async function checkEndpointStatus() {
+//   const results = [];
+  
+//   // 遍历接口列表
+//   for (const endpoint of endpoints) {
+//     try {
+//       // 发送 HEAD 请求检查接口状态
+//       await request.head(endpoint);
+//       // 将接口状态添加到结果数组
+//       results.push(`${endpoint}: OK`);
+//     } catch (error) {
+//       // 如果请求失败，将错误信息添加到结果数组
+//       results.push(`${endpoint}: ${error.message}`);
+//     }
+//   }
+  
+//   // 输出结果
+//   console.log('/ping all');
+//   console.log(results.join('\n'));
+// }
+
+// // 调用函数检查接口状态
+// checkEndpointStatus();

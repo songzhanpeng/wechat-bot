@@ -13,7 +13,7 @@ import {
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
 } from '../services/index.js'
-import { containsHtmlTags, getRedirectUrl } from '../utils/index.js'
+import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
 
 export class MessageHandler {
@@ -228,6 +228,7 @@ xdlnkgdj66`)
       }
     } catch (error) {
       console.error('Error sending random girl video message:', error)
+      await msg.say('获取随机小姐姐视频失败')
     }
   }
 
@@ -259,7 +260,28 @@ xdlnkgdj66`)
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK },
     { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
+    { keyword: ['/mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
   ]
+
+  async handleFetchFabing (msg) {
+    try {
+      const content = msg.text()
+      const { parameters } = parseCommand(content)
+      let name = parameters[0];
+      if (!name) {
+        const contact = msg.talker() // 发消息人
+        name = (await contact.alias()) || (await contact.name()) // 发消息人昵称
+      }
+      const { data } = await fetchFabingData(name)
+      if (data.code === 200) {
+        await msg.say(data.data)
+      } else {
+        console.error('Failed to get random girl video: Video URL not found')
+      }
+    } catch (error) {
+      console.error('Error sending random girl video message:', error)
+    }
+  }
 
   async handleMessage(msg) {
     const content = msg.text()
@@ -273,17 +295,18 @@ xdlnkgdj66`)
   }
 
   isIncludesKeyword(content) {
+    const { instruction } = parseCommand(content)
     return this.TASKS.some((task) => {
       return task.keyword.some((keyword) => {
-        return keyword === content
+        return keyword === instruction
       })
     })
   }
 }
 
-const handler = new MessageHandler({})
-const res = handler.isIncludesKeyword('/mm')
-console.log('🚀 ~ res:', res)
+// const handle = new MessageHandler({})
+// const res = handle.isIncludesKeyword('/mf hhh')
+// console.log("🚀 ~ res:", res)
 
 export class MessageSender {
   constructor(wechaty) {

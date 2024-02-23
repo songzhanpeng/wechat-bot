@@ -57,3 +57,22 @@ export function containsHtmlTags(str) {
   const regex = /<[^>]*>/;
   return regex.test(str);
 }
+
+export function parseCommand(command) {
+  // 使用正则表达式将字符串按空格分割
+  var parts = command.split(/\s+/);
+  
+  // 如果命令至少包含一个部分
+  if (parts.length > 0) {
+      // 提取第一个部分作为指令
+      var instruction = parts[0];
+      // 剔除指令部分，返回剩余的部分作为参数
+      var parameters = parts.slice(1);
+      
+      // 返回指令和参数作为对象
+      return { instruction: instruction, parameters: parameters };
+  } else {
+      // 如果命令为空，返回空对象
+      return { instruction: "", parameters: [] };
+  }
+}
