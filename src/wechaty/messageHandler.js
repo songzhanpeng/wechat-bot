@@ -271,9 +271,10 @@ xdlnkgdj66`)
       let name = parameters[0];
       if (!name) {
         const contact = msg.talker() // 发消息人
-        name = (await contact.alias()) || (await contact.name()) // 发消息人昵称
+        name = await contact.name() // 发消息人昵称
       }
       const { data } = await fetchFabingData(name)
+      console.log("🚀 ~ MessageHandler ~ handleFetchFabing ~ data:", data)
       if (data.code === 1) {
         await msg.say(data.data)
       } else {
