@@ -7,84 +7,94 @@ import {
   fetchConstellationsData,
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
-  fetchShaoLuoRandomBeautyGirlVideo,
-  fetchFabingData
+  fetchFabingData,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
 
 describe('Testing XiaRuo API Endpoints', () => {
   it('Get MoYu People Calendar', async () => {
-    const { data } = await fetchMoyuData();
+    const { data } = await fetchMoyuData()
+    console.log("🚀 ~ it ~ data:", data)
     if (data.code === 200) {
-      const res = await getRedirectUrl(data.data.moyu_url);
-      const pngUrlRegex = /\.png$/i;
-      expect(pngUrlRegex.test(res)).toBe(true);
+      const res = await getRedirectUrl(data.data.moyu_url)
+      const pngUrlRegex = /\.png$/i
+      expect(pngUrlRegex.test(res)).toBe(true)
     }
-  });
+  })
 
   it('Get News in 60s', async () => {
-    const { data } = await fetchSixsData();
+    const { data } = await fetchSixsData()
+    console.log("🚀 ~ it ~ data:", data)
     if (data.code === '200') {
-      const pngUrlRegex = /\.png$/i;
-      expect(pngUrlRegex.test(data.image)).toBe(true);
+      const pngUrlRegex = /\.png$/i
+      expect(pngUrlRegex.test(data.image)).toBe(true)
     }
-  });
+  })
 
   it('Get Tiantian Gou Diary', async () => {
-    const { data = '' } = await fetchTianGouData();
-    expect(containsHtmlTags(data)).toBe(true);
-  });
+    const { data = '' } = await fetchTianGouData()
+    console.log("🚀 ~ it ~ data:", data)
+    expect(containsHtmlTags(data)).toBe(true)
+  })
 
   it('Get Daily English', async () => {
-    const { data } = await fetchOneDayEnglishData();
-    console.log('🚀 ~ it ~ data:', data);
-    if (data.code === 200) {
-      const pngUrlRegex = /\.png$/i;
-      expect(pngUrlRegex.test(data.result.img)).toBe(true);
-    }
-  });
+    const { data } = await fetchOneDayEnglishData()
+    console.log('🚀 ~ it ~ data:', data)
+    expect(data).toEqual(
+      expect.objectContaining({
+        code: 200,
+        msg: 'success',
+        result: {
+          tts: expect.any(String),
+          content: expect.any(String),
+          note: expect.any(String),
+          dateline: expect.any(String),
+          img: expect.any(String),
+        },
+      }),
+    )
+  })
 
   it('Get Constellation Fortune', async () => {
-    const { data } = await fetchConstellationsData();
-    console.log('🚀 ~ it.only ~ data:', data);
-    if (data.code === 200) {
-      const pngUrlRegex = /\.png$/i;
-      expect(pngUrlRegex.test(data.data)).toBe(true);
-    }
-  });
+    const { data } = await fetchConstellationsData()
+    console.log('🚀 ~ it.only ~ data:', data)
+    expect(data).toEqual(
+      expect.objectContaining({
+        code: 200,
+        msg: 'success',
+        data: expect.any(String),
+      }),
+    )
+  })
 
   it('Get Random Girl Video', async () => {
-    try {
-      const { data } = await fetchGirlVideo();
-      expect(data.result).toBe(200)
-      expect(data.msg).toBe('请求成功')
-      expect(data.mp4).toEqual(expect.any(String));
-      console.log('🚀 ~ it.only ~ data:', data);
-    } catch (error) {
-      console.log("🚀 ~ it ~ error:", error)
-    }
-  });
+    const { data } = await fetchGirlVideo()
+    console.log('🚀 ~ it.only ~ data:', data)
+    expect(data).toEqual(
+      expect.objectContaining({
+        result: 200,
+        msg: '请求成功',
+        mp4: expect.any(String),
+      }),
+    )
+    expect(data.result).toBe(200)
+    expect(data.msg).toBe('请求成功')
+    expect(data.mp4).toEqual(expect.any(String))
+  })
 
   it('Fetch Random Beauty Girl Video', async () => {
-    const { data } = await fetchRandomBeautyGirlVideo();
+    const { data } = await fetchRandomBeautyGirlVideo()
     expect(data.code).toBe('200')
     expect(data.msg).toBe('请求成功')
-    expect(data.data).toEqual(expect.any(String));
-  });
-
-  it('Fetch ShaoLuo Random Beauty Girl Video', async () => {
-    const { data } = await fetchShaoLuoRandomBeautyGirlVideo();
-    console.log("🚀 ~ it ~ data:", data)
-    const res = await FileBox.fromUrl('https://www.mnapi.cn/sl.php?type=video');
-    console.log("🚀 ~ it.only ~ res:", res);
-  });
+    expect(data.data).toEqual(expect.any(String))
+  })
 
   it('Get Fabing Data', async () => {
-    const { data } = await fetchFabingData('张三');
-    console.log("🚀 ~ it ~ data:", data)
+    const { data } = await fetchFabingData('张三')
+    console.log('🚀 ~ it ~ data:', data)
     expect(data.code).toBe(1)
     expect(data.message).toBe('Success/成功')
-    expect(data.data).toEqual(expect.any(String));
-  });
-});
+    expect(data.data).toEqual(expect.any(String))
+  })
+})

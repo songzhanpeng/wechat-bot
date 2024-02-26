@@ -52,11 +52,6 @@ export async function fetchRandomBeautyGirlVideo() {
   return await request.get(url);
 }
 
-export async function fetchShaoLuoRandomBeautyGirlVideo() {
-  const url = 'https://api.8uid.cn/sl.php';
-  return await request.get(url);
-}
-
 export async function fetchFabingData(name) {
   const url = `https://api.lolimi.cn/API/fabing/fb.php?name=${name}`;
   return await request.get(url);

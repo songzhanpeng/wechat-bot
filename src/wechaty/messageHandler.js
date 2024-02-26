@@ -249,19 +249,19 @@ xdlnkgdj66`)
   }
 
   TASKS = [
-    { keyword: ['/ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing },
-    { keyword: ['/moyu'], description: '获取摸鱼人数据', func: this.handleMoYu },
-    { keyword: ['/sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
-    { keyword: ['/dog'], description: '获取舔狗日记', func: this.handleDog },
-    { keyword: ['/de'], description: '获取每日英语', func: this.handleDailyEnglish },
-    { keyword: ['/cs'], description: '获取今日星座运势', func: this.handleConstellations },
-    { keyword: ['/help'], description: '获取帮助信息', func: this.handleHelp },
-    { keyword: ['/gg'], description: '获取随机帅哥', func: this.handleGG },
-    { keyword: ['/mm'], description: '获取随机妹妹', func: this.handleMM },
+    { keyword: ['/ping', 'ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing },
+    { keyword: ['/moyu', 'moyu'], description: '获取摸鱼人数据', func: this.handleMoYu },
+    { keyword: ['/sixs', 'sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
+    { keyword: ['/dog', 'dog'], description: '获取舔狗日记', func: this.handleDog },
+    { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
+    { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
+    { keyword: ['/help', 'help'], description: '获取帮助信息', func: this.handleHelp },
+    { keyword: ['/gg', 'gg'], description: '获取随机帅哥', func: this.handleGG },
+    { keyword: ['/mm', 'mm'], description: '获取随机妹妹', func: this.handleMM },
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK },
-    { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
-    { keyword: ['/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
-    { keyword: ['/mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
+    // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
+    { keyword: ['/rgv', '/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
+    { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
   ]
 
   async handleFetchFabing (msg) {
