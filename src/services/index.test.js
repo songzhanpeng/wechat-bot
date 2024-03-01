@@ -8,6 +8,7 @@ import {
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
   fetchFabingData,
+  fetchFkxqsData
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -91,10 +92,17 @@ describe('Testing XiaRuo API Endpoints', () => {
   })
 
   it('Get Fabing Data', async () => {
-    const { data } = await fetchFabingData('张三')
+    const { data } = await fetchFabingData('来钱')
     console.log('🚀 ~ it ~ data:', data)
     expect(data.code).toBe(1)
     expect(data.message).toBe('Success/成功')
     expect(data.data).toEqual(expect.any(String))
   })
+
+  it('Get Fkxqs Data', async () => {
+    const { data } = await fetchFkxqsData()
+    console.log('🚀 ~ it ~ data:', data)
+    expect(data).toEqual(expect.any(String))
+  })
+  
 })

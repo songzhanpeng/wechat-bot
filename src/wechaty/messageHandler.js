@@ -250,9 +250,9 @@ xdlnkgdj66`)
 
   TASKS = [
     { keyword: ['/ping', 'ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing },
-    { keyword: ['/moyu', 'moyu'], description: '获取摸鱼人数据', func: this.handleMoYu },
+    { keyword: ['/moyu', 'moyu', '摸鱼'], description: '获取摸鱼人数据', func: this.handleMoYu },
     { keyword: ['/sixs', 'sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
-    { keyword: ['/dog', 'dog'], description: '获取舔狗日记', func: this.handleDog },
+    { keyword: ['/dog', 'dog', '舔狗日记'], description: '获取舔狗日记', func: this.handleDog },
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
     { keyword: ['/help', 'help'], description: '获取帮助信息', func: this.handleHelp },
