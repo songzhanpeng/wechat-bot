@@ -67,7 +67,7 @@ export class MessageHandler {
       const { data = '' } = await fetchTianGouData()
       if (containsHtmlTags(data)) {
         const result = data.replace(/<[^>]*>/g, '')
-        await msg.say(result)
+        await msg.say(result.trim())
         console.log('Dog data message sent successfully')
       } else {
         // 如果数据不包含 HTML 标签，发送一条提示消息
