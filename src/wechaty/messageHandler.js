@@ -164,10 +164,10 @@ export class MessageHandler {
       '/de': '获取每日英语',
       '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
       '/cs': '获取今日星座运势',
-      '/gg': '获取随机帅哥',
-      '/mm': '获取随机妹妹',
-      '/rgv': '获取随机小姐姐视频',
-      '/rgbv': '获取随机美少女视频',
+      // '/gg': '获取随机帅哥',
+      // '/mm': '获取随机妹妹',
+      // '/rgv': '获取随机小姐姐视频',
+      // '/rgbv': '获取随机美少女视频',
       '/dog': '获取舔狗日记',
     }
 
@@ -256,11 +256,11 @@ xdlnkgdj66`)
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
     { keyword: ['/help', 'help'], description: '获取帮助信息', func: this.handleHelp },
-    { keyword: ['/gg', 'gg'], description: '获取随机帅哥', func: this.handleGG },
-    { keyword: ['/mm', 'mm'], description: '获取随机妹妹', func: this.handleMM },
+    // { keyword: ['/gg', 'gg'], description: '获取随机帅哥', func: this.handleGG },
+    // { keyword: ['/mm', 'mm'], description: '获取随机妹妹', func: this.handleMM },
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK },
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
-    { keyword: ['/rgv', '/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
+    // { keyword: ['/rgv', '/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
   ]
 
