@@ -256,11 +256,11 @@ xdlnkgdj66`)
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
     { keyword: ['/help', 'help'], description: '获取帮助信息', func: this.handleHelp },
-    // { keyword: ['/gg', 'gg'], description: '获取随机帅哥', func: this.handleGG },
-    // { keyword: ['/mm', 'mm'], description: '获取随机妹妹', func: this.handleMM },
+    { keyword: ['/gg', 'gg', '帅哥', 'giegie'], description: '获取随机帅哥', func: this.handleGG },
+    { keyword: ['/mm', 'mm', '美女', '妹妹'], description: '获取随机妹妹', func: this.handleMM },
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK },
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
-    // { keyword: ['/rgv', '/rgbv'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
+    { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
   ]
 
