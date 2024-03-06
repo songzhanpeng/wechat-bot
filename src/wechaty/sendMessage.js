@@ -8,18 +8,6 @@ const botName = env.BOT_NAME
 const roomWhiteList = env.ROOM_WHITE_LIST.split(',')
 const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',')
 
-let timerId;
-function debounce(func, delay) {
-
-  return function (...args) {
-    clearTimeout(timerId);
-    timerId = setTimeout(() => {
-      func.apply(this, args);
-    }, delay);
-  };
-}
-
-
 /**
  * 默认消息发送
  * @param msg
@@ -57,14 +45,10 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
-    const debouncedHandleMessage = debounce((msg) => {
-      if (handler.isIncludesKeyword(content)) {
-        handler.handleMessage(msg);
-      }
-    }, 1000); // 设置延迟时间为300毫秒
-    
-    // 调用防抖函数来处理消息
-    debouncedHandleMessage(msg);
+    if (handler.isIncludesKeyword(content)) {
+      handler.handleMessage(msg);
+      return
+    }
     
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
