@@ -157,24 +157,28 @@ export class MessageHandler {
   }
 
   async handleHelp(msg) {
-    const commands = {
-      '/ping': '发送 "pong" 以测试是否在线',
-      '/moyu': '获取摸鱼人数据',
-      '/sixs': '获取60秒新闻数据',
-      '/de': '获取每日英语',
-      '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
-      '/cs': '获取今日星座运势',
-      '/gg': '获取随机帅哥',
-      '/mm': '获取随机妹妹',
-      '/rgv': '获取随机小姐姐视频',
-      '/rgbv': '获取随机美少女视频',
-      '/dog': '获取舔狗日记',
-    }
+    // const commands = {
+    //   '/ping': '发送 "pong" 以测试是否在线',
+    //   '/moyu': '获取摸鱼人数据',
+    //   '/sixs': '获取60秒新闻数据',
+    //   '/de': '获取每日英语',
+    //   '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
+    //   '/cs': '获取今日星座运势',
+    //   '/gg': '获取随机帅哥',
+    //   '/mm': '获取随机妹妹',
+    //   '/rgv': '获取随机小姐姐视频',
+    //   '/rgbv': '获取随机美少女视频',
+    //   '/dog': '获取舔狗日记',
+    // }
 
+    // let helpMessage = '可用命令：\n'
+    // for (const [command, description] of Object.entries(commands)) {
+    //   helpMessage += `${command} - ${description}\n`
+    // }
     let helpMessage = '可用命令：\n'
-    for (const [command, description] of Object.entries(commands)) {
-      helpMessage += `${command} - ${description}\n`
-    }
+    this.TASKS.forEach(task => {
+      helpMessage += `${task.keyword.join(' | ')} - ${task.description}\n`
+    })
 
     await msg.say(helpMessage)
   }
