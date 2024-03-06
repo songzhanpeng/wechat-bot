@@ -8,8 +8,8 @@ const botName = env.BOT_NAME
 const roomWhiteList = env.ROOM_WHITE_LIST.split(',')
 const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',')
 
+let timerId;
 function debounce(func, delay) {
-  let timerId;
 
   return function (...args) {
     clearTimeout(timerId);
@@ -61,7 +61,7 @@ export async function defaultMessage(msg, bot) {
       if (handler.isIncludesKeyword(content)) {
         handler.handleMessage(msg);
       }
-    }, 300); // 设置延迟时间为300毫秒
+    }, 1000); // 设置延迟时间为300毫秒
     
     // 调用防抖函数来处理消息
     debouncedHandleMessage(msg);
