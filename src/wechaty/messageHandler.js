@@ -12,7 +12,8 @@ import {
   fetchGirlImage,
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
-  fetchFabingData
+  fetchFabingData,
+  fetchFkxqsData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
@@ -176,7 +177,7 @@ export class MessageHandler {
     //   helpMessage += `${command} - ${description}\n`
     // }
     let helpMessage = '可用命令：\n'
-    this.TASKS.forEach(task => {
+    this.TASKS.forEach((task) => {
       if (task.skip) {
         return
       }
@@ -269,19 +270,20 @@ xdlnkgdj66`)
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
+    { keyword: ['/kfc', 'kfc', '50', 'v50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
   ]
 
-  async handleFetchFabing (msg) {
+  async handleFetchFabing(msg) {
     try {
       const content = msg.text()
       const { parameters } = parseCommand(content)
-      let name = parameters[0];
+      let name = parameters[0]
       if (!name) {
         const contact = msg.talker() // 发消息人
         name = await contact.name() // 发消息人昵称
       }
       const { data } = await fetchFabingData(name)
-      console.log("🚀 ~ MessageHandler ~ handleFetchFabing ~ data:", data)
+      console.log('🚀 ~ MessageHandler ~ handleFetchFabing ~ data:', data)
       if (data.code === 1) {
         await msg.say(data.data)
       } else {
@@ -289,6 +291,22 @@ xdlnkgdj66`)
       }
     } catch (error) {
       console.error('Error sending random girl video message:', error)
+    }
+  }
+
+  async handleFetchFkxqs(msg) {
+    try {
+      const { data } = await fetchFkxqsData()
+      if (typeof data === 'string') {
+        await msg.say(data)
+      } else {
+        console.error('获取疯狂星期四文案失败：文案未找到')
+        throw new Error('获取疯狂星期四文案失败：文案未找到')
+      }
+    } catch (error) {
+      console.error('发送疯狂星期四文案消息时出错：', error)
+      // 在出现错误时，确保传递给 msg.say 的内容是一个字符串
+      await msg.say('获取疯狂星期四文案失败，请稍后再试。')
     }
   }
 
