@@ -271,7 +271,7 @@ xdlnkgdj66`)
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
-    { keyword: ['/draw', 'draw', '画'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
+    { keyword: ['/draw', 'draw', '画'], description: '绘画 需指定关键词', func: this.handleGenerations },
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
   ]
 
