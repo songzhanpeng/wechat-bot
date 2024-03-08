@@ -8,7 +8,8 @@ import {
   fetchGirlVideo,
   fetchRandomBeautyGirlVideo,
   fetchFabingData,
-  fetchFkxqsData
+  fetchFkxqsData,
+  fetchGenerationsData
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -104,5 +105,11 @@ describe('Testing XiaRuo API Endpoints', () => {
     console.log('🚀 ~ it ~ data:', data)
     expect(data).toEqual(expect.any(String))
   })
-  
+
+  it('Get Generations Data', async () => {
+    const { data } = await fetchGenerationsData('一只可爱的粉红色狐狸')
+    console.log('🚀 ~ it ~ data:', data)
+    expect(data.created).toEqual(expect.any(Number))
+    expect(data.data).toEqual(expect.any(Array))
+  })
 })

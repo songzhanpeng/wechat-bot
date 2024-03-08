@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  timeout: 5000, // 设置超时时间为 5 秒
+  timeout: 30 * 1000, // 设置超时时间为 5 秒
 })
 
 // 定义接口列表
@@ -17,6 +17,7 @@ export const endpointsMap = new Map([
   ['scSp', 'http://www.wudada.online/Api/ScSp'],
   ['faBing', 'https://api.lolimi.cn/API/fabing/fb.php'],
   ['fkxqs', 'https://jkyapi.top/API/fkxqs.php'],
+  ['generations', 'https://api-collect.idcdun.com/v1/images/generations'],
 ])
 
 // 通用的请求函数
@@ -82,6 +83,13 @@ export async function fetchFabingData(name) {
 // 获取疯狂星期四
 export async function fetchFkxqsData() {
   return await request.get(endpointsMap.get('fkxqs'))
+}
+
+// 绘图 ?prompt=API&n=1&model=dall-e-3&size=1024x1024
+export async function fetchGenerationsData(prompt = 'API') {
+  return await request.get(endpointsMap.get('generations'), {
+    params: { prompt, n: 1, model: 'dall-e-3', size: '1024x1024' },
+  })
 }
 
 // // 测试所有接口的状态

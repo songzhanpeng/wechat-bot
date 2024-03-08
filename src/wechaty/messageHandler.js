@@ -14,6 +14,7 @@ import {
   fetchRandomBeautyGirlVideo,
   fetchFabingData,
   fetchFkxqsData,
+  fetchGenerationsData
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
@@ -270,6 +271,7 @@ xdlnkgdj66`)
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
+    { keyword: ['/draw', 'draw', '画'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
   ]
 
@@ -291,6 +293,25 @@ xdlnkgdj66`)
       }
     } catch (error) {
       console.error('Error sending random girl video message:', error)
+    }
+  }
+
+  async handleGenerations(msg) {
+    try {
+      const content = msg.text()
+      const { parameters } = parseCommand(content)
+      let prompt = parameters.slice(1).join(" ")
+      await msg.say('绘画中...')
+      const { data } = await fetchGenerationsData(prompt)
+      if (data.data && data.data.length) {
+        await msg.say(FileBox.fromUrl(data.data[0].url))
+      } else {
+        console.error('Failed to get random girl video: Video URL not found')
+        throw '绘画失败'
+      }
+    } catch (error) {
+      console.error('Error sending random girl video message:', error)
+      await msg.say('绘画失败')
     }
   }
 
