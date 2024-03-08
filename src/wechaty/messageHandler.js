@@ -300,7 +300,8 @@ xdlnkgdj66`)
     try {
       const content = msg.text()
       const { parameters } = parseCommand(content)
-      let prompt = parameters.slice(1).join(" ")
+      let prompt = parameters.join(" ")
+      console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
       await msg.say('绘画中...')
       const { data } = await fetchGenerationsData(prompt)
       if (data.data && data.data.length) {
