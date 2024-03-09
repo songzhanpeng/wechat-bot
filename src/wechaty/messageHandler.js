@@ -18,7 +18,9 @@ import {
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
-
+import dotenv from 'dotenv'
+const env = dotenv.config().parsed
+const botName = env.BOT_NAME
 export class MessageHandler {
   constructor(bot) {
     this.bot = bot
@@ -223,7 +225,8 @@ xdhhgdn
 xdxxscl66
 xdhjak666
 xdwsry888
-xdlnkgdj66`)
+xdlnkgdj66
+xdfnjfl66`)
   }
 
   async handleRGV(msg) {
@@ -258,7 +261,7 @@ xdlnkgdj66`)
   }
 
   TASKS = [
-    { keyword: ['/ping', 'ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing },
+    { keyword: ['/ping', 'ping'], description: `发送 "ping" 以测试[${botName}]是否在线`, func: this.handlePing },
     { keyword: ['/moyu', 'moyu', '摸鱼'], description: '获取摸鱼人数据', func: this.handleMoYu },
     { keyword: ['/sixs', 'sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
     { keyword: ['/dog', 'dog', '舔狗日记'], description: '获取舔狗日记', func: this.handleDog },
@@ -272,7 +275,7 @@ xdlnkgdj66`)
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
     { keyword: ['/draw', 'draw', '画'], description: '绘画 需指定关键词', func: this.handleGenerations },
-    { keyword: ['/kfc', 'kfc', '50', 'v50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
+    { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
   ]
 
   async handleFetchFabing(msg) {
