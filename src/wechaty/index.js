@@ -4,6 +4,9 @@ import { dirname, join } from 'path'
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
 import { MessageSender } from './messageHandler.js'
+import dotenv from 'dotenv'
+const env = dotenv.config().parsed
+const botName = env.BOT_NAME
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -37,7 +40,7 @@ function onLogout(user) {
 
 // 收到好友请求
 async function onFriendShip(friendship) {
-  const frienddShipRe = /chatgpt|chat/
+  const frienddShipRe = new RegExp(`我也想养生|${botName}`)
   if (friendship.type() === 2) {
     if (frienddShipRe.test(friendship.hello())) {
       await friendship.accept()

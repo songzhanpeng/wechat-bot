@@ -268,7 +268,7 @@ xdfnjfl66`)
     { keyword: ['/dog', 'dog', '舔狗日记'], description: '获取舔狗日记', func: this.handleDog },
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
-    { keyword: ['/help', 'help'], description: '获取帮助信息', func: this.handleHelp },
+    { keyword: ['/help', 'help', 'h'], description: '获取帮助信息', func: this.handleHelp },
     { keyword: ['/gg', 'gg', '帅哥', 'giegie'], description: '获取随机帅哥', func: this.handleGG },
     { keyword: ['/mm', 'mm', '美女', '妹妹'], description: '获取随机妹妹', func: this.handleMM },
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK, skip: true },
