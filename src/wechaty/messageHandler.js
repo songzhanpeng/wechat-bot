@@ -196,38 +196,10 @@ export class MessageHandler {
   }
 
   async handleCDK(msg) {
-    await msg.say(`VIP666
-VIP888
-VIP2023
-xddq666
-xddq2023
-xddq2309
-xddqqq
-xddqzhw
-xddqgzh
-xddqfl
-XD123NBH6
-wgyx666
-cyg666
-cyg888
-zhendan666
-zz666
-zz888
-XD12YLH6
-DQ34QLH88
-QT666
-xdcjxqy
-xddqydkl
-fkxqyxd66
-cjxqyxd6
-dqdxyq8
-hylddqsj6
-xdhhgdn
-xdxxscl66
-xdhjak666
-xdwsry888
-xdlnkgdj66
-xdfnjfl66`)
+    const usernames = new Set([
+      'VIP666', 'VIP888', 'VIP2023', 'xddq666', 'xddq2023', 'xddq2309', 'xddqqq', 'xddqzhw', 'xddqgzh', 'xddqfl', 'XD123NBH6', 'wgyx666', 'cyg666', 'cyg888', 'zhendan666', 'zz666', 'zz888', 'XD12YLH6', 'DQ34QLH88', 'QT666', 'xdcjxqy', 'xddqydkl', 'fkxqyxd66', 'cjxqyxd6', 'dqdxyq8', 'hylddqsj6', 'xdhhgdn', 'xdxxscl66', 'xdhjak666', 'xdwsry888', 'xdlnkgdj66', 'xdfnjfl66', 'xdltj888'
+    ]);
+    await msg.say([...usernames].join('\n'))
   }
 
   async handleRGV(msg) {
