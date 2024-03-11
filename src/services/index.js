@@ -18,6 +18,8 @@ export const endpointsMap = new Map([
   ['faBing', 'https://api.lolimi.cn/API/fabing/fb.php'],
   ['fkxqs', 'https://jkyapi.top/API/fkxqs.php'],
   ['generations', 'https://api-collect.idcdun.com/v1/images/generations'],
+  ['sl', 'https://www.mnapi.cn/sl.php?type=video'],
+  ['yz', 'https://www.mnapi.cn/yz.php?type=video'],
 ])
 
 // 通用的请求函数
@@ -90,6 +92,10 @@ export async function fetchGenerationsData(prompt = 'API') {
   return await request.get(endpointsMap.get('generations'), {
     params: { prompt, n: 1, model: 'dall-e-3', size: '1024x1024' },
   })
+}
+
+export async function fetchSlData() {
+  return await request.get(endpointsMap.get('sl'))
 }
 
 // // 测试所有接口的状态

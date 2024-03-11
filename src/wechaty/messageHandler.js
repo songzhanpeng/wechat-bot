@@ -14,7 +14,8 @@ import {
   fetchRandomBeautyGirlVideo,
   fetchFabingData,
   fetchFkxqsData,
-  fetchGenerationsData
+  fetchGenerationsData,
+  endpointsMap
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import axios from 'axios'
@@ -276,7 +277,29 @@ xdfnjfl66`)
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
     { keyword: ['/draw', 'draw', '画'], description: '绘画 需指定关键词', func: this.handleGenerations },
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
+    { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
+    { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
   ]
+
+  async handleSlVideo (msg) {
+    try {
+      const res = await getRedirectUrl(endpointsMap.get('sl'))
+      await msg.say(FileBox.fromUrl(res))
+    } catch (error) {
+      console.error('Error sending random girl video message:', error)
+      await msg.say("少萝妹妹下载失败")
+    }
+  }
+
+  async handleYzVideo (msg) {
+    try {
+      const res = await getRedirectUrl(endpointsMap.get('yz'))
+      await msg.say(FileBox.fromUrl(res))
+    } catch (error) {
+      console.error('Error sending random girl video message:', error)
+      await msg.say("玉足妹妹下载失败")
+    }
+  }
 
   async handleFetchFabing(msg) {
     try {

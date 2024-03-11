@@ -7,10 +7,8 @@ import { MessageSender } from './messageHandler.js'
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
-    console.log('\n\n')
     // 在控制台显示二维码
     qrTerminal.generate(qrcode, { small: true })
-    console.log('\n\n')
     const qrcodeImageUrl = ['https://api.qrserver.com/v1/create-qr-code/?data=', encodeURIComponent(qrcode)].join('')
     console.log('Scan:', qrcodeImageUrl, ScanStatus[status], status)
   } else {

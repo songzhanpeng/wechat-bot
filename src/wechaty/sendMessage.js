@@ -29,21 +29,21 @@ export async function defaultMessage(msg, bot) {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   const privateChat = !room
   const handler = new MessageHandler(bot)
-  //  console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
+   console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
 
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
     console.log(JSON.stringify(msg))
 
     // 检查消息时间戳，如果距离现在超过10秒则不处理
-    const messageTimestamp = 1000 * msg.payload.timestamp
-    const currentTimestamp = Date.now()
-    const timeDifference = currentTimestamp - messageTimestamp
+    // const messageTimestamp = 1000 * msg.payload.timestamp
+    // const currentTimestamp = Date.now()
+    // const timeDifference = currentTimestamp - messageTimestamp
 
-    if (timeDifference > 10 * 1000) {
-      console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`)
-      return
-    }
+    // if (timeDifference > 10 * 1000) {
+    //   console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`)
+    //   return
+    // }
 
     if (handler.isIncludesKeyword(content)) {
       handler.handleMessage(msg);

@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import axios from 'axios'
 import {
   fetchMoyuData,
   fetchSixsData,
@@ -9,7 +10,8 @@ import {
   fetchRandomBeautyGirlVideo,
   fetchFabingData,
   fetchFkxqsData,
-  fetchGenerationsData
+  fetchGenerationsData,
+  fetchSlData,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -17,7 +19,7 @@ import { FileBox } from 'file-box'
 describe('Testing XiaRuo API Endpoints', () => {
   it('Get MoYu People Calendar', async () => {
     const { data } = await fetchMoyuData()
-    console.log("🚀 ~ it ~ data:", data)
+    console.log('🚀 ~ it ~ data:', data)
     if (data.code === 200) {
       const res = await getRedirectUrl(data.data.moyu_url)
       const pngUrlRegex = /\.png$/i
@@ -27,7 +29,7 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get News in 60s', async () => {
     const { data } = await fetchSixsData()
-    console.log("🚀 ~ it ~ data:", data)
+    console.log('🚀 ~ it ~ data:', data)
     if (data.code === '200') {
       const pngUrlRegex = /\.png$/i
       expect(pngUrlRegex.test(data.image)).toBe(true)
@@ -36,7 +38,7 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get Tiantian Gou Diary', async () => {
     const { data = '' } = await fetchTianGouData()
-    console.log("🚀 ~ it ~ data:", data)
+    console.log('🚀 ~ it ~ data:', data)
     expect(containsHtmlTags(data)).toBe(true)
   })
 
@@ -111,5 +113,17 @@ describe('Testing XiaRuo API Endpoints', () => {
     console.log('🚀 ~ it ~ data:', data)
     expect(data.created).toEqual(expect.any(Number))
     expect(data.data).toEqual(expect.any(Array))
+  })
+
+  it('Get fetchSlData ', async () => {
+    const res = await getRedirectUrl('https://www.mnapi.cn/sl.php?type=video')
+    console.log("🚀 ~ it ~ res:", res)
+    const a = FileBox.fromUrl(res)
+    console.log("🚀 ~ it ~ a:", a)
+    // const a = FileBox.fromBuffer(res.data, 'video.mp4')
+    // console.log('Location:', a);
+    // console.log('🚀 ~ it ~ data:', data)
+    // expect(data.created).toEqual(expect.any(Number))
+    // expect(data.data).toEqual(expect.any(Array))
   })
 })
