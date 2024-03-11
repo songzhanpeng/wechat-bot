@@ -41,8 +41,6 @@ function onLogout(user) {
 // 收到好友请求
 async function onFriendShip(friendship) {
   const frienddShipRe = new RegExp(`我也想养生|${botName}`)
-  console.log("🚀 ~ onFriendShip ~ friendship.type():", friendship.type())
-  console.log("🚀 ~ onFriendShip ~ friendship.hello():", friendship.hello())
   if (friendship.type() === 2) {
     if (frienddShipRe.test(friendship.hello())) {
       await friendship.accept()
