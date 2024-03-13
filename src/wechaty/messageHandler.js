@@ -357,6 +357,7 @@ export class MessageHandler {
       const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
       if (response) {
         const url = parseMessage(response)
+        console.log("🚀 ~ MessageHandler ~ handleGenerations ~ url:", url)
         if (url) {
           await msg.say(FileBox.fromUrl(url))
         } else {
