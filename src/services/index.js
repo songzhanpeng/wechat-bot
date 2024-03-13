@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  timeout: 30 * 1000, // 设置超时时间为 5 秒
+  timeout: 30 * 1000, // 设置超时时间为 30 秒
 })
 
 // 定义接口列表
@@ -34,7 +34,7 @@ export async function fetchData(url) {
 
 // 获取摸鱼人日历
 export async function fetchMoyuData() {
-  return await request.get(endpointsMap.get('moYu'))
+  return await request.get(endpointsMap.get('moYu'), {timeout: 30000})
 }
 
 // 新闻60s

@@ -15,9 +15,10 @@ import {
   fetchFabingData,
   fetchFkxqsData,
   fetchGenerationsData,
-  endpointsMap
+  endpointsMap,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
+import { createSpackPicture } from '../spark/picture.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 const env = dotenv.config().parsed
@@ -197,8 +198,40 @@ export class MessageHandler {
 
   async handleCDK(msg) {
     const usernames = new Set([
-      'VIP666', 'VIP888', 'VIP2023', 'xddq666', 'xddq2023', 'xddq2309', 'xddqqq', 'xddqzhw', 'xddqgzh', 'xddqfl', 'XD123NBH6', 'wgyx666', 'cyg666', 'cyg888', 'zhendan666', 'zz666', 'zz888', 'XD12YLH6', 'DQ34QLH88', 'QT666', 'xdcjxqy', 'xddqydkl', 'fkxqyxd66', 'cjxqyxd6', 'dqdxyq8', 'hylddqsj6', 'xdhhgdn', 'xdxxscl66', 'xdhjak666', 'xdwsry888', 'xdlnkgdj66', 'xdfnjfl66', 'xdltj888'
-    ]);
+      'VIP666',
+      'VIP888',
+      'VIP2023',
+      'xddq666',
+      'xddq2023',
+      'xddq2309',
+      'xddqqq',
+      'xddqzhw',
+      'xddqgzh',
+      'xddqfl',
+      'XD123NBH6',
+      'wgyx666',
+      'cyg666',
+      'cyg888',
+      'zhendan666',
+      'zz666',
+      'zz888',
+      'XD12YLH6',
+      'DQ34QLH88',
+      'QT666',
+      'xdcjxqy',
+      'xddqydkl',
+      'fkxqyxd66',
+      'cjxqyxd6',
+      'dqdxyq8',
+      'hylddqsj6',
+      'xdhhgdn',
+      'xdxxscl66',
+      'xdhjak666',
+      'xdwsry888',
+      'xdlnkgdj66',
+      'xdfnjfl66',
+      'xdltj888',
+    ])
     await msg.say([...usernames].join('\n'))
   }
 
@@ -253,23 +286,23 @@ export class MessageHandler {
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
   ]
 
-  async handleSlVideo (msg) {
+  async handleSlVideo(msg) {
     try {
       const res = await getRedirectUrl(endpointsMap.get('sl'))
       await msg.say(FileBox.fromUrl(res))
     } catch (error) {
       console.error('Error sending random girl video message:', error)
-      await msg.say("少萝妹妹下载失败")
+      await msg.say('少萝妹妹下载失败')
     }
   }
 
-  async handleYzVideo (msg) {
+  async handleYzVideo(msg) {
     try {
       const res = await getRedirectUrl(endpointsMap.get('yz'))
       await msg.say(FileBox.fromUrl(res))
     } catch (error) {
       console.error('Error sending random girl video message:', error)
-      await msg.say("玉足妹妹下载失败")
+      await msg.say('玉足妹妹下载失败')
     }
   }
 
@@ -294,18 +327,42 @@ export class MessageHandler {
     }
   }
 
+  // async handleGenerations(msg) {
+  //   try {
+  //     const content = msg.text()
+  //     const { parameters } = parseCommand(content)
+  //     let prompt = parameters.join(" ")
+  //     console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
+  //     await msg.say('绘画中...')
+  //     const { data } = await fetchGenerationsData(prompt)
+  //     if (data.data && data.data.length) {
+  //       await msg.say(FileBox.fromUrl(data.data[0].url))
+  //     } else {
+  //       console.error('Failed to get random girl video: Video URL not found')
+  //       throw '绘画失败'
+  //     }
+  //   } catch (error) {
+  //     console.error('Error sending random girl video message:', error)
+  //     await msg.say('绘画失败')
+  //   }
+  // }
+
   async handleGenerations(msg) {
     try {
       const content = msg.text()
       const { parameters } = parseCommand(content)
-      let prompt = parameters.join(" ")
-      console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
+      let prompt = parameters.join(' ')
+      console.log('🚀 ~ MessageHandler ~ handleGenerations ~ prompt:', prompt)
       await msg.say('绘画中...')
-      const { data } = await fetchGenerationsData(prompt)
-      if (data.data && data.data.length) {
-        await msg.say(FileBox.fromUrl(data.data[0].url))
+      const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
+      if (response) {
+        const url = parseMessage(response)
+        if (url) {
+          await msg.say(FileBox.fromUrl(url))
+        } else {
+          throw '绘画失败'
+        }
       } else {
-        console.error('Failed to get random girl video: Video URL not found')
         throw '绘画失败'
       }
     } catch (error) {
