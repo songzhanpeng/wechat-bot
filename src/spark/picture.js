@@ -114,10 +114,19 @@ export async function createSpackPicture(text, appId, apiKey, apiSecret) {
 
 // Convert base64 image data to image and save locally
 function base64ToImage(base64Data, imageName, savePath) {
-  const imgData = Buffer.from(base64Data, "base64");
-  fs.writeFileSync(`${savePath}/${imageName}.jpg`, imgData);
-  console.log("Image saved at:", `${savePath}/${imageName}.jpg`);
+  try {
+    const imgData = Buffer.from(base64Data, "base64");
+    if (!fs.existsSync(savePath)) {
+      fs.mkdirSync(savePath, { recursive: true }); // 创建保存路径
+    }
+    fs.accessSync(savePath, fs.constants.W_OK); // 检查写入权限
+    fs.writeFileSync(`${savePath}/${imageName}.jpg`, imgData);
+    console.log("Image saved at:", `${savePath}/${imageName}.jpg`);
+  } catch (error) {
+    console.error("Error saving image:", error);
+  }
 }
+
 
 // Parse and save to specified location
 export function parseMessage(message) {
@@ -141,7 +150,7 @@ const APPID = "e1b6d57c";
 const APISecret = "YjdlMzFlZDMzNzg2NTUzZWJmODlhOGM1";
 const APIKEY = "98cf7f008c096f36c593b7765497e525";
 const description =
-  "Generate an image: There are high mountains in the distance, covered with snow and ice. There is a deep blue lake nearby.";
+  "飞龙";
 
 // Main execution
 (async () => {
