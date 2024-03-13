@@ -18,7 +18,7 @@ import {
   endpointsMap,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
-import { createSpackPicture } from '../spark/picture.js'
+import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 const env = dotenv.config().parsed
