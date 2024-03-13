@@ -1,5 +1,7 @@
 import { FileBox } from 'file-box'
 import fs from 'fs'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
 import {
@@ -357,9 +359,11 @@ export class MessageHandler {
       const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
       if (response) {
         const url = parseMessage(response)
-        console.log("🚀 ~ MessageHandler ~ handleGenerations ~ url:", url)
+        const currentFilePath = fileURLToPath(import.meta.url)
+        const currentDirPath = dirname(currentFilePath)
+        console.log("🚀 ~ MessageHandler ~ handleGenerations ~ url:", join(currentDirPath, url))
         if (url) {
-          await msg.say(FileBox.fromUrl(url))
+          await msg.say(FileBox.fromUrl(join(currentDirPath, url)))
         } else {
           throw '绘画失败'
         }

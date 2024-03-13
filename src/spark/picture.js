@@ -122,11 +122,12 @@ function base64ToImage(base64Data, imageName, savePath) {
     fs.accessSync(savePath, fs.constants.W_OK); // 检查写入权限
     fs.writeFileSync(`${savePath}/${imageName}.jpg`, imgData);
     console.log("Image saved at:", `${savePath}/${imageName}.jpg`);
+    return `${savePath}/${imageName}.jpg`;
   } catch (error) {
     console.error("Error saving image:", error);
+    return null; // 返回 null 表示生成失败
   }
 }
-
 
 // Parse and save to specified location
 export function parseMessage(message) {
@@ -134,14 +135,20 @@ export function parseMessage(message) {
   const code = data.header.code;
   if (code !== 0) {
     console.error(`Request error: ${code}, ${data}`);
+    return null; // 返回 null 表示生成失败
   } else {
     const text = data.payload.choices.text;
     const imageContent = text[0];
     const imageBase = imageContent.content;
     const imageName = data.header.sid;
     const savePath = "../assets"; // 设置图片保存路径
-    base64ToImage(imageBase, imageName, savePath);
-    return `${savePath}/${imageName}.jpg`
+    const imagePath = base64ToImage(imageBase, imageName, savePath);
+    if (imagePath) {
+      return imagePath;
+    } else {
+      console.error("Failed to generate image.");
+      return null; // 返回 null 表示生成失败
+    }
   }
 }
 
