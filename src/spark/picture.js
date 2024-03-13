@@ -136,17 +136,17 @@ export function parseMessage(message) {
   }
 }
 
-// // Configuration
-// const APPID = "e1b6d57c";
-// const APISecret = "YjdlMzFlZDMzNzg2NTUzZWJmODlhOGM1";
-// const APIKEY = "98cf7f008c096f36c593b7765497e525";
-// const description =
-//   "Generate an image: There are high mountains in the distance, covered with snow and ice. There is a deep blue lake nearby.";
+// Configuration
+const APPID = "e1b6d57c";
+const APISecret = "YjdlMzFlZDMzNzg2NTUzZWJmODlhOGM1";
+const APIKEY = "98cf7f008c096f36c593b7765497e525";
+const description =
+  "Generate an image: There are high mountains in the distance, covered with snow and ice. There is a deep blue lake nearby.";
 
-// // Main execution
-// (async () => {
-//   const response = await createSpackPicture(description, APPID, APIKEY, APISecret);
-//   if (response) {
-//     parseMessage(response);
-//   }
-// })();
+// Main execution
+(async () => {
+  const response = await createSpackPicture(description, APPID, APIKEY, APISecret);
+  if (response) {
+    parseMessage(response);
+  }
+})();
