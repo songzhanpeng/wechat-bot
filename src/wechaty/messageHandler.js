@@ -329,45 +329,18 @@ export class MessageHandler {
     }
   }
 
-  // async handleGenerations(msg) {
-  //   try {
-  //     const content = msg.text()
-  //     const { parameters } = parseCommand(content)
-  //     let prompt = parameters.join(" ")
-  //     console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
-  //     await msg.say('绘画中...')
-  //     const { data } = await fetchGenerationsData(prompt)
-  //     if (data.data && data.data.length) {
-  //       await msg.say(FileBox.fromUrl(data.data[0].url))
-  //     } else {
-  //       console.error('Failed to get random girl video: Video URL not found')
-  //       throw '绘画失败'
-  //     }
-  //   } catch (error) {
-  //     console.error('Error sending random girl video message:', error)
-  //     await msg.say('绘画失败')
-  //   }
-  // }
-
   async handleGenerations(msg) {
     try {
       const content = msg.text()
       const { parameters } = parseCommand(content)
-      let prompt = parameters.join(' ')
-      console.log('🚀 ~ MessageHandler ~ handleGenerations ~ prompt:', prompt)
+      let prompt = parameters.join(" ")
+      console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
       await msg.say('绘画中...')
-      const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
-      if (response) {
-        const url = parseMessage(response)
-        const currentFilePath = fileURLToPath(import.meta.url)
-        const currentDirPath = dirname(currentFilePath)
-        console.log("🚀 ~ MessageHandler ~ handleGenerations ~ url:", join(currentDirPath, url))
-        if (url) {
-          await msg.say(FileBox.fromUrl(join(currentDirPath, url)))
-        } else {
-          throw '绘画失败'
-        }
+      const { data } = await fetchGenerationsData(prompt)
+      if (data.data && data.data.length) {
+        await msg.say(FileBox.fromUrl(data.data[0].url))
       } else {
+        console.error('Failed to get random girl video: Video URL not found')
         throw '绘画失败'
       }
     } catch (error) {
@@ -375,6 +348,33 @@ export class MessageHandler {
       await msg.say('绘画失败')
     }
   }
+
+  // async handleGenerations(msg) {
+  //   try {
+  //     const content = msg.text()
+  //     const { parameters } = parseCommand(content)
+  //     let prompt = parameters.join(' ')
+  //     console.log('🚀 ~ MessageHandler ~ handleGenerations ~ prompt:', prompt)
+  //     await msg.say('绘画中...')
+  //     const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
+  //     if (response) {
+  //       const url = parseMessage(response)
+  //       const currentFilePath = fileURLToPath(import.meta.url)
+  //       const currentDirPath = dirname(currentFilePath)
+  //       console.log("🚀 ~ MessageHandler ~ handleGenerations ~ url:", join(currentDirPath, url))
+  //       if (url) {
+  //         await msg.say(FileBox.fromUrl(join(currentDirPath, url)))
+  //       } else {
+  //         throw '绘画失败'
+  //       }
+  //     } else {
+  //       throw '绘画失败'
+  //     }
+  //   } catch (error) {
+  //     console.error('Error sending random girl video message:', error)
+  //     await msg.say('绘画失败')
+  //   }
+  // }
 
   async handleFetchFkxqs(msg) {
     try {
