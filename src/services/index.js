@@ -20,6 +20,7 @@ export const endpointsMap = new Map([
   ['generations', 'https://api-collect.idcdun.com/v1/images/generations'],
   ['sl', 'https://www.mnapi.cn/sl.php?type=video'],
   ['yz', 'https://www.mnapi.cn/yz.php?type=video'],
+  ['jk', 'https://api.suyanw.cn/api/jk.php'],
 ])
 
 // 通用的请求函数
@@ -34,7 +35,7 @@ export async function fetchData(url) {
 
 // 获取摸鱼人日历
 export async function fetchMoyuData() {
-  return await request.get(endpointsMap.get('moYu'), {timeout: 30000})
+  return await request.get(endpointsMap.get('moYu'), { timeout: 30000 })
 }
 
 // 新闻60s
@@ -96,6 +97,12 @@ export async function fetchGenerationsData(prompt = 'API') {
 
 export async function fetchSlData() {
   return await request.get(endpointsMap.get('sl'))
+}
+
+export async function fetchJKData() {
+  return await request.get(endpointsMap.get('jk'), {
+    responseType: 'arraybuffer',
+  })
 }
 
 // // 测试所有接口的状态

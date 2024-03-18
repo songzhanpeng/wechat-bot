@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import axios from 'axios'
+import fs from 'fs'
 import {
   fetchMoyuData,
   fetchSixsData,
@@ -12,6 +12,7 @@ import {
   fetchFkxqsData,
   fetchGenerationsData,
   fetchSlData,
+  fetchJKData
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -125,5 +126,16 @@ describe('Testing XiaRuo API Endpoints', () => {
     // console.log('🚀 ~ it ~ data:', data)
     // expect(data.created).toEqual(expect.any(Number))
     // expect(data.data).toEqual(expect.any(Array))
+  })
+
+  it('Get fetchJKData ', async () => {
+    const res = await fetchJKData()
+    console.log("🚀 ~ it ~ res:", res)
+    const d = FileBox.fromBuffer(res.data, 'image.jpeg')
+    // console.log("🚀 ~ it ~ d:", d)
+    // // // 将图像保存到本地
+    // const imagePath = './image.jpeg'; // 指定本地保存路径
+    // fs.writeFileSync(imagePath, d.buffer);
+    // console.log('Image saved to:', imagePath);
   })
 })

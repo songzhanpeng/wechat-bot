@@ -18,6 +18,7 @@ import {
   fetchFkxqsData,
   fetchGenerationsData,
   endpointsMap,
+  fetchJKData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
@@ -282,10 +283,11 @@ export class MessageHandler {
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
     { keyword: ['/mf', 'mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing },
-    { keyword: ['/draw', 'draw', '画'], description: '绘画 需指定关键词', func: this.handleGenerations },
+    // { keyword: ['/draw', 'draw', '画'], description: '绘画 需指定关键词', func: this.handleGenerations },
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
+    { keyword: ['/jk', 'jk', 'JK', '#'], description: '随机jk', func: this.handleFetchJK },
   ]
 
   async handleSlVideo(msg) {
@@ -333,8 +335,8 @@ export class MessageHandler {
     try {
       const content = msg.text()
       const { parameters } = parseCommand(content)
-      let prompt = parameters.join(" ")
-      console.log("🚀 ~ MessageHandler ~ handleGenerations ~ prompt:", prompt)
+      let prompt = parameters.join(' ')
+      console.log('🚀 ~ MessageHandler ~ handleGenerations ~ prompt:', prompt)
       await msg.say('绘画中...')
       const { data } = await fetchGenerationsData(prompt)
       if (data.data && data.data.length) {
@@ -375,6 +377,16 @@ export class MessageHandler {
   //     await msg.say('绘画失败')
   //   }
   // }
+
+  async handleFetchJK(msg) {
+    try {
+      const res = await fetchJKData()
+      await msg.say(FileBox.fromBuffer(res.data, 'image.jpeg'))
+    } catch (error) {
+      // 在出现错误时，确保传递给 msg.say 的内容是一个字符串
+      await msg.say('图片解析失败')
+    }
+  }
 
   async handleFetchFkxqs(msg) {
     try {
