@@ -234,6 +234,7 @@ export class MessageHandler {
       'xdlnkgdj66',
       'xdfnjfl66',
       'xdltj888',
+      'xdxlh123',
     ])
     await msg.say([...usernames].join('\n'))
   }
