@@ -43,16 +43,16 @@ export class MessageHandler {
   async handleMoYu(msg) {
     try {
       const { data } = await fetchMoyuData()
-      if (data.code === 200) {
-        const res = await getRedirectUrl(data.data.moyu_url)
-        await msg.say(FileBox.fromUrl(res))
+      if (data.success) {
+        await msg.say(FileBox.fromUrl(data.url))
         console.log('MoYu data message sent successfully')
       } else {
         await msg.say('获取摸鱼数据失败')
-        console.error('Error: 摸鱼数据请求失败，状态码:', data.code)
+        console.error('Error: 摸鱼数据请求失败，状态码:', data)
       }
     } catch (error) {
       console.error('Error sending MoYu data message:', error)
+      await msg.say('获取摸鱼数据失败')
     }
   }
 

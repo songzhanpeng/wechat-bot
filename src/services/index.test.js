@@ -21,11 +21,8 @@ describe('Testing XiaRuo API Endpoints', () => {
   it('Get MoYu People Calendar', async () => {
     const { data } = await fetchMoyuData()
     console.log('🚀 ~ it ~ data:', data)
-    if (data.code === 200) {
-      const res = await getRedirectUrl(data.data.moyu_url)
-      const pngUrlRegex = /\.png$/i
-      expect(pngUrlRegex.test(res)).toBe(true)
-    }
+    expect(data.success).toBe(true)
+    expect(data.url).toEqual(expect.any(String))
   })
 
   it('Get News in 60s', async () => {
