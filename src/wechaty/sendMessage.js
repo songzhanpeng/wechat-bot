@@ -6,6 +6,7 @@ import { MessageHandler } from './messageHandler.js'
 const env = dotenv.config().parsed
 const botName = env.BOT_NAME
 const roomWhiteList = env.ROOM_WHITE_LIST.split(',')
+const roomWhitePushList = env.ROOM_WHITE_LIST_PUSH.split(',')
 const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',')
 
 /**
@@ -25,6 +26,7 @@ export async function defaultMessage(msg, bot) {
   const name = await contact.name() // 微信名称
   const isText = msg.type() === bot.Message.Type.Text // 消息类型是否为文本
   const isRoom = (roomWhiteList.includes(roomName) || roomWhiteList.includes('*')) && content.includes(`@${botName}`) // 是否在群聊白名单内并且艾特了机器人
+  const isPushRoom = (roomWhitePushList.includes(roomName) || roomWhitePushList.includes('*')) && content.includes(`@${botName}`) // 是否在群聊白名单内并且艾特了机器人
   const isAlias = aliasWhiteList.includes(remarkName) || aliasWhiteList.includes(name) || aliasWhiteList.includes('*') // 发消息的人是否在联系人白名单内
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   const privateChat = !room

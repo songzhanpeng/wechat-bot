@@ -4,6 +4,7 @@ import { dirname, join } from 'path';
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
 import { MessageSender } from './messageHandler.js'
+import {HttpClient} from "../utils/request.js";
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -78,6 +79,8 @@ bot.on('logout', onLogout)
 bot.on('message', onMessage)
 // 添加好友
 bot.on('friendship', onFriendShip)
+
+
 
 // 启动微信机器人
 bot

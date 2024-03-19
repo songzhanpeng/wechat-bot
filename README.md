@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2024-03-06 15:49:10
+ * @LastEditors: 牛智超
+ * @LastEditTime: 2024-03-06 16:04:07
+ * @FilePath: \wechat-bot\README.md
+-->
 # WeChat Bot
 
 ![](https://assets.fedtop.com/picbed/202212071317377.png)
@@ -44,7 +50,8 @@ version=3
 4. 运行服务
 
 > 安装依赖时，大陆的朋友推荐切到 taobao 镜像源后再安装，要不然可能会因为依赖安装不完整导致出错， 推荐使用我的工具 👉🏻 [prm-cli](https://github.com/wangrongding/prm-cli) 快速切换。
-
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+npm install --ignore-scripts puppeteer
 ```sh
 # 安装依赖
 npm i

@@ -1,66 +1,95 @@
 import axios from 'axios'
 
 const request = axios.create({
-  timeout: 5000, // 设置超时时间为 5 秒
+    timeout: 5000, // 设置超时时间为 5 秒
 })
 
 // 获取摸鱼人日历
 export async function fetchMoyuData() {
-  const url = 'https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json'
-  return await request.get(url)
+    const url = 'https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json'
+    return await request.get(url)
 }
 
 // 新闻60s
 export async function fetchSixsData() {
-  const url = 'http://api.suxun.site/api/sixs?type=json'
-  return await request.get(url)
+    const url = 'http://api.suxun.site/api/sixs?type=json'
+    return await request.get(url)
 }
 
 // 获取舔狗日记
 export async function fetchTianGouData() {
-  const url = 'https://v.api.aa1.cn/api/tiangou/index.php'
-  return await request.get(url)
+    const url = 'https://v.api.aa1.cn/api/tiangou/index.php'
+    return await request.get(url)
 }
 
 export async function fetchOneDayEnglishData() {
-  const url = 'https://api.oioweb.cn/api/common/OneDayEnglish'
-  return await request.get(url)
+    const url = 'https://api.oioweb.cn/api/common/OneDayEnglish'
+    return await request.get(url)
 }
 
 export async function fetchConstellationsData() {
-  const url = `https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json`
-  return await request.get(url)
+    const url = `https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json`
+    return await request.get(url)
 }
 
 export async function fetchBoyImage() {
-  const url = 'https://api.52vmy.cn/api/img/tu/boy'
-  return await request.get(url)
+    const url = 'https://api.52vmy.cn/api/img/tu/boy'
+    return await request.get(url)
 }
 
 export async function fetchGirlImage() {
-  const url = 'https://api.52vmy.cn/api/img/tu/girl'
-  return await request.get(url)
+    const url = 'https://api.52vmy.cn/api/img/tu/girl'
+    return await request.get(url)
 }
 
 export async function fetchGirlVideo() {
-  const url = 'https://tucdn.wpon.cn/api-girl/index.php?wpon=json'
-  return await request.get(url)
+    const url = 'https://tucdn.wpon.cn/api-girl/index.php?wpon=json'
+    return await request.get(url)
 }
 
 export async function fetchRandomBeautyGirlVideo() {
-  const url = 'http://www.wudada.online/Api/ScSp';
-  return await request.get(url);
+    const url = 'http://www.wudada.online/Api/ScSp';
+    return await request.get(url);
 }
 
 export async function fetchShaoLuoRandomBeautyGirlVideo() {
-  const url = 'https://api.8uid.cn/sl.php';
-  return await request.get(url);
+    const url = 'https://api.8uid.cn/sl.php';
+    return await request.get(url);
 }
 
 export async function fetchFabingData(name) {
-  const url = `https://api.lolimi.cn/API/fabing/fb.php?name=${name}`;
-  return await request.get(url);
+    const url = `https://api.lolimi.cn/API/fabing/fb.php?name=${name}`;
+    return await request.get(url);
 }
+
+export async function fetchStockCode(name) {
+// 终端打印如下信息
+    const url = `https://www.iwencai.com/unifiedwap/chat.html`;
+    // return await request.post(url);
+    return {data:url};
+}
+
+export async function fetchTHS(question) {
+    const url = `https://www.iwencai.com/unifiedwap/chat.html`;
+    const jsonObj = JSON.stringify({
+        events: [],
+        input_type: "click",
+        question: question,
+        session_id: "85dc2c31cb75eb1f3086955ae04ad5be",
+        source: "Ths_iwencai_Xuangu",
+        user_id: "562728075",
+        version: "3.3.1",
+        add_info: {"url": {"is_lowcode": 1, "scene": 2}},
+        entity_info: {"device_type": "browser"},
+    })
+    const headers = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return await request.post(url, jsonObj, headers);
+}
+
 
 // // 定义接口列表
 // const endpoints = [
@@ -71,7 +100,7 @@ export async function fetchFabingData(name) {
 
 // async function checkEndpointStatus() {
 //   const results = [];
-  
+
 //   // 遍历接口列表
 //   for (const endpoint of endpoints) {
 //     try {
@@ -84,7 +113,7 @@ export async function fetchFabingData(name) {
 //       results.push(`${endpoint}: ${error.message}`);
 //     }
 //   }
-  
+
 //   // 输出结果
 //   console.log('/ping all');
 //   console.log(results.join('\n'));
