@@ -12,7 +12,8 @@ import {
   fetchFkxqsData,
   fetchGenerationsData,
   fetchSlData,
-  fetchJKData
+  fetchJKData,
+  fetchYiYanData
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -134,5 +135,12 @@ describe('Testing XiaRuo API Endpoints', () => {
     // const imagePath = './image.jpeg'; // 指定本地保存路径
     // fs.writeFileSync(imagePath, d.buffer);
     // console.log('Image saved to:', imagePath);
+  })
+
+  it('Get fetchYiYanData ', async () => {
+    const res = await fetchYiYanData()
+    const result = res.data.replace(/<[^>]*>/g, '')
+    console.log("🚀 ~ it ~ result:", result)
+    expect(result).toEqual(expect.any(String))
   })
 })

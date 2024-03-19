@@ -19,6 +19,7 @@ import {
   fetchGenerationsData,
   endpointsMap,
   fetchJKData,
+  fetchYiYanData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
@@ -288,7 +289,8 @@ export class MessageHandler {
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
-    { keyword: ['/jk', 'jk', 'JK', '#jk'], description: '随机jk', func: this.handleFetchJK },
+    { keyword: ['/jk', 'jk', 'JK'], description: '随机jk', func: this.handleFetchJK },
+    { keyword: ['yiyan', 'yy', '每日一言', '一言'], description: '每日一言', func: this.handleFetchYiYan },
   ]
 
   async handleSlVideo(msg) {
@@ -386,6 +388,16 @@ export class MessageHandler {
     } catch (error) {
       // 在出现错误时，确保传递给 msg.say 的内容是一个字符串
       await msg.say('图片解析失败')
+    }
+  }
+
+  async handleFetchYiYan(msg) {
+    try {
+      const res = await fetchYiYanData()
+      const result = res.data.replace(/<[^>]*>/g, '')
+      await msg.say(result)
+    } catch (error) {
+      await msg.say('每日一言获取失败')
     }
   }
 

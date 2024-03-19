@@ -21,6 +21,7 @@ export const endpointsMap = new Map([
   ['sl', 'https://www.mnapi.cn/sl.php?type=video'],
   ['yz', 'https://www.mnapi.cn/yz.php?type=video'],
   ['jk', 'https://api.suyanw.cn/api/jk.php'],
+  ['yiyan', 'https://v.api.aa1.cn/api/yiyan/index.php']
 ])
 
 // 通用的请求函数
@@ -103,6 +104,10 @@ export async function fetchJKData() {
   return await request.get(endpointsMap.get('jk'), {
     responseType: 'arraybuffer',
   })
+}
+
+export async function fetchYiYanData() {
+  return await request.get(endpointsMap.get('yiyan'))
 }
 
 // // 测试所有接口的状态
