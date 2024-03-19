@@ -139,6 +139,7 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get fetchYiYanData ', async () => {
     const res = await fetchYiYanData()
+    console.log("🚀 ~ it ~ res.data:", res.data)
     const result = res.data.replace(/<[^>]*>/g, '')
     console.log("🚀 ~ it ~ result:", result)
     expect(result).toEqual(expect.any(String))

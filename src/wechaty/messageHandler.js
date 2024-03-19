@@ -395,7 +395,7 @@ export class MessageHandler {
     try {
       const res = await fetchYiYanData()
       const result = res.data.replace(/<[^>]*>/g, '')
-      await msg.say(result)
+      await msg.say(result.trim())
     } catch (error) {
       await msg.say('每日一言获取失败')
     }
