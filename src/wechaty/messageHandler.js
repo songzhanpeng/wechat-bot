@@ -94,7 +94,7 @@ export class MessageHandler {
       const { data } = await fetchOneDayEnglishData()
       if (data.code === 200) {
         await msg.say(FileBox.fromUrl(data.result.img))
-        await msg.say(FileBox.fromUrl(data.result.tts))
+        await msg.say(FileBox.fromFile(data.result.tts))
         console.log('Daily English data message sent successfully')
       } else {
         await msg.say('获取每日英语一句数据失败')
@@ -272,15 +272,17 @@ export class MessageHandler {
   }
 
   TASKS = [
+    { keyword: ['/help', 'help', 'h'], description: '获取帮助信息', func: this.handleHelp },
     { keyword: ['/ping', 'ping'], description: `发送 "ping" 以测试[${botName}]是否在线`, func: this.handlePing },
-    { keyword: ['/moyu', 'moyu', '摸鱼'], description: '获取摸鱼人数据', func: this.handleMoYu },
+    { keyword: ['/moyu', 'moyu', '摸鱼'], description: '获取摸鱼人日历', func: this.handleMoYu },
     { keyword: ['/sixs', 'sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
+    { keyword: ['yiyan', 'yy', '一言'], description: '每日一言', func: this.handleFetchYiYan },
     { keyword: ['/dog', 'dog', '舔狗日记'], description: '获取舔狗日记', func: this.handleDog },
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
-    { keyword: ['/help', 'help', 'h'], description: '获取帮助信息', func: this.handleHelp },
     { keyword: ['/gg', 'gg', '帅哥', 'giegie'], description: '获取随机帅哥', func: this.handleGG },
-    { keyword: ['/mm', 'mm', '美女', '妹妹'], description: '获取随机妹妹', func: this.handleMM },
+    { keyword: ['/mm', 'mm', '美女', '妹妹'], description: '获取随机美女', func: this.handleMM },
+    { keyword: ['/jk', 'jk', 'JK'], description: '获取随机jk', func: this.handleFetchJK },
     { keyword: ['#CDK', '#兑换码', '兑换码'], description: '输出兑换码', func: this.handleCDK, skip: true },
     // { keyword: ['/rgv'], description: '获取随机小姐姐视频', func: this.handleRGV },
     { keyword: ['/rgv', '/rgbv', '小姐姐'], description: '获取随机美少女视频', func: this.handleRandomBeautyGirlVideo },
@@ -289,8 +291,6 @@ export class MessageHandler {
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
-    { keyword: ['/jk', 'jk', 'JK'], description: '随机jk', func: this.handleFetchJK },
-    { keyword: ['yiyan', 'yy', '每日一言', '一言'], description: '每日一言', func: this.handleFetchYiYan },
   ]
 
   async handleSlVideo(msg) {
