@@ -291,7 +291,17 @@ export class MessageHandler {
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
+    { keyword: ['test'], description: 'test', func: this.handleTest },
   ]
+
+  async handleTest(msg) {
+    try {
+      await msg.say(FileBox.fromFile('./test.silk'))
+    } catch (error) {
+      console.error('Error sending random girl video message:', error)
+      await msg.say('Error ')
+    }
+  }
 
   async handleSlVideo(msg) {
     try {

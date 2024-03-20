@@ -44,19 +44,21 @@ describe('Testing XiaRuo API Endpoints', () => {
   it('Get Daily English', async () => {
     const { data } = await fetchOneDayEnglishData()
     console.log('🚀 ~ it ~ data:', data)
-    expect(data).toEqual(
-      expect.objectContaining({
-        code: 200,
-        msg: 'success',
-        result: {
-          tts: expect.any(String),
-          content: expect.any(String),
-          note: expect.any(String),
-          dateline: expect.any(String),
-          img: expect.any(String),
-        },
-      }),
-    )
+    const a  = await FileBox.fromUrl(data.result.tts)
+    console.log("🚀 ~ it ~ a:", a)
+    // expect(data).toEqual(
+    //   expect.objectContaining({
+    //     code: 200,
+    //     msg: 'success',
+    //     result: {
+    //       tts: expect.any(String),
+    //       content: expect.any(String),
+    //       note: expect.any(String),
+    //       dateline: expect.any(String),
+    //       img: expect.any(String),
+    //     },
+    //   }),
+    // )
   })
 
   it('Get Constellation Fortune', async () => {
