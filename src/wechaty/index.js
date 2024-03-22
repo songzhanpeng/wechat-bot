@@ -4,9 +4,11 @@ import { dirname, join } from 'path'
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
 import { MessageSender } from './messageHandler.js'
-import dotenv from 'dotenv'
-const env = dotenv.config().parsed
-const botName = env.BOT_NAME
+import { loadConfig } from '../utils/index.js'
+
+const config = loadConfig();
+const botName = config.BOT_NAME;
+
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {

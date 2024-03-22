@@ -24,9 +24,10 @@ import {
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
-import dotenv from 'dotenv'
-const env = dotenv.config().parsed
-const botName = env.BOT_NAME
+import { loadConfig } from '../utils/index.js'
+
+const config = loadConfig();
+const botName = config.BOT_NAME
 export class MessageHandler {
   constructor(bot) {
     this.bot = bot
@@ -387,7 +388,7 @@ export class MessageHandler {
   //     let prompt = parameters.join(' ')
   //     console.log('🚀 ~ MessageHandler ~ handleGenerations ~ prompt:', prompt)
   //     await msg.say('绘画中...')
-  //     const response = await createSpackPicture(prompt, env.APP_ID, env.API_KEY, env.API_SECRET)
+  //     const response = await createSpackPicture(prompt, config.APP_ID, config.API_KEY, config.API_SECRET)
   //     if (response) {
   //       const url = parseMessage(response)
   //       const currentFilePath = fileURLToPath(import.meta.url)

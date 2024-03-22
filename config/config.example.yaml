@@ -1,25 +1,27 @@
-# 星火配置
 # 填写你的星火应用程序ID
-APP_ID=
+APP_ID: 
 
 # 填写你的星火API密钥
-API_KEY=
+API_KEY: 
 
 # 填写你的星火API密钥
-API_SECRET=
+API_SECRET: 
 
-# 指定星火域名（例如，generalv3）
-DOMAIN=generalv3
+# 指定星火域名（例如，generalv3.5）
+DOMAIN: generalv3.5
 
-# 指定星火API版本（例如，v3.1）
-VERSION=v3.1
+# 指定星火API版本（例如，v3.5）
+VERSION: v3.5
 
 # 机器人配置
 # 定义机器人的名称，这里是为了防止群聊消息太多，所以只有艾特机器人才会回复，
-BOT_NAME=花火
+BOT_NAME: 花火
 
 # 群聊白名单，白名单内的群聊才会自动回复
-ROOM_WHITE_LIST=*
+ROOM_WHITE_LIST: '*'
 
 # 联系人白名单，白名单内的联系人才会自动回复
-ALIAS_WHITE_LIST=备注名或微信名,*
+ALIAS_WHITE_LIST: '*'
+
+# 主人名称
+OWNER_NAME: 

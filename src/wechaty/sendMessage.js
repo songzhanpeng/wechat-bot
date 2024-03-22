@@ -1,12 +1,12 @@
-import dotenv from 'dotenv'
 
 import { getSparkAiReply as getReply } from '../spark/index.js'
 import { MessageHandler } from './messageHandler.js'
+import { loadConfig } from '../utils/index.js'
 
-const env = dotenv.config().parsed
-const botName = env.BOT_NAME
-const roomWhiteList = env.ROOM_WHITE_LIST.split(',')
-const aliasWhiteList = env.ALIAS_WHITE_LIST.split(',')
+const config = loadConfig();
+const botName = config.BOT_NAME
+const roomWhiteList = config.ROOM_WHITE_LIST.split(',')
+const aliasWhiteList = config.ALIAS_WHITE_LIST.split(',')
 
 /**
  * 默认消息发送

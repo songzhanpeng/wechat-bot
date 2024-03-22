@@ -5,4 +5,4 @@ test.js
 package-lock.json
 yarn.lock
 Chromium.app
-config.js
+config.yaml
