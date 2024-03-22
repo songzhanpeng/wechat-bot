@@ -1,9 +1,14 @@
 import { WechatyBuilder, ScanStatus, log } from 'wechaty'
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import qrTerminal from 'qrcode-terminal'
 import { defaultMessage, shardingMessage } from './sendMessage.js'
 import { MessageSender } from './messageHandler.js'
+import { loadConfig } from '../utils/index.js'
+
+const config = loadConfig();
+const botName = config.BOT_NAME;
+
 // 扫码
 function onScan(qrcode, status) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -11,7 +16,6 @@ function onScan(qrcode, status) {
     qrTerminal.generate(qrcode, { small: true })
     const qrcodeImageUrl = ['https://api.qrserver.com/v1/create-qr-code/?data=', encodeURIComponent(qrcode)].join('')
     console.log('Scan:', qrcodeImageUrl, ScanStatus[status], status)
-
   } else {
     log.info('Scan: %s(%s)', ScanStatus[status], status)
   }
@@ -19,26 +23,26 @@ function onScan(qrcode, status) {
 
 // 登录
 function onLogin(user) {
-  console.log(`User ${user} logged in`);
-  const date = new Date();
-  console.log(`Current time: ${date}`);
-  console.log(`Auto chatbot mode activated`);
+  console.log(`User ${user} logged in`)
+  const date = new Date()
+  console.log(`Current time: ${date}`)
+  console.log(`Auto chatbot mode activated`)
 
-  // 加载任务
-  const currentFilePath = fileURLToPath(import.meta.url);
-  const currentDirPath = dirname(currentFilePath);
-  const messageSender = new MessageSender(bot)
-  messageSender.loadTasksFromJSON(join(currentDirPath, '..', 'tasks', 'tasks.json'))
+  // // 加载任务
+  // const currentFilePath = fileURLToPath(import.meta.url)
+  // const currentDirPath = dirname(currentFilePath)
+  // const messageSender = new MessageSender(bot)
+  // messageSender.loadTasksFromJSON(join(currentDirPath, '..', 'tasks', 'tasks.json'))
 }
 
 // 登出
 function onLogout(user) {
-  console.log(`${user} has logged out`);
+  console.log(`${user} has logged out`)
 }
 
 // 收到好友请求
 async function onFriendShip(friendship) {
-  const frienddShipRe = /chatgpt|chat/
+  const frienddShipRe = new RegExp(`我也想养生|${botName}`)
   if (friendship.type() === 2) {
     if (frienddShipRe.test(friendship.hello())) {
       await friendship.accept()

@@ -17,33 +17,17 @@ xxx
 ## 开发
 
 1. 检查好自己的开发环境，确保已经安装了 `nodejs` , 版本需要满足 Node.js >= v18.0 ，版本太低会导致运行报错,最好使用 LTS 版本。
-2. 先获取自己的 `api key`，地址戳这里 👉🏻 ：[创建你的 api key](https://beta.openai.com/account/api-keys)
+2. 先获取自己的 `api key`，地址戳这里 👉🏻 ：[创建你的 api key](https://console.xfyun.cn/services/bm35)
 
-3. 创建完了， 复制下来，然后在项目根目录下创建一个 `.env` 文件，内容如下：
+3. 创建完了， 复制下来，然后在项目根目录 `config` 下创建一个 `config.yaml` 文件，内容如下：
 
 ```sh
 # 执行下面命令，拷贝一份 .env.example 文件
-cp .env.example .env
-# 完善.env 文件内容
-# 填写你的星火应用程序ID
-appId=
-
-# 填写你的星火API密钥
-apiKey=
-
-# 填写你的星火API密钥
-apiSecret=
-
-# 指定星火域名（例如，generalv3）
-domain=generalv3
-
-# 指定星火API版本（例如，3）
-version=3
+cp config/config.example.yaml config/config.yaml
+# 完善 config.yaml 文件内容
 ```
 
 4. 运行服务
-
-> 安装依赖时，大陆的朋友推荐切到 taobao 镜像源后再安装，要不然可能会因为依赖安装不完整导致出错， 推荐使用我的工具 👉🏻 [prm-cli](https://github.com/wangrongding/prm-cli) 快速切换。
 
 ```sh
 # 安装依赖
