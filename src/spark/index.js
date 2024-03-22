@@ -5,6 +5,7 @@ import Spark from './model.js';
 const env = dotenv.config().parsed;
 
 async function sendRequestToSpark(requestPayload) {
+    console.log("🚀 ~ sendRequestToSpark ~ requestPayload:", requestPayload)
     try {
         const spark = new Spark(env.APP_ID, env.API_KEY, env.API_SECRET, env.DOMAIN, env.VERSION);
         let finalUrl = await spark.generateFinalUrl();
