@@ -6,3 +6,4 @@ package-lock.json
 yarn.lock
 Chromium.app
 config.yaml
+coverage

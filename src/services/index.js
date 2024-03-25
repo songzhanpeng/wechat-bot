@@ -1,7 +1,10 @@
 import axios from 'axios'
+import { loadConfig } from '../utils/index.js'
+const config = loadConfig()
 
 const request = axios.create({
   timeout: 30 * 1000, // 设置超时时间为 30 秒
+  cancelToken: false
 })
 
 // 定义接口列表
@@ -22,7 +25,7 @@ export const endpointsMap = new Map([
   ['sl', 'https://www.mnapi.cn/sl.php?type=video'],
   ['yz', 'https://www.mnapi.cn/yz.php?type=video'],
   ['jk', 'https://api.suyanw.cn/api/jk.php'],
-  ['yiyan', 'https://v.api.aa1.cn/api/yiyan/index.php']
+  ['yiyan', 'https://v.api.aa1.cn/api/yiyan/index.php'],
 ])
 
 // 通用的请求函数
@@ -111,27 +114,34 @@ export async function fetchYiYanData() {
   return await request.get(endpointsMap.get('yiyan'))
 }
 
-// // 测试所有接口的状态
-// export async function checkAllEndpointsStatus() {
-//   const results = []
+/**
+ * 异步获取 Kimi 数据的函数。
+ * @param {string} prompt 用户输入的消息。
+ * @returns {Promise<Object>} 返回一个承诺（Promise），解析为从 API 获取的响应数据。
+ */
+export async function fetchKimiData(prompt) {
+  // 定义 API 的 URL 和使用的 Token
+  const url = 'https://api.moonshot.cn/v1/chat/completions'
+  const token = config.KIMI_TOKEN
 
-//   // 遍历接口列表
-//   for (const [funcName, endpoint] of endpointsMap.entries()) {
-//     try {
-//       // 发送 HEAD 请求检查接口状态
-//       await request.head(endpoint)
-//       // 将接口状态添加到结果数组
-//       results.push(`${funcName}: OK`)
-//     } catch (error) {
-//       // 如果请求失败，将错误信息添加到结果数组
-//       results.push(`${funcName}: ${error.message}`)
-//     }
-//   }
+  // 构建要发送给 API 的数据，包括模型名称、用户消息和温度设置
+  const data = {
+    model: 'moonshot-v1-8k',
+    messages: [
+      {
+        role: 'system',
+        content:
+          '你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。同时，你会拒绝一切涉及恐怖主义，种族歧视，黄色暴力等问题的回答。Moonshot AI 为专有名词，不可翻译成其他语言。',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.3,
+  }
 
-//   // 输出结果
-//   console.log('/ping all endpoints')
-//   console.log(results.join('\n'))
-// }
-
-// // 调用函数检查所有接口状态
-// checkAllEndpointsStatus()
+  return await request.post(url, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

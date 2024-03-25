@@ -11,7 +11,7 @@ import {
   fetchFabingData,
   fetchFkxqsData,
   fetchGenerationsData,
-  fetchSlData,
+  fetchKimiData,
   fetchJKData,
   fetchYiYanData
 } from './index.js'
@@ -145,5 +145,11 @@ describe('Testing XiaRuo API Endpoints', () => {
     const result = res.data.replace(/<[^>]*>/g, '')
     console.log("🚀 ~ it ~ result:", result)
     expect(result).toEqual(expect.any(String))
+  })
+
+  it('Get fetchKimiData ', async () => {
+      const res = await fetchKimiData('你是谁')
+      console.log("🚀 ~ it ~ res.data:", res.data.choices[0].message.content)
+      expect(res.data.choices[0].message.content).toEqual(expect.any(String))
   })
 })
