@@ -115,6 +115,17 @@ export async function fetchYiYanData() {
 }
 
 /**
+ * 异步获取天气数据
+ * @param {string} city - 要查询天气的城市名，默认为空字符串，即查询全球天气
+ * @returns {Promise} - 返回一个Promise对象，解析后包含从服务器获取的天气数据
+ */
+export async function fetchWetherData(city='') {
+  // 使用request.get异步请求天气数据
+  return await request.get(`http://tq.ruiange.work/?city=${city}&type=json`)
+}
+
+
+/**
  * 异步获取 Kimi 数据的函数。
  * @param {string} prompt 用户输入的消息。
  * @returns {Promise<Object>} 返回一个承诺（Promise），解析为从 API 获取的响应数据。

@@ -20,14 +20,15 @@ import {
   endpointsMap,
   fetchJKData,
   fetchYiYanData,
-  fetchKimiData
+  fetchKimiData,
+  fetchWetherData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
 import { loadConfig } from '../utils/index.js'
 
-const config = loadConfig();
+const config = loadConfig()
 const botName = config.BOT_NAME
 export class MessageHandler {
   constructor(bot) {
@@ -73,8 +74,6 @@ export class MessageHandler {
     }
   }
 
-  
-
   async handleSixs(msg) {
     try {
       const { data } = await fetchSixsData()
@@ -117,8 +116,26 @@ export class MessageHandler {
       const { data } = await fetchKimiData(prompt)
       await msg.say(data.choices[0].message.content)
     } catch (error) {
-      console.error('接口请求是爱', error)
+      console.error('接口请求失败', error)
       await msg.say('大脑已宕机,你让我缓缓吧[微笑]')
+    }
+  }
+
+  async handleFetchWetherData(msg) {
+    try {
+      const content = msg.text()
+      const { parameters } = parseCommand(content)
+      let city = parameters[0]
+      await msg.say('查询中...')
+      const { data } = await fetchWetherData(city)
+      if (data.imgUrl) {
+        await msg.say(FileBox.fromUrl(data.imgUrl))
+      } else {
+        throw new Error('接口请求失败')
+      }
+    } catch (error) {
+      console.error('接口请求失败', error)
+      await msg.say('请输入合法的城市[微笑]')
     }
   }
 
@@ -325,6 +342,7 @@ export class MessageHandler {
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
     { keyword: ['kimi', '牢大'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
+    { keyword: ['天气', 'weather', 'wtr'], description: '天气查询 [调用示例: weather 北京]', func: this.handleFetchWetherData },
     { keyword: ['test'], description: 'test', func: this.handleTest, skip: true },
   ]
 
