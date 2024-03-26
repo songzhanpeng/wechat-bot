@@ -118,7 +118,7 @@ export class MessageHandler {
       await msg.say(data.choices[0].message.content)
     } catch (error) {
       console.error('接口请求是爱', error)
-      await msg.say('大脑已宕机,你让我换换[微笑]')
+      await msg.say('大脑已宕机,你让我缓缓吧[微笑]')
     }
   }
 
@@ -324,7 +324,7 @@ export class MessageHandler {
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
-    { keyword: ['kimi'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
+    { keyword: ['kimi', '牢大'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
     { keyword: ['test'], description: 'test', func: this.handleTest, skip: true },
   ]
 

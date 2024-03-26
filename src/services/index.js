@@ -136,6 +136,7 @@ export async function fetchKimiData(prompt) {
       { role: 'user', content: prompt },
     ],
     temperature: 0.3,
+    // use_search: true,
   }
 
   return await request.post(url, data, {

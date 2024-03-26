@@ -148,7 +148,7 @@ describe('Testing XiaRuo API Endpoints', () => {
   })
 
   it('Get fetchKimiData ', async () => {
-      const res = await fetchKimiData('你是谁')
+      const res = await fetchKimiData('vite 是什么，好学嘛')
       console.log("🚀 ~ it ~ res.data:", res.data.choices[0].message.content)
       expect(res.data.choices[0].message.content).toEqual(expect.any(String))
   })
