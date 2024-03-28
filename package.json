@@ -8,7 +8,7 @@
     "dev": "node ./index.js",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "update": "sh update.sh"
+    "deploy": "sh deploy.sh"
   },
   "author": "rongding",
   "license": "ISC",
