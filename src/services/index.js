@@ -157,3 +157,8 @@ export async function fetchKimiData(prompt) {
     },
   })
 }
+
+export async function fetchNtyyData() {
+  return await request.get(`https://api.qvqa.cn/api/ntyy/?name=yuanshen`)
+}
+

@@ -22,6 +22,7 @@ import {
   fetchYiYanData,
   fetchKimiData,
   fetchWetherData,
+  fetchNtyyData
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
@@ -136,6 +137,20 @@ export class MessageHandler {
     } catch (error) {
       console.error('接口请求失败', error)
       await msg.say('请输入合法的城市[微笑]')
+    }
+  }
+
+  async handleFetchNtyyData(msg) {
+    try {
+      const { data } = await fetchNtyyData()
+      if (data.code === 200) {
+        await msg.say(data.data.msg)
+      } else {
+        throw new Error('接口请求失败')
+      }
+    } catch (error) {
+      console.error('接口请求失败', error)
+      await msg.say('逆天言论获取失败')
     }
   }
 
@@ -344,6 +359,7 @@ export class MessageHandler {
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
     { keyword: ['kimi', '牢大'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
     { keyword: ['天气', 'weather', 'wtr'], description: '天气查询 [调用示例: weather 北京]', func: this.handleFetchWetherData },
+    { keyword: ['nt', '启动', '原神', '缘神启动'], description: '每日逆天言论', func: this.handleFetchNtyyData },
     { keyword: ['test'], description: 'test', func: this.handleTest, skip: true },
   ]
 

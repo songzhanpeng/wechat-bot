@@ -15,6 +15,7 @@ import {
   fetchJKData,
   fetchYiYanData,
   fetchWetherData,
+  fetchNtyyData,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -158,5 +159,10 @@ describe('Testing XiaRuo API Endpoints', () => {
     const res = await fetchWetherData('上海')
     expect(res.data.imgUrl).toEqual(expect.any(String))
   })
-  
+
+  it('Get fetchNtyyData ', async () => {
+    const res = await fetchNtyyData()
+    expect(res.data.code).toBe(200)
+    expect(res.data.data.msg).toEqual(expect.any(String))
+  })
 })
