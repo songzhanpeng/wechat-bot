@@ -1,9 +1,8 @@
-
 import { getSparkAiReply as getReply } from '../spark/index.js'
 import { MessageHandler } from './messageHandler.js'
 import { loadConfig } from '../utils/index.js'
 
-const config = loadConfig();
+const config = loadConfig()
 const botName = config.BOT_NAME
 const roomWhiteList = config.ROOM_WHITE_LIST.split(',')
 const aliasWhiteList = config.ALIAS_WHITE_LIST.split(',')
@@ -29,7 +28,12 @@ export async function defaultMessage(msg, bot) {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   const privateChat = !room
   const handler = new MessageHandler(bot)
-   console.log('接收到消息类型：', bot.Message.Type[msg.type()]);
+  console.log('接收到消息类型：', bot.Message.Type[msg.type()])
+
+  if (msg.type() == 0 && content.includes('拍了拍我')) {
+    handler.handleFetchYiYan(msg)
+    return
+  }
 
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
@@ -49,7 +53,7 @@ export async function defaultMessage(msg, bot) {
       handler.handleMessage(msg);
       return
     }
-    
+
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
     } else {

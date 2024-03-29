@@ -25,3 +25,6 @@ ALIAS_WHITE_LIST: '*'
 
 # 主人名称
 OWNER_NAME: 
+
+# Kimi token
+KIMI_TOKEN:

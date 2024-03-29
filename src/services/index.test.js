@@ -11,9 +11,10 @@ import {
   fetchFabingData,
   fetchFkxqsData,
   fetchGenerationsData,
-  fetchSlData,
+  fetchKimiData,
   fetchJKData,
-  fetchYiYanData
+  fetchYiYanData,
+  fetchWetherData,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -44,8 +45,8 @@ describe('Testing XiaRuo API Endpoints', () => {
   it('Get Daily English', async () => {
     const { data } = await fetchOneDayEnglishData()
     console.log('🚀 ~ it ~ data:', data)
-    const a  = await FileBox.fromUrl(data.result.tts)
-    console.log("🚀 ~ it ~ a:", a)
+    const a = await FileBox.fromUrl(data.result.tts)
+    console.log('🚀 ~ it ~ a:', a)
     // expect(data).toEqual(
     //   expect.objectContaining({
     //     code: 200,
@@ -118,9 +119,9 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get fetchSlData ', async () => {
     const res = await getRedirectUrl('https://www.mnapi.cn/sl.php?type=video')
-    console.log("🚀 ~ it ~ res:", res)
+    console.log('🚀 ~ it ~ res:', res)
     const a = FileBox.fromUrl(res)
-    console.log("🚀 ~ it ~ a:", a)
+    console.log('🚀 ~ it ~ a:', a)
     // const a = FileBox.fromBuffer(res.data, 'video.mp4')
     // console.log('Location:', a);
     // console.log('🚀 ~ it ~ data:', data)
@@ -130,7 +131,7 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get fetchJKData ', async () => {
     const res = await fetchJKData()
-    console.log("🚀 ~ it ~ res:", res)
+    console.log('🚀 ~ it ~ res:', res)
     const d = FileBox.fromBuffer(res.data, 'image.jpeg')
     // console.log("🚀 ~ it ~ d:", d)
     // // // 将图像保存到本地
@@ -141,9 +142,21 @@ describe('Testing XiaRuo API Endpoints', () => {
 
   it('Get fetchYiYanData ', async () => {
     const res = await fetchYiYanData()
-    console.log("🚀 ~ it ~ res.data:", res.data)
+    console.log('🚀 ~ it ~ res.data:', res.data)
     const result = res.data.replace(/<[^>]*>/g, '')
-    console.log("🚀 ~ it ~ result:", result)
+    console.log('🚀 ~ it ~ result:', result)
     expect(result).toEqual(expect.any(String))
   })
+
+  it('Get fetchKimiData ', async () => {
+    const res = await fetchKimiData('vite 是什么，好学嘛')
+    console.log('🚀 ~ it ~ res.data:', res.data.choices[0].message.content)
+    expect(res.data.choices[0].message.content).toEqual(expect.any(String))
+  })
+
+  it('Get fetchWetherData ', async () => {
+    const res = await fetchWetherData('上海')
+    expect(res.data.imgUrl).toEqual(expect.any(String))
+  })
+  
 })
