@@ -55,6 +55,7 @@ npm install --ignore-scripts puppeteer
 ```sh
 # 安装依赖
 npm i
+npm install --ignore-scripts puppeteer
 # 启动服务
 npm run dev
 ```

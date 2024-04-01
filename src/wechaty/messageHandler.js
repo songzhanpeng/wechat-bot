@@ -157,6 +157,20 @@ export class MessageHandler {
     }
 
     async handleHelp(msg) {
+        // const commands = {
+        //     '/ping': '发送 "pong" 以测试是否在线',
+        //     '/moyu': '获取摸鱼人数据',
+        //     '/sixs': '获取60秒新闻数据',
+        //     '/de': '获取每日英语',
+        //     '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
+        //     '/cs': '获取今日星座运势',
+        //     '/gg': '获取随机帅哥',
+        //     '/mm': '获取随机妹妹',
+        //     '/rgv': '获取随机小姐姐视频',
+        //     '/rgbv': '获取随机美少女视频',
+        //     '/dog': '获取舔狗日记',
+        //     '添加股票': '获取舔狗日记',
+        // }
         const commands = {
             '/ping': '发送 "pong" 以测试是否在线',
             '/moyu': '获取摸鱼人数据',
@@ -164,11 +178,8 @@ export class MessageHandler {
             '/de': '获取每日英语',
             '/mf': '获取发疯语录，需要指定名字，没有则默认你自己昵称',
             '/cs': '获取今日星座运势',
-            '/gg': '获取随机帅哥',
-            '/mm': '获取随机妹妹',
-            '/rgv': '获取随机小姐姐视频',
-            '/rgbv': '获取随机美少女视频',
-            '/dog': '获取舔狗日记',
+            '/tj': '添加股票--日期--股票全称--成本--逻辑(可有可无)--市值',
+            '/ck': '查看添加过的股票',
         }
 
         let helpMessage = '可用命令：\n'
@@ -264,7 +275,41 @@ xdlnkgdj66`)
         {keyword: ['/mf'], description: '发癫文学 需指定对应的名字', func: this.handleFetchFabing},
         {keyword: ['/今日推荐'], description: '推荐今日股票', func: this.handleFetchStockCode},
         {keyword: ['/同花顺'], description: '推荐今日股票', func: this.handleTHS},
+        {keyword: ['/tj'], description: '推荐今日股票', func: this.handleTJ},
+        {keyword: ['/ck'], description: '推荐今日股票', func: this.handleCK},
     ]
+
+    async handleCK(msg) {
+        try {
+            const content = msg.text()
+            const {parameters} = parseCommand(content)
+            let name = parameters[0];
+            if (!name) {
+                const contact = msg.talker() // 发消息人
+                name = await contact.name() // 发消息人昵称
+            }
+            const res = await fetchTHS(name)
+            await msg.say(data)
+        } catch (error) {
+            console.error('Error sending random girl video message:', error)
+        }
+    }
+
+    async handleTJ(msg) {
+        try {
+            const content = msg.text()
+            const {parameters} = parseCommand(content)
+            let name = parameters[0];
+            if (!name) {
+                const contact = msg.talker() // 发消息人
+                name = await contact.name() // 发消息人昵称
+            }
+            const res = await fetchTHS(name)
+            await msg.say(data)
+        } catch (error) {
+            console.error('Error sending random girl video message:', error)
+        }
+    }
 
     async handleTHS(msg) {
         try {

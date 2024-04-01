@@ -1,0 +1,12 @@
+
+ujavascript:S3776"TRefactor this function to reduce its Cognitive Complexity from 25 to the 15 allowed.(™ª¨ãøÿÿÿÿ
+Zjavascript:S1481"9Remove the declaration of the unused 'receiver' variable.(Ì®ÉÏýÿÿÿÿ
+Wjavascript:S1854"6Remove this useless assignment to variable "receiver".(Ì®ÉÏýÿÿÿÿ
+Rjavascript:S1481"6Remove the declaration of the unused 'alias' variable.(ªÞÓ 
+Ojavascript:S1854"3Remove this useless assignment to variable "alias".(ªÞÓ 
+Wjavascript:S1481";Remove the declaration of the unused 'isPushRoom' variable.(ÿÜ‹Ð
+Tjavascript:S1854"8Remove this useless assignment to variable "isPushRoom".(ÿÜ‹Ð
+:javascript:S125""Remove this commented out code.(ÂÄª¡
+Rjavascript:S1481k"6Remove the declaration of the unused 'topic' variable.(Ð…ò©
+Ojavascript:S1854k"3Remove this useless assignment to variable "topic".(Ð…ò©
+`javascript:S6551m"?'realText' will evaluate to '[object Object]' when stringified.(ìŒêˆûÿÿÿÿ
