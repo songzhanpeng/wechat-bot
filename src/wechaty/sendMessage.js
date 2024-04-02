@@ -31,7 +31,7 @@ export async function defaultMessage(msg, bot) {
   console.log('接收到消息类型：', bot.Message.Type[msg.type()])
 
   if (msg.type() == 0 && content.includes('拍了拍我')) {
-    handler.handleFetchYiYan(msg)
+    handler.handleDog(msg)
     return
   }
 

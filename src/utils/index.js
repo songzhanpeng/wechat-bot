@@ -114,7 +114,7 @@ export function getCurrentDirPath() {
  * 加载配置文件。
  * 该函数尝试从指定的相对路径读取配置文件（config.yaml），并解析其内容。
  * 如果解析成功，将返回配置对象；如果失败，将打印错误信息并返回 null。
- * 
+ *
  * @returns {Object|null} 解析成功的配置对象，或在出现错误时返回 null。
  */
 export function loadConfig() {
@@ -146,5 +146,23 @@ export function loadConfig() {
   }
 }
 
-const config = loadConfig();
-console.log("🚀 ~ config:", config)
+// const config = loadConfig();
+// console.log("🚀 ~ config:", config)
+
+/**
+ * 加载指定的文件。
+ * @param {string} fileUrl - 文件的URL，相对于当前执行目录。
+ * @returns {string} 返回文件的内容。
+ */
+export function loadFile(fileUrl) {
+  // 获取当前执行目录的路径
+  const currentDirPath = getCurrentDirPath()
+  // 拼接完整的文件路径
+  const filePath = join(currentDirPath, fileUrl)
+  // 读取文件内容
+  const file = fs.readFileSync(filePath, 'utf8')
+  return file
+}
+
+// const res = loadFile('../data/dog.json')
+// console.log("🚀 ~ res:",typeof res)

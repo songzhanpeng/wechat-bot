@@ -24,7 +24,7 @@ import {
   fetchWetherData,
   fetchNtyyData
 } from '../services/index.js'
-import { containsHtmlTags, getRedirectUrl, parseCommand } from '../utils/index.js'
+import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
 import { loadConfig } from '../utils/index.js'
@@ -104,6 +104,18 @@ export class MessageHandler {
       }
     } catch (error) {
       console.error('Error sending Dog data message:', error)
+    }
+  }
+
+  async handleDog(msg) {
+    try {
+      const res = JSON.parse(loadFile('../data/dog.json'));
+      const randomIndex = Math.floor(Math.random() * res.length);
+      return msg.say(res[randomIndex]);
+    } catch (error) {
+      console.error("Error:", error);
+      // 在这里使用 msg.say 输出错误消息
+      return msg.say("抱歉，无法获取数据");
     }
   }
 
@@ -301,7 +313,8 @@ export class MessageHandler {
       'xdfnjfl66',
       'xdltj888',
       'xdxlh123',
-      'hyldwdsj6'
+      'hyldwdsj6',
+      'sjflxd66'
     ])
     await msg.say([...usernames].join('\n'))
   }
@@ -343,7 +356,7 @@ export class MessageHandler {
     { keyword: ['/moyu', 'moyu', '摸鱼'], description: '获取摸鱼人日历', func: this.handleMoYu },
     { keyword: ['/sixs', 'sixs'], description: '获取60秒新闻数据', func: this.handleSixs },
     { keyword: ['yiyan', 'yy', '一言'], description: '每日一言', func: this.handleFetchYiYan },
-    { keyword: ['/dog', 'dog', '舔狗日记'], description: '获取舔狗日记', func: this.handleDog },
+    { keyword: ['/dog', 'dog', '舔狗日记', 'g'], description: '获取舔狗日记', func: this.handleDog },
     { keyword: ['/de', 'de'], description: '获取每日英语', func: this.handleDailyEnglish },
     { keyword: ['/cs', 'cs'], description: '获取今日星座运势', func: this.handleConstellations },
     { keyword: ['/gg', 'gg', '帅哥', 'giegie'], description: '获取随机帅哥', func: this.handleGG },
