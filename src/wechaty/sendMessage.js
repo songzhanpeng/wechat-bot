@@ -7,6 +7,10 @@ const botName = config.BOT_NAME
 const roomWhiteList = config.ROOM_WHITE_LIST.split(',')
 const aliasWhiteList = config.ALIAS_WHITE_LIST.split(',')
 
+
+let lastMessage = ''; // 保存上一次收到的消息内容
+let repeatCount = 0; // 重复次数计数
+
 /**
  * 默认消息发送
  * @param msg
@@ -38,6 +42,20 @@ export async function defaultMessage(msg, bot) {
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
     console.log(JSON.stringify(msg))
+
+    // 如果当前消息内容与上一次相同，则增加重复次数计数
+    if (content === lastMessage) {
+      repeatCount++;
+    } else {
+      repeatCount = 1;
+      lastMessage = content;
+    }
+
+    // 如果重复次数达到三次，则发送消息
+    if (repeatCount === 3) {
+      await msg.say(content);
+      repeatCount = 0;
+    }
 
     // 检查消息时间戳，如果距离现在超过10秒则不处理
     // const messageTimestamp = 1000 * msg.payload.timestamp
