@@ -3,7 +3,7 @@ import { loadConfig } from '../utils/index.js'
 const config = loadConfig()
 
 const request = axios.create({
-  timeout: 30 * 1000, // 设置超时时间为 30 秒
+  // timeout: 30 * 1000, // 设置超时时间为 30 秒
   cancelToken: false
 })
 
@@ -40,7 +40,7 @@ export async function fetchData(url) {
 
 // 获取摸鱼人日历
 export async function fetchMoyuData() {
-  return await request.get(endpointsMap.get('moYu'), { timeout: 30000 })
+  return await request.get(endpointsMap.get('moYu'))
 }
 
 // 新闻60s

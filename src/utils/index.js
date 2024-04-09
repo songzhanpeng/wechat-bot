@@ -3,7 +3,7 @@ import fs from 'fs'
 import yaml from 'yaml'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-import { exec } from 'child_process'
+import { exec, execFile } from 'child_process'
 
 export async function getRedirectUrl(url, maxRedirects = 5) {
   try {
@@ -166,3 +166,41 @@ export function loadFile(fileUrl) {
 
 // const res = loadFile('../data/dog.json')
 // console.log("🚀 ~ res:",typeof res)
+
+/**
+ * 执行Rust程序，并返回执行结果。
+ * @param {string} rustExecutable - Rust可执行文件的路径。
+ * @param {Array} args - 传递给Rust程序的参数数组。
+ * @returns {Promise} - 返回一个Promise对象，成功时resolve包含Rust程序的标准输出，失败时reject包含错误信息。
+ */
+export function runRustProgram(rustExecutable, args) {
+  // 创建一个新的Promise，以便异步处理Rust程序的执行
+  return new Promise((resolve, reject) => {
+    // 使用execFile执行Rust可执行文件，传入参数和回调函数
+    execFile(rustExecutable, args, (error, stdout, stderr) => {
+      // 如果执行过程中出现错误
+      if (error) {
+        console.error('执行 Rust 程序时出错：', error); // 打印错误信息
+        reject(error); // 通过reject传递错误
+        return;
+      }
+      // 如果执行成功，通过resolve返回程序的标准输出
+      resolve(stdout);
+    });
+  });
+}
+
+// Rust 可执行文件路径
+const rustExecutable = '../plugin/dog/bot-plugin';
+
+// 连击数量
+const comboCount = 5; // 你可以根据需要设置连击的数量
+
+// 执行 Rust 可执行文件并传递连击数量作为参数
+runRustProgram(rustExecutable, [comboCount.toString()])
+  .then(result => {
+    console.log('Rust 程序的输出：', JSON.parse(result));
+  })
+  .catch(error => {
+    console.error('执行 Rust 程序时出错：', error);
+  });

@@ -22,12 +22,12 @@ import {
   fetchYiYanData,
   fetchKimiData,
   fetchWetherData,
-  fetchNtyyData
+  fetchNtyyData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
-import { loadConfig } from '../utils/index.js'
+import { loadConfig, runRustProgram } from '../utils/index.js'
 
 const config = loadConfig()
 const botName = config.BOT_NAME
@@ -109,13 +109,56 @@ export class MessageHandler {
 
   async handleDog(msg) {
     try {
-      const res = JSON.parse(loadFile('../data/dog.json'));
-      const randomIndex = Math.floor(Math.random() * res.length);
-      return msg.say(res[randomIndex]);
+      const res = JSON.parse(loadFile('../data/dog.json'))
+      const randomIndex = Math.floor(Math.random() * res.length)
+      return msg.say(res[randomIndex])
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error)
       // 在这里使用 msg.say 输出错误消息
-      return msg.say("抱歉，无法获取数据");
+      return msg.say('抱歉，无法获取数据')
+    }
+  }
+
+  async handleDog(msg) {
+    try {
+      // Rust 可执行文件路径
+      const rustExecutable = process.env.RUST_EXECUTABLE || '../plugin/dog/bot-plugin'
+
+      // // 连击数量
+      // const inputComboCount = msg.comboCount // 假设来自消息对象，需要验证
+      // if (typeof inputComboCount !== 'number' || inputComboCount < 0) {
+      //   // 输入不合法时，直接返回错误消息
+      //   return msg.say('comboCount 必须是一个非负整数')
+      // }
+      // const comboCount = Math.floor(inputComboCount) // 确保comboCount为整数
+
+      // 执行 Rust 可执行文件并传递连击数量作为参数
+      runRustProgram(rustExecutable, ['1'])
+        .then((result) => {
+          console.log('Rust 程序的输出：', result)
+          let res
+          try {
+            res = JSON.parse(result)
+          } catch (parseError) {
+            console.error('解析 Rust 程序输出为 JSON 时出错：', parseError)
+            // 解析失败时，可以向用户反馈错误或返回默认值
+            return msg.say('抱歉，解析结果时出错')
+          }
+          if (!Array.isArray(res) || res.length === 0) {
+            // 检查解析结果是否符合预期
+            return msg.say('抱歉，Rust 程序未返回有效数据')
+          }
+          return msg.say(res[0])
+        })
+        .catch((error) => {
+          console.error('执行 Rust 程序时出错：', error)
+          // 向用户反馈具体的错误信息
+          return msg.say(`抱歉，执行 Rust 程序时出错：${error.message}`)
+        })
+    } catch (error) {
+      console.error('Error:', error)
+      // 在这里使用 msg.say 输出错误消息
+      return msg.say('抱歉，无法获取数据')
     }
   }
 
@@ -314,7 +357,7 @@ export class MessageHandler {
       'xdltj888',
       'xdxlh123',
       'hyldwdsj6',
-      'sjflxd66'
+      'sjflxd66',
     ])
     await msg.say([...usernames].join('\n'))
   }
