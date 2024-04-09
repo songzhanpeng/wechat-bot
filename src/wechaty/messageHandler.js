@@ -122,6 +122,7 @@ export class MessageHandler {
   async handleDog(msg, inputComboCount = 1) {
     try {
       const rustExecutable = process.env.RUST_EXECUTABLE || '../plugin/dog/bot-plugin';
+      const content = msg.text()
       const { parameters = [] } = parseCommand(content);
       // let inputComboCount = 1; // Default value
   
