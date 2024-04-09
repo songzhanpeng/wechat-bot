@@ -119,42 +119,42 @@ export class MessageHandler {
     }
   }
 
-  async handleDog(msg, inputComboCount = 1) {
-    try {
-      const rustExecutable = process.env.RUST_EXECUTABLE || '../plugin/dog/bot-plugin';
-      const content = msg.text()
-      const { parameters = [] } = parseCommand(content);
-      // let inputComboCount = 1; // Default value
+  // async handleDog(msg, inputComboCount = 1) {
+  //   try {
+  //     const rustExecutable = process.env.RUST_EXECUTABLE || '../plugin/dog/bot-plugin';
+  //     const content = msg.text()
+  //     const { parameters = [] } = parseCommand(content);
+  //     // let inputComboCount = 1; // Default value
   
-      if (parameters.length > 0) {
-        inputComboCount = Math.min(Math.max(Number(parameters[0]), 1), 10);
-      }
+  //     if (parameters.length > 0) {
+  //       inputComboCount = Math.min(Math.max(Number(parameters[0]), 1), 10);
+  //     }
   
-      // 执行 Rust 可执行文件并传递连击数量作为参数
-      runRustProgram(rustExecutable, [inputComboCount.toString()])
-        .then((result) => {
-          console.log('Rust 程序的输出：', result);
-          let res;
-          try {
-            res = JSON.parse(result);
-          } catch (parseError) {
-            console.error('解析 Rust 程序输出为 JSON 时出错：', parseError);
-            return msg.say('抱歉，解析结果时出错');
-          }
-          if (!Array.isArray(res) || res.length === 0) {
-            return msg.say('抱歉，Rust 程序未返回有效数据');
-          }
-          return msg.say(res[0]);
-        })
-        .catch((error) => {
-          console.error('执行 Rust 程序时出错：', error);
-          return msg.say(`抱歉，执行 Rust 程序时出错：${error.message}`);
-        });
-    } catch (error) {
-      console.error('Error:', error);
-      return msg.say('抱歉，无法获取数据');
-    }
-  }
+  //     // 执行 Rust 可执行文件并传递连击数量作为参数
+  //     runRustProgram(rustExecutable, [inputComboCount.toString()])
+  //       .then((result) => {
+  //         console.log('Rust 程序的输出：', result);
+  //         let res;
+  //         try {
+  //           res = JSON.parse(result);
+  //         } catch (parseError) {
+  //           console.error('解析 Rust 程序输出为 JSON 时出错：', parseError);
+  //           return msg.say('抱歉，解析结果时出错');
+  //         }
+  //         if (!Array.isArray(res) || res.length === 0) {
+  //           return msg.say('抱歉，Rust 程序未返回有效数据');
+  //         }
+  //         return msg.say(res[0]);
+  //       })
+  //       .catch((error) => {
+  //         console.error('执行 Rust 程序时出错：', error);
+  //         return msg.say(`抱歉，执行 Rust 程序时出错：${error.message}`);
+  //       });
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     return msg.say('抱歉，无法获取数据');
+  //   }
+  // }
   
 
   async handleFetchKimiData(msg) {
