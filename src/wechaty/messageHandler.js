@@ -353,6 +353,7 @@ export class MessageHandler {
       'xdxlh123',
       'hyldwdsj6',
       'sjflxd66',
+      'xd123smh'
     ])
     await msg.say([...usernames].join('\n'))
   }
