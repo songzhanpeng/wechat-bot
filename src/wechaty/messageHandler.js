@@ -559,7 +559,7 @@ export class MessageHandler {
       await msg.say(data.title)
   
       if (data.type === '图文') {
-        const promiseList = data.images.map(img => axios.get(img.url, { responseType: 'arraybuffer' }))
+        const promiseList = data.images.map(img => axios.get(img, { responseType: 'arraybuffer' }))
         const responses = await Promise.all(promiseList)
   
         responses.forEach(response => {
