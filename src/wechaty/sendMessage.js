@@ -66,17 +66,18 @@ export async function defaultMessage(msg, bot) {
     //   console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`)
     //   return
     // }
+    
+    // 检测 分享码
+    if (handler.handleFetchShareCode(content)) {
+      handler.parseShareCode(msg)
+      return
+    }
 
     if (handler.isIncludesKeyword(content)) {
       handler.handleMessage(msg)
       return
     }
 
-    // 检测 分享码
-    if (handler.handleFetchShareCode(content)) {
-      handler.parseShareCode(msg)
-      return
-    }
 
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
