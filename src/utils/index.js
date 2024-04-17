@@ -204,3 +204,17 @@ export function runRustProgram(rustExecutable, args) {
 //   .catch(error => {
 //     console.error('执行 Rust 程序时出错：', error);
 //   });
+
+// 提取字符串中的 URL
+export function extractURL(str) {
+  // 使用正则表达式匹配 URL
+  const urlRegex = /(https?:\/\/[^\s，]+)/;
+  const match = str.match(urlRegex);
+  
+  // 如果匹配到 URL，则返回匹配到的 URL
+  if (match) {
+      return match[0];
+  } else {
+      return null; // 如果没有匹配到 URL，则返回 null
+  }
+}

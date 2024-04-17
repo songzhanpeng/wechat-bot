@@ -72,6 +72,12 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
+    // 检测 分享码
+    if (handler.handleFetchShareCode(content)) {
+      handler.parseShareCode(msg)
+      return
+    }
+
     if (privateChat) {
       console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
     } else {

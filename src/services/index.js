@@ -162,3 +162,8 @@ export async function fetchNtyyData() {
   return await request.get(`https://api.qvqa.cn/api/ntyy/?name=yuanshen`)
 }
 
+// https://api.mu-jie.cc/xhs?url=http://xhslink.com/ZX9OHG
+// 解析小红书
+export async function fetchXhsData(url = '') {
+  return await request.get(`https://api.mu-jie.cc/xhs?url=${url}`)
+}
