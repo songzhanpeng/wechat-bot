@@ -25,7 +25,7 @@ import {
   fetchNtyyData,
   fetchXhsData,
 } from '../services/index.js'
-import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile, extractURL } from '../utils/index.js'
+import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile, extractURL, sleep } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
 import { loadConfig } from '../utils/index.js'
@@ -562,8 +562,9 @@ export class MessageHandler {
         const promiseList = data.images.map(img => axios.get(img, { responseType: 'arraybuffer' }))
         const responses = await Promise.all(promiseList)
   
-        responses.forEach(response => {
-          msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+        responses.map(async response => {
+          await sleep(100)
+          await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
         })
       } else if (data.type === '视频') {
         msg.say(FileBox.fromUrl(data.url))

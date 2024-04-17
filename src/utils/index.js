@@ -180,14 +180,14 @@ export function runRustProgram(rustExecutable, args) {
     execFile(rustExecutable, args, (error, stdout, stderr) => {
       // 如果执行过程中出现错误
       if (error) {
-        console.error('执行 Rust 程序时出错：', error); // 打印错误信息
-        reject(error); // 通过reject传递错误
-        return;
+        console.error('执行 Rust 程序时出错：', error) // 打印错误信息
+        reject(error) // 通过reject传递错误
+        return
       }
       // 如果执行成功，通过resolve返回程序的标准输出
-      resolve(stdout);
-    });
-  });
+      resolve(stdout)
+    })
+  })
 }
 
 // // Rust 可执行文件路径
@@ -208,13 +208,17 @@ export function runRustProgram(rustExecutable, args) {
 // 提取字符串中的 URL
 export function extractURL(str) {
   // 使用正则表达式匹配 URL
-  const urlRegex = /(https?:\/\/[^\s，]+)/;
-  const match = str.match(urlRegex);
-  
+  const urlRegex = /(https?:\/\/[^\s，]+)/
+  const match = str.match(urlRegex)
+
   // 如果匹配到 URL，则返回匹配到的 URL
   if (match) {
-      return match[0];
+    return match[0]
   } else {
-      return null; // 如果没有匹配到 URL，则返回 null
+    return null // 如果没有匹配到 URL，则返回 null
   }
+}
+
+export function sleep(ms = 1000) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
