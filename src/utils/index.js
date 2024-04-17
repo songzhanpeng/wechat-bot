@@ -190,17 +190,17 @@ export function runRustProgram(rustExecutable, args) {
   });
 }
 
-// Rust 可执行文件路径
-const rustExecutable = '../plugin/dog/bot-plugin';
+// // Rust 可执行文件路径
+// const rustExecutable = '../plugin/dog/bot-plugin';
 
-// 连击数量
-const comboCount = 5; // 你可以根据需要设置连击的数量
+// // 连击数量
+// const comboCount = 5; // 你可以根据需要设置连击的数量
 
-// 执行 Rust 可执行文件并传递连击数量作为参数
-runRustProgram(rustExecutable, [comboCount.toString()])
-  .then(result => {
-    console.log('Rust 程序的输出：', JSON.parse(result));
-  })
-  .catch(error => {
-    console.error('执行 Rust 程序时出错：', error);
-  });
+// // 执行 Rust 可执行文件并传递连击数量作为参数
+// runRustProgram(rustExecutable, [comboCount.toString()])
+//   .then(result => {
+//     console.log('Rust 程序的输出：', JSON.parse(result));
+//   })
+//   .catch(error => {
+//     console.error('执行 Rust 程序时出错：', error);
+//   });
