@@ -167,3 +167,8 @@ export async function fetchNtyyData() {
 export async function fetchXhsData(url = '') {
   return await request.get(`https://api.mu-jie.cc/xhs?url=${url}`)
 }
+
+// https://api.suxun.site/api/douyin?url=https://v.douyin.com/iYUqNyjy/
+export async function fetchDouyinData(url = '') {
+  return await request.get(`https://api.suxun.site/api/douyin?url=${url}`)
+}

@@ -533,45 +533,47 @@ export class MessageHandler {
   }
 
   // 检测分享码
-  async handleFetchShareCode(content) {
+  handleFetchShareCode(content) {
     const reg = new RegExp(`(xhslink|douyin).com`)
     return reg.test(content)
   }
 
   // 解析分享码
   async parseShareCode(msg) {
-    const content = msg.text()
-    const url = extractURL(content)
-  
-    if (url.includes('xhslink')) {
-      // 小红书
-      await msg.say('好的,我尝试帮你下载你的小红薯~')
-      const res = await fetchXhsData(url)
-  
-      if (res.data.code !== 200) {
-        console.error('小红书数据获取失败')
-        await msg.say('小红薯数据下载失败')
-        return
+    try {
+      const content = msg.text()
+      const url = extractURL(content)
+
+      if (url.includes('xhslink')) {
+        // 小红书
+        await msg.say('好的,我尝试帮你下载你的小红薯~')
+        const res = await fetchXhsData(url)
+
+        if (res.data.code !== 200) {
+          console.error('小红书数据获取失败')
+          await msg.say('小红薯数据下载失败')
+          return
+        }
+
+        const { data } = res.data
+
+        await msg.say(data.title)
+
+        if (data.type === '图文') {
+          const promiseList = data.images.map((img) => axios.get(img, { responseType: 'arraybuffer' }))
+          const responses = await Promise.all(promiseList)
+
+          responses.map(async (response) => {
+            await sleep(100)
+            await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+          })
+        } else if (data.type === '视频') {
+          msg.say(FileBox.fromUrl(data.url))
+        }
+      } else {
+        console.log('其他 暂不支持')
       }
-  
-      const { data } = res.data
-  
-      await msg.say(data.title)
-  
-      if (data.type === '图文') {
-        const promiseList = data.images.map(img => axios.get(img, { responseType: 'arraybuffer' }))
-        const responses = await Promise.all(promiseList)
-  
-        responses.map(async response => {
-          await sleep(100)
-          await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
-        })
-      } else if (data.type === '视频') {
-        msg.say(FileBox.fromUrl(data.url))
-      }
-    } else {
-      console.log('其他 暂不支持')
-    }
+    } catch (error) {}
   }
 }
 
