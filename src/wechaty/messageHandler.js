@@ -25,7 +25,7 @@ import {
   fetchNtyyData,
   fetchXhsData,
 } from '../services/index.js'
-import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile } from '../utils/index.js'
+import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile, extractURL } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
 import axios from 'axios'
 import { loadConfig } from '../utils/index.js'
