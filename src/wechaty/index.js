@@ -67,9 +67,9 @@ async function onMessage(msg) {
 export const bot = WechatyBuilder.build({
   name: 'wechat-bot',
   puppet: "wechaty-puppet-wechat",
-  puppetOptions: {
-    uos: true
-  }
+  // puppetOptions: {
+  //   uos: true
+  // }
 })
 
 // 扫码
