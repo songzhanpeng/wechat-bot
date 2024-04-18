@@ -66,10 +66,10 @@ async function onMessage(msg) {
 // 初始化机器人
 export const bot = WechatyBuilder.build({
   name: 'wechat-bot',
-  // puppet: "wechaty-puppet-wechat",
-  // puppetOptions: {
-  //   uos: true
-  // }
+  puppet: "wechaty-puppet-wechat",
+  puppetOptions: {
+    uos: true
+  }
 })
 
 // 扫码
