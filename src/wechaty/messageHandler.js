@@ -24,6 +24,7 @@ import {
   fetchWetherData,
   fetchNtyyData,
   fetchXhsData,
+  fetchDouyinData,
 } from '../services/index.js'
 import { containsHtmlTags, getRedirectUrl, parseCommand, loadFile, extractURL, sleep } from '../utils/index.js'
 import { createSpackPicture, parseMessage } from '../spark/picture.js'
@@ -570,10 +571,40 @@ export class MessageHandler {
         } else if (data.type === '视频') {
           msg.say(FileBox.fromUrl(data.url))
         }
+      } else if (url.includes('douyin')) {
+        // 小红书
+        await msg.say('好的,我尝试帮你下载你的抖音~')
+        const res = await fetchDouyinData(url)
+
+        if (res.data.code !== 200) {
+          console.error('抖音数据获取失败')
+          await msg.say('抖音数据下载失败')
+          return
+        }
+
+        const { data } = res.data
+
+        await msg.say(data.title)
+        await msg.say(FileBox.fromUrl(data.url + '.mp4'))
+        // if (data.type === '图文') {
+        //   const promiseList = data.images.map((img) => axios.get(img, { responseType: 'arraybuffer' }))
+        //   const responses = await Promise.all(promiseList)
+
+        //   responses.map(async (response) => {
+        //     await sleep(100)
+        //     await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+        //   })
+        // } else if (data.type === '视频') {
+        //   msg.say(FileBox.fromUrl(data.url))
+        // }
       } else {
         console.log('其他 暂不支持')
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error('发送分享码消息时出错：', error)
+      // 在出现错误时，确保传递给 msg.say 的内容是一个字符串
+      await msg.say('分享码解析失败，请稍后再试。')
+    }
   }
 }
 

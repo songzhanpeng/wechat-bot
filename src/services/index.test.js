@@ -15,7 +15,8 @@ import {
   fetchYiYanData,
   fetchWetherData,
   fetchNtyyData,
-  fetchXhsData
+  fetchXhsData,
+  fetchDouyinData,
 } from './index.js'
 import { getRedirectUrl, containsHtmlTags } from '../utils/index.js'
 import { FileBox } from 'file-box'
@@ -166,10 +167,16 @@ describe('Testing XiaRuo API Endpoints', () => {
     expect(res.data.data.msg).toEqual(expect.any(String))
   })
 
-  it.only('Get fetchXhsData ', async () => {
+  it('Get fetchXhsData ', async () => {
     const res = await fetchXhsData(`http://xhslink.com/ZX9OHG`)
     // console.log("🚀 ~ it ~ res:", res.data.data.images)
     expect(res.data.code).toBe(200)
     expect(res.data.data.type).toBe('图文')
+  })
+
+  it.only('Get fetchDouyinData ', async () => {
+    const res = await fetchDouyinData(`https://v.douyin.com/iYUqNyjy`)
+    console.log("🚀 ~ it.only ~ res:", res)
+    expect(res.data.code).toBe(200)
   })
 })
