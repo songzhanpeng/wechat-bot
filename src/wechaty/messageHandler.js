@@ -585,7 +585,7 @@ export class MessageHandler {
         const { data } = res.data
 
         await msg.say(data.title)
-        await msg.say(FileBox.fromUrl(data.url + '.mp4'))
+        await msg.say(FileBox.fromUrl(data.url, 'video.mp4'))
         // if (data.type === '图文') {
         //   const promiseList = data.images.map((img) => axios.get(img, { responseType: 'arraybuffer' }))
         //   const responses = await Promise.all(promiseList)
