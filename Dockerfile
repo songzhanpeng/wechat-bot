@@ -15,5 +15,8 @@ COPY . .
 # 安装依赖
 RUN npm install
 
+# 设置环境变量指向外部配置文件路径
+ENV WECHATY_CONFIG_FILE=/app/wechat-bot.memory-card.json
+
 # 使用 PM2 启动应用
 CMD ["node", "index.js"]

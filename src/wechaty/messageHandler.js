@@ -127,7 +127,7 @@ export class MessageHandler {
       const { parameters } = parseCommand(content)
       let prompt = parameters.join(' ')
       console.log('🚀 ~ MessageHandler ~ handleFetchKimiData ~ prompt:', prompt)
-      await msg.say('思考中...')
+      // await msg.say('思考中...')
       const { data } = await fetchKimiData(prompt)
       await msg.say(data.choices[0].message.content)
     } catch (error) {
