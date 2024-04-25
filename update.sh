@@ -16,6 +16,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 检查是否有代码更新
+git diff --quiet --exit-code
+if [ $? -eq 0 ]; then
+    echo -e "\e[1;32m✅ 代码库已是最新，无需重新启动。\e[0m"
+    exit 0
+fi
+
 # 执行 pnpm install 命令
 echo -e "\e[1;34m📦 正在安装依赖项...\e[0m"
 pnpm install
