@@ -169,11 +169,11 @@ export async function fetchXhsData(url = '') {
 }
 
 // https://api.suxun.site/api/douyin?url=https://v.douyin.com/iYUqNyjy/
-export async function fetchDouyinData(url = '') {
-  return await request.get(`https://api.suxun.site/api/douyin?url=${url}`)
-}
+// export async function fetchDouyinData(url = '') {
+//   return await request.get(`https://api.suxun.site/api/douyin?url=${url}`)
+// }
 
 // https://api.pearktrue.cn/api/video/douyin/?url=https://v.douyin.com/iererwFh/
-// export async function fetchDouyinData(url = '') {
-//   return await request.get(`https://api.pearktrue.cn/api/video/douyin/?url=${url}`)
-// }
+export async function fetchDouyinData(url = '') {
+  return await request.get(`https://api.pearktrue.cn/api/video/douyin/?url=${url}`)
+}
