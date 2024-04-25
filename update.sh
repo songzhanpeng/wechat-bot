@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 检查是否安装了 pnpm，如果没有则安装
-if ! command -v pnpm &> /dev/null; then
+if ! /usr/local/bin/pnpm --version &> /dev/null; then
     echo -e "\e[1;34m📦 安装 pnpm...\e[0m"
     npm install -g pnpm
 fi
