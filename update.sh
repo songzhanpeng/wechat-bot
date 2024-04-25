@@ -1,9 +1,14 @@
 #!/bin/bash
 
-# 检查是否安装了 pnpm，如果没有则安装
-if ! /usr/local/bin/pnpm --version &> /dev/null; then
+# 查询 pnpm 的安装路径
+PNPM_PATH=$(which pnpm)
+
+# 判断 pnpm 是否已安装
+if [ -z "$PNPM_PATH" ]; then
     echo -e "\e[1;34m📦 安装 pnpm...\e[0m"
     npm install -g pnpm
+else
+    echo -e "\e[1;32m✅ pnpm 已安装，路径为: $PNPM_PATH\e[0m"
 fi
 
 # 执行 git fetch 命令
