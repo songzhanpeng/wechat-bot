@@ -373,7 +373,7 @@ export class MessageHandler {
     { keyword: ['/kfc', 'kfc', '50', 'v50', 'V50', 'KFC', '开封菜'], description: '随机疯狂星期四文案', func: this.handleFetchFkxqs },
     { keyword: ['/sl', 'sl', '少萝'], description: '随机少萝妹妹', func: this.handleSlVideo },
     { keyword: ['/yz', 'yz', '玉足', 'YZ'], description: '随机美腿玉足视频', func: this.handleYzVideo },
-    { keyword: ['kimi', '牢大'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
+    { keyword: ['kimi'], description: '月之暗面LLM：Kimi Chat [调用示例: kimi 你是谁]', func: this.handleFetchKimiData },
     { keyword: ['天气', 'weather', 'wtr'], description: '天气查询 [调用示例: weather 北京]', func: this.handleFetchWetherData },
     // { keyword: ['nt', '启动', '原神', '原神启动'], description: '每日逆天言论', func: this.handleFetchNtyyData },
     // { keyword: ['test'], description: 'test', func: this.handleTest, skip: true },
