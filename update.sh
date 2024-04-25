@@ -11,9 +11,10 @@ else
     echo -e "\e[1;32m✅ pnpm 已安装，路径为: $PNPM_PATH\e[0m"
 fi
 
-# 执行 git fetch 命令
+# 执行 git pull 命令，并记录开始时间
 echo -e "\e[1;34m🔄 正在更新远程代码库...\e[0m"
-git fetch
+START_TIME=$(date +%s)
+git pull
 
 # 检查更新是否成功
 if [ $? -ne 0 ]; then
@@ -21,26 +22,20 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 检查是否需要更新
-git status -uno | grep -q 'Your branch is behind' && NEED_UPDATE=true || NEED_UPDATE=false
+# 计算并显示执行时间
+END_TIME=$(date +%s)
+ELAPSED_TIME=$((END_TIME - START_TIME))
+echo -e "\e[1;34m⏱️ 更新代码库完成，用时: $ELAPSED_TIME 秒\e[0m"
 
-if [ "$NEED_UPDATE" = true ]; then
-    # 执行 git pull 命令
-    echo -e "\e[1;34m🔄 本地分支落后于远程分支，正在自动更新...\e[0m"
-    git pull
-
-    # 检查更新是否成功
-    if [ $? -ne 0 ]; then
-        echo -e "\e[1;31m❌ 更新失败！请手动解决冲突。\e[0m"
-        exit 1
-    fi
-else
-    echo -e "\e[1;32m✅ 代码库已是最新，无需重新启动。\e[0m"
-fi
-
-# 执行 pnpm install 命令
+# 执行 pnpm install 命令，并记录开始时间
 echo -e "\e[1;34m📦 正在安装依赖项...\e[0m"
+START_TIME=$(date +%s)
 pnpm install
+
+# 计算并显示执行时间
+END_TIME=$(date +%s)
+ELAPSED_TIME=$((END_TIME - START_TIME))
+echo -e "\e[1;34m⏱️ 安装依赖项完成，用时: $ELAPSED_TIME 秒\e[0m"
 
 # 执行 pm2 命令
 echo -e "\e[1;34m⏹️ 正在停止 wechat-bot...\e[0m"
