@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# 检查是否安装了 pnpm，如果没有则安装
+if ! command -v pnpm &> /dev/null; then
+    echo -e "\e[1;34m📦 安装 pnpm...\e[0m"
+    npm install -g pnpm
+fi
+
 # 执行 git pull 命令
 echo -e "\e[1;34m🔄 正在更新代码库...\e[0m"
 git pull
@@ -10,9 +16,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 执行 npm install 命令
+# 执行 pnpm install 命令
 echo -e "\e[1;34m📦 正在安装依赖项...\e[0m"
-npm install
+pnpm install
 
 # 执行 pm2 命令
 echo -e "\e[1;34m⏹️ 正在停止 wechat-bot...\e[0m"

@@ -135,8 +135,8 @@ export function loadConfig() {
       return null
     } else {
       // 解析成功，打印配置信息
-      console.log('Parsed configuration:')
-      console.log(config)
+      // console.log('Parsed configuration:')
+      // console.log(config)
       return config
     }
   } catch (e) {
