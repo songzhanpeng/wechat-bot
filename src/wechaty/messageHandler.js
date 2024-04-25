@@ -575,6 +575,7 @@ export class MessageHandler {
         // 小红书
         await msg.say('好的,我尝试帮你下载你的抖音~')
         const res = await fetchDouyinData(url)
+        console.log("🚀 ~ MessageHandler ~ parseShareCode ~ res:", res)
 
         if (res.data.code !== 200) {
           console.error('抖音数据获取失败')
