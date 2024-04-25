@@ -21,19 +21,21 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 检查本地分支是否落后于远程分支
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-BASE=$(git merge-base @ @{u})
+# 检查是否需要更新
+git status -uno | grep -q 'Your branch is behind' && NEED_UPDATE=true || NEED_UPDATE=false
 
-if [ $LOCAL = $REMOTE ]; then
-    echo -e "\e[1;32m✅ 代码库已是最新，无需重新启动。\e[0m"
-    exit 0
-elif [ $LOCAL = $BASE ]; then
-    echo -e "\e[1;34m🔄 本地分支落后于远程分支，需要更新。\e[0m"
+if [ "$NEED_UPDATE" = true ]; then
+    # 执行 git pull 命令
+    echo -e "\e[1;34m🔄 本地分支落后于远程分支，正在自动更新...\e[0m"
+    git pull
+
+    # 检查更新是否成功
+    if [ $? -ne 0 ]; then
+        echo -e "\e[1;31m❌ 更新失败！请手动解决冲突。\e[0m"
+        exit 1
+    fi
 else
-    echo -e "\e[1;31m❌ 本地分支与远程分支存在分歧，请解决冲突后再操作。\e[0m"
-    exit 1
+    echo -e "\e[1;32m✅ 代码库已是最新，无需重新启动。\e[0m"
 fi
 
 # 执行 pnpm install 命令
