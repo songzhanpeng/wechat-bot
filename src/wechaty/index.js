@@ -64,7 +64,7 @@ async function onMessage(msg) {
 }
 // 初始化机器人
 export const bot = WechatyBuilder.build({
-  name: process.cwd() + '/momery/' + 'wechat-bot.memory-card.json',
+  name: process.cwd() + '/memory/' + 'wechat-bot.memory-card.json',
   // puppet: "wechaty-puppet-wechat",
   // puppetOptions: {
   //   uos: true
