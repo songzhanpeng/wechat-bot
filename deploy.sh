@@ -41,7 +41,7 @@ build_image() {
 start_container() {
     echo -e "\e[1;34m▶️ 正在启动容器...\e[0m"
     # docker run -itd --name="wechat-bot" --restart=always wechat-bot:v1
-    docker run -itd --name="wechat-bot" -v ./wechat-bot.memory-card.json:/app/wechat-bot.memory-card.json --restart=always wechat-bot:v1
+    docker run -itd --name="wechat-bot" -v ./memory:/app/memory --restart=always wechat-bot:v1
     if [ $? -ne 0 ]; then
         echo -e "\e[1;31m❌ 容器启动失败！请检查。\e[0m"
         exit 1
