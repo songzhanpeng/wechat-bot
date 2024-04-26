@@ -561,13 +561,17 @@ export class MessageHandler {
         await msg.say(data.title)
 
         if (data.type === '图文') {
-          const promiseList = data.images.map((img) => axios.get(img, { responseType: 'arraybuffer' }))
-          const responses = await Promise.all(promiseList)
-
-          responses.map(async (response) => {
+          data.images.map(async (img) => {
+            const  res = await axios.get(img, { responseType: 'arraybuffer' })
             await sleep(100)
-            await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+            await msg.say(FileBox.fromBuffer(res.data, 'image.png'))
           })
+          // const responses = await Promise.all(promiseList)
+
+          // responses.map(async (response) => {
+          //   await sleep(300)
+          //   await msg.say(FileBox.fromBuffer(response.data, 'image.png'))
+          // })
         } else if (data.type === '视频') {
           msg.say(FileBox.fromUrl(data.url))
         }
