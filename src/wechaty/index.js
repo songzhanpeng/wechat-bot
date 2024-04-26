@@ -62,7 +62,6 @@ async function onMessage(msg) {
   // 消息分片
   // await shardingMessage(msg,bot)
 }
-console.log(process.cwd() + '../../momery/' + 'wechat-bot.memory-card.json');
 // 初始化机器人
 export const bot = WechatyBuilder.build({
   name: process.cwd() + '/momery/' + 'wechat-bot.memory-card.json',
