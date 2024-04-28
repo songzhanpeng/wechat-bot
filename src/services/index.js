@@ -11,7 +11,7 @@ const request = axios.create({
 export const endpointsMap = new Map([
   // ['moYu', 'https://api.vvhan.com/api/moyu?type=json'],
   ['moYu', 'https://api.j4u.ink/v1/store/other/proxy/remote/moyu.json'],
-  ['sixs', 'http://localhost:3000/getSixs'],
+  ['sixs', 'http://106.14.22.194:3000/getSixs'],
   ['tianGou', 'https://v.api.aa1.cn/api/tiangou/index.php'],
   ['oneDayEnglish', 'https://api.oioweb.cn/api/common/OneDayEnglish'],
   ['xingZuoYunShi', 'https://dayu.qqsuu.cn/xingzuoyunshi/apis.php?type=json'],
