@@ -41,7 +41,7 @@ export async function defaultMessage(msg, bot) {
 
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
-    console.log(JSON.stringify(msg))
+    // console.log(JSON.stringify(msg))
 
     // 如果当前消息内容与上一次相同，则增加重复次数计数
     if (content === lastMessage) {
