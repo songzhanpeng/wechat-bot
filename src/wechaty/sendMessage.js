@@ -32,7 +32,8 @@ export async function defaultMessage(msg, bot) {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   const privateChat = !room
   const handler = new MessageHandler(bot)
-  console.log('接收到消息类型：', bot.Message.Type[msg.type()])
+  
+  // console.log('接收到消息类型：', bot.Message.Type[msg.type()])
 
   if (msg.type() == 0 && content.includes('拍了拍我')) {
     handler.handleDog(msg)
@@ -42,6 +43,13 @@ export async function defaultMessage(msg, bot) {
   // 如果消息类型为文本且不是机器人自己发送的消息
   if (isText && !isBotSelf) {
     // console.log(JSON.stringify(msg))
+
+    if (privateChat) {
+      console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
+    } else {
+      const topic = await room.topic()
+      console.log(`🚪 Room: ${topic} 🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
+    }
 
     // 如果当前消息内容与上一次相同，则增加重复次数计数
     if (content === lastMessage) {
@@ -55,6 +63,7 @@ export async function defaultMessage(msg, bot) {
     if (repeatCount === 3) {
       await msg.say(content);
       repeatCount = 0;
+      return
     }
 
     // 检查消息时间戳，如果距离现在超过10秒则不处理
@@ -76,14 +85,6 @@ export async function defaultMessage(msg, bot) {
     if (handler.isIncludesKeyword(content)) {
       handler.handleMessage(msg)
       return
-    }
-
-
-    if (privateChat) {
-      console.log(`🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
-    } else {
-      const topic = await room.topic()
-      console.log(`🚪 Room: ${topic} 🤵 Contact: ${contact.name()} 💬 Text: ${content}`)
     }
 
     try {
