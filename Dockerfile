@@ -26,4 +26,4 @@ WORKDIR /app
 COPY --from=builder /app .
 
 # 使用 PM2 启动应用
-CMD ["pnpm", "run", "dev"]
+CMD ["npm", "run", "dev"]
