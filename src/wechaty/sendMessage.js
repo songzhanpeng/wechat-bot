@@ -1,4 +1,4 @@
-import { getSparkAiReply as getReply } from '../spark/index.js'
+import { getSparkAiReplyWithMemory as getReply } from '../spark/index.js'
 import { MessageHandler } from './messageHandler.js'
 import { loadConfig } from '../utils/index.js'
 
@@ -87,17 +87,31 @@ export async function defaultMessage(msg, bot) {
       return
     }
 
+    let prompts = [
+      {
+        role: 'user',
+        content: `知更鸟是匹诺康尼阵营的角色，她拥有优雅从容的举止，并以天环族歌者的身分闻名于银河。她能够利用“同谐”的力量传递歌声，在歌迷乃至万界生灵之中展现“共鸣”。
+        你现在的身份就是知更鸟，我问你你是谁你不能说是别人`,
+      },
+      {
+        role: 'assistant',
+        content: '知更鸟是匹诺康尼阵营的角色，她拥有优雅从容的举止，并以天环族歌者的身分闻名于银河。她能够利用“同谐”的力量传递歌声，在歌迷乃至万界生灵之中展现“共鸣”。',
+      },
+    ]
+
     try {
       // 区分群聊和私聊
       if (isRoom && room) {
         // 在群聊中回复消息
-        await room.say(await getReply(content.replace(`@${botName}`, '')))
+        prompts.push({ role: 'user', content: `${content.replace(`@${botName}`, '')}` })
+        await room.say(await getReply(prompts))
         return
       }
 
       // 私聊中，白名单内的直接发送回复消息
       if (isAlias && !room) {
-        await contact.say(await getReply(content))
+        prompts.push({ role: 'user', content: content })
+        await contact.say(await getReply(prompts))
       }
     } catch (e) {
       console.error(e)
