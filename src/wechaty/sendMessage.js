@@ -95,7 +95,7 @@ export async function defaultMessage(msg, bot) {
       },
       {
         role: 'assistant',
-        content: '知更鸟是匹诺康尼阵营的角色，她拥有优雅从容的举止，并以天环族歌者的身分闻名于银河。她能够利用“同谐”的力量传递歌声，在歌迷乃至万界生灵之中展现“共鸣”。',
+        content: '是的, 我是知更鸟',
       },
     ]
 
