@@ -38,14 +38,14 @@ export async function defaultMessage(msg, bot) {
     console.log(JSON.stringify(msg))
 
     // 检查消息时间戳，如果距离现在超过10秒则不处理
-    const messageTimestamp = 1000 * msg.payload.timestamp
-    const currentTimestamp = Date.now()
-    const timeDifference = currentTimestamp - messageTimestamp
+    // const messageTimestamp = 1000 * msg.payload.timestamp
+    // const currentTimestamp = Date.now()
+    // const timeDifference = currentTimestamp - messageTimestamp
 
-    if (timeDifference > 10 * 1000) {
-      console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`)
-      return
-    }
+    // if (timeDifference > 10 * 1000) {
+    //   console.log(`消息时间戳超过10秒，当前时间戳: ${currentTimestamp}, 消息时间戳: ${messageTimestamp}`)
+    //   return
+    // }
 
     // 检测到 / | # 拦截一下
     if (handler.isIncludesKeyword(content)) {

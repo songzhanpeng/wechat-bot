@@ -260,7 +260,7 @@ xdlnkgdj66`)
     }
 
     TASKS = [
-        {keyword: ['/ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing},
+        {keyword: ['/ping','ping'], description: '发送 "pong" 以测试是否在线', func: this.handlePing},
         {keyword: ['/moyu'], description: '获取摸鱼人数据', func: this.handleMoYu},
         {keyword: ['/sixs'], description: '获取60秒新闻数据', func: this.handleSixs},
         {keyword: ['/dog'], description: '获取舔狗日记', func: this.handleDog},
