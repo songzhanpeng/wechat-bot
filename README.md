@@ -52,6 +52,7 @@ version=3
 > 安装依赖时，大陆的朋友推荐切到 taobao 镜像源后再安装，要不然可能会因为依赖安装不完整导致出错， 推荐使用我的工具 👉🏻 [prm-cli](https://github.com/wangrongding/prm-cli) 快速切换。
 npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 npm install --ignore-scripts puppeteer
+node 版本 16.20.2
 ```sh
 # 安装依赖
 npm i
